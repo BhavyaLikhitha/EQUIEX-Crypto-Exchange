@@ -1,0 +1,113 @@
+openapi: 3.0.0
+info:
+  title: Chatbot API
+  version: 1.0.0
+  description: >-
+    API for chatbot interactions, including retrieving available questions,
+    submitting questions, and getting user-specific chat history.
+paths:
+  /chatbot/questions:
+    get:
+      summary: Retrieve the list of available questions for the chatbot
+      responses:
+        '200':
+          description: Questions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+        '500':
+          description: Internal server error while retrieving questions
+    post:
+      summary: Submit a question to the chatbot and get an answer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionSubmission'
+      responses:
+        '200':
+          description: Answer provided by chatbot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Answer'
+        '400':
+          description: Bad request due to invalid question format
+        '500':
+          description: Internal server error while processing question
+  /chatbot/{userId}:
+    get:
+      summary: >-
+        Retrieve chat history or questions answered by the chatbot for a
+        specific user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Chat history retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChatHistory'
+        '404':
+          description: Chat history not found for the specified user
+        '500':
+          description: Internal server error while retrieving chat history
+components:
+  schemas:
+    Question:
+      type: object
+      properties:
+        questionId:
+          type: string
+          description: Unique identifier for the question
+        text:
+          type: string
+          description: Text of the question
+      required:
+        - questionId
+        - text
+    QuestionSubmission:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: User submitting the question
+        text:
+          type: string
+          description: Text of the question
+      required:
+        - userId
+        - text
+    Answer:
+      type: object
+      properties:
+        answerId:
+          type: string
+          description: Unique identifier for the answer
+        text:
+          type: string
+          description: Text of the answer provided by the chatbot
+      required:
+        - answerId
+        - text
+    ChatHistory:
+      type: object
+      properties:
+        question:
+          $ref: '#/components/schemas/Question'
+        answer:
+          $ref: '#/components/schemas/Answer'
+      required:
+        - question
+        - answer
