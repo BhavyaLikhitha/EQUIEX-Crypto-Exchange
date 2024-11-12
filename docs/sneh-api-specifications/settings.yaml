@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Settings API
+  version: 2.0.0
+  description: A RESTful API for managing application settings with versioning, validation, and configurations.
+
+servers:
+  - url: https://api.advancedsettings.com/v2
+    description: Production server
+  - url: https://staging-api.advancedsettings.com/v2
+    description: Staging server
+
+paths:
+  /settings:
+    get:
+      summary: Retrieve all settings
+      description: Get a complete list of all application settings with their values and metadata.
+      parameters:
+        - in: query
+          name: category
+          schema:
+            type: string
+          description: Filter settings by category.
+        - in: query
+          name: version
+          schema:
+            type: string
+          description: Filter settings by version.
+      responses:
+        "200":
+          description: List of settings returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Setting"
+        "400":
+          description: Bad request, invalid query parameters
+        "500":
+          description: Error occurred while retrieving settings
+
+    post:
+      summary: Create a new setting
+      description: Add a new setting with its value and optional metadata.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewSetting"
+      responses:
+        "201":
+          description: Setting created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Setting"
+        "400":
+          description: Bad request, invalid input
+        "422":
+          description: Unprocessable entity, validation failed
+        "500":
+          description: Internal server error
+
+  /settings/{userId}:
+    get:
+      summary: Retrieve the user’s settings
+      description: Get the settings of a specific user by their ID.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+          description: The unique identifier for the user.
+      responses:
+        "200":
+          description: User settings retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Setting"
+        "400":
+          description: Bad request, invalid ID format
+        "404":
+          description: User settings not found
+        "500":
+          description: Server error occurred
+
+    put:
+      summary: Update the user’s settings
+      description: Update the settings of a specific user, such as password, privacy settings, or notifications.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+          description: The unique identifier for the user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Setting"
+      responses:
+        "200":
+          description: User settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Setting"
+        "400":
+          description: Invalid input, unable to update user settings
+        "404":
+          description: User settings not found
+        "422":
+          description: Validation failed for the update request
+        "500":
+          description: Internal server error
+
+  /settings/logout:
+    post:
+      summary: Log out the user
+      description: Logs out the user from their current session.
+      responses:
+        "200":
+          description: User logged out successfully
+        "400":
+          description: Bad request, invalid session or parameters
+        "500":
+          description: Server error occurred
+
+components:
+  schemas:
+    Setting:
+      type: object
+      properties:
+        settingId:
+          type: string
+          description: Unique identifier for the setting.
+        name:
+          type: string
+          description: The name of the setting.
+        value:
+          type: string
+          description: The value of the setting.
+        version:
+          type: string
+          description: The version of the setting.
+        createdDate:
+          type: string
+          format: date-time
+          description: The date the setting was created.
+      required:
+        - settingId
+        - name
+        - value
+        - version
+        - createdDate
