@@ -1,0 +1,400 @@
+openapi: 3.0.1
+info:
+  title: Coin Tracker API
+  description: API for managing coins and tracking them in a user's coin tracker.
+  version: 1.0.0
+servers:
+  - url: http://localhost:9000
+    description: Local development envirornment
+paths:
+  /coins:
+    get:
+      summary: "List all available coins"
+      description: "Retrieve a list of all available coins."
+      responses:
+        '200':
+          description: "List of available coins."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Coin"
+              example:
+                - id: "bitcoin"
+                  name: "Bitcoin"
+                  symbol: "BTC"
+                  price: 80000.00
+                - id: "ethereum"
+                  name: "Ethereum"
+                  symbol: "ETH"
+                  price: 2500.00
+        '500':
+          description: "Internal server error."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INTERNAL_SERVER_ERROR"
+                message: "An error occurred on the server."
+
+    post:
+      summary: "Add a new coin to the system"
+      description: "Add a new coin with price and other details to the system."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Coin"
+      responses:
+        '201':
+          description: "Coin successfully added."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Coin"
+              example:
+                id: "dogecoin"
+                name: "Dogecoin"
+                symbol: "DOGE"
+                price: 0.35
+        '400':
+          description: "Invalid input or missing data."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INVALID_COIN_DATA"
+                message: "The coin data provided is invalid."
+        '500':
+          description: "Internal server error."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INTERNAL_SERVER_ERROR"
+                message: "An error occurred on the server."
+
+  /coins/{coinId}:
+    get:
+      summary: "Get details about a specific coin"
+      description: "Retrieve detailed information about a specific coin by its ID."
+      parameters:
+        - name: coinId
+          in: path
+          required: true
+          description: "The ID of the coin to retrieve details for."
+          schema:
+            type: string
+            example: "bitcoin"
+      responses:
+        '200':
+          description: "Details of the specific coin."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Coin"
+              example:
+                coinId: "bitcoin"
+                name: "Bitcoin"
+                symbol: "BTC"
+                price: 35000.25
+        '404':
+          description: "Coin not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "COIN_NOT_FOUND"
+                message: "The coin with the provided ID does not exist."
+        '500':
+          description: "Internal server error."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INTERNAL_SERVER_ERROR"
+                message: "An error occurred on the server."
+
+  /user/{userId}/coin-tracker:
+    get:
+      summary: "Get a user's coin tracker"
+      description: "Retrieve the coin tracker for a specific user, including coin details and their prices."
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: "The ID of the user whose coin tracker is to be retrieved."
+          schema:
+            type: string
+            example: "user123"
+      responses:
+        '200':
+          description: "User's coin tracker with price and coin details."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserCoin"
+              example:
+                - coinId: "bitcoin"
+                  name: "Bitcoin"
+                  symbol: "BTC"
+                  price: 40000.00
+                  amount: 2
+                - coinId: "ethereum"
+                  name: "Ethereum"
+                  symbol: "ETH"
+                  price: 2500.00
+                  amount: 10
+        '404':
+          description: "User not found or coin tracker is empty."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "USER_NOT_FOUND"
+                message: "The user does not exist or has no coins in their tracker."
+        '500':
+          description: "Internal server error."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INTERNAL_SERVER_ERROR"
+                message: "An error occurred on the server."
+
+    post:
+      summary: "Add a coin to the user's coin tracker"
+      description: "Add a specific coin to a user's coin tracker, specifying the amount of coins they hold."
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: "The ID of the user to whom the coin should be added."
+          schema:
+            type: string
+            example: "user123"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coinId:
+                  type: string
+                  description: "ID of the coin to add."
+                  example: "bitcoin"
+                amount:
+                  type: number
+                  description: "Amount of the coin being added."
+                  example: 2
+      responses:
+        '201':
+          description: "Coin successfully added to the user's tracker."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCoin"
+              example:
+                coinId: "bitcoin"
+                name: "Bitcoin"
+                symbol: "BTC"
+                price: 40000.00
+                amount: 2
+        '400':
+          description: "Invalid coin or user."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INVALID_COIN"
+                message: "The specified coin is invalid or not found."
+        '500':
+          description: "Internal server error."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INTERNAL_SERVER_ERROR"
+                message: "An error occurred on the server."
+
+  /user/{userId}/coin-tracker/{coinId}:
+    put:
+      summary: "Update coin in tracker"
+      description: "Update the amount of a specific coin in the user's coin tracker."
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: "The ID of the user whose tracker is being updated."
+          schema:
+            type: string
+            example: "user123"
+        - name: coinId
+          in: path
+          required: true
+          description: "The ID of the coin to update."
+          schema:
+            type: string
+            example: "bitcoin"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  description: "New amount of the coin being tracked."
+                  example: 3
+      responses:
+        '200':
+          description: "Coin successfully updated in the user's tracker."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCoin"
+              example:
+                coinId: "bitcoin"
+                name: "Bitcoin"
+                symbol: "BTC"
+                price: 40000.00
+                amount: 3
+        '400':
+          description: "Invalid input."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INVALID_INPUT"
+                message: "The data provided is invalid."
+        '404':
+          description: "Coin or user not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "COIN_NOT_FOUND"
+                message: "The coin or user was not found."
+        '500':
+          description: "Internal server error."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INTERNAL_SERVER_ERROR"
+                message: "An error occurred on the server."
+
+    delete:
+      summary: "Remove a coin from the user's coin tracker"
+      description: "Remove a specific coin from the user's coin tracker."
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: "The ID of the user from whose tracker the coin should be removed."
+          schema:
+            type: string
+            example: "user123"
+        - name: coinId
+          in: path
+          required: true
+          description: "The ID of the coin to remove."
+          schema:
+            type: string
+            example: "bitcoin"
+      responses:
+        '200':
+          description: "Coin successfully removed from the user's tracker."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCoin"
+              example:
+                coinId: "bitcoin"
+                name: "Bitcoin"
+                symbol: "BTC"
+                price: 40000.00
+                amount: 0
+        '404':
+          description: "Coin or user not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "COIN_NOT_FOUND"
+                message: "The coin or user was not found."
+        '500':
+          description: "Internal server error."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INTERNAL_SERVER_ERROR"
+                message: "An error occurred on the server."
+
+components:
+  schemas:
+    Coin:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "Unique identifier for the coin."
+        name:
+          type: string
+          description: "Name of the coin."
+        symbol:
+          type: string
+          description: "Symbol of the coin."
+        price:
+          type: number
+          description: "Price of the coin."
+    UserCoin:
+      type: object
+      properties:
+        coinId:
+          type: string
+          description: "ID of the coin."
+        name:
+          type: string
+          description: "Name of the coin."
+        symbol:
+          type: string
+          description: "Symbol of the coin."
+        price:
+          type: number
+          description: "Price of the coin."
+        amount:
+          type: number
+          description: "Amount of the coin the user owns."
+    ErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: "A code representing the error."
+          example: "COIN_NOT_FOUND"
+        message:
+          type: string
+          description: "A message describing the error."
+          example: "Invalid input."

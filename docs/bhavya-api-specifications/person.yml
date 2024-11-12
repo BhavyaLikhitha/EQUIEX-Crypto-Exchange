@@ -1,0 +1,205 @@
+openapi: 3.0.0
+info:
+  title: VaultX Person API
+  description: API for managing person-related information, including user profile data, account settings, and associated actions.
+  version: 1.0.0
+servers:
+  - url: http://localhost:9000
+    description: Local development envirornment
+paths:
+  /persons/{personId}:
+    get:
+      summary: Retrieve person details
+      description: Fetches details of a specific person by their unique identifier.
+      parameters:
+        - in: path
+          name: personId
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier for the person
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      responses:
+        '200':
+          description: Successful response with person details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+              example:
+                id: "123e4567-e89b-12d3-a456-426614174000"
+                name: "John Doe"
+                email: "john.doe@example.com"
+                settings:
+                  privacy: true
+                  emailNotifications: true
+                  securitySettings: "Two-factor authentication enabled"
+        '404':
+          description: Person not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Person not found"
+                message: "No person exists with the provided ID."
+
+    put:
+      summary: Update person information
+      description: Updates details for a specific person.
+      parameters:
+        - in: path
+          name: personId
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier for the person
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonUpdate'
+            example:
+              name: "John Doe"
+              email: "new.johndoe@example.com"
+              settings:
+                privacy: false
+                emailNotifications: false
+                securitySettings: "Two-factor authentication disabled"
+      responses:
+        '200':
+          description: Successful update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+              example:
+                id: "123e4567-e89b-12d3-a456-426614174000"
+                name: "John Doe"
+                email: "new.johndoe@example.com"
+                settings:
+                  privacy: false
+                  emailNotifications: false
+                  securitySettings: "Two-factor authentication disabled"
+        '400':
+          description: Invalid input provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Bad Request"
+                message: "Invalid field values in request."
+        '404':
+          description: Person not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Person not found"
+                message: "No person exists with the provided ID."
+
+    delete:
+      summary: Delete a person
+      description: Deletes a person's account from the system.
+      parameters:
+        - in: path
+          name: personId
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier for the person
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      responses:
+        '204':
+          description: Successful deletion, no content returned.
+        '404':
+          description: Person not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Person not found"
+                message: "No person exists with the provided ID."
+
+components:
+  schemas:
+    Person:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the person
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        name:
+          type: string
+          description: Full name of the person
+          example: "John Doe"
+        email:
+          type: string
+          format: email
+          description: Email address of the person
+          example: "john.doe@example.com"
+        settings:
+          $ref: '#/components/schemas/Settings'
+      required:
+        - id
+        - name
+        - email
+
+    PersonUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated name of the person
+          example: "John Doe"
+        email:
+          type: string
+          format: email
+          description: Updated email address of the person
+          example: "new.johndoe@example.com"
+        settings:
+          $ref: '#/components/schemas/Settings'
+      required:
+        - name
+        - email
+
+    Settings:
+      type: object
+      properties:
+        privacy:
+          type: boolean
+          description: Privacy settings of the person (true for private, false for public)
+          example: true
+        emailNotifications:
+          type: boolean
+          description: Email notification preference (true to receive notifications)
+          example: true
+        securitySettings:
+          type: string
+          description: Security configuration, such as two-factor authentication
+          example: "Two-factor authentication enabled"
+      required:
+        - privacy
+        - emailNotifications
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type or code
+          example: "Person not found"
+        message:
+          type: string
+          description: Detailed error message
+          example: "No person exists with the provided ID."
