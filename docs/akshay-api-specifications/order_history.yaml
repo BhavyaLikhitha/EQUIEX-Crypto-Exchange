@@ -1,0 +1,112 @@
+openapi: 3.0.3
+info:
+  title: Order History API
+  description: API for managing order history of buy and sell transactions.
+  version: "1.0.0"
+servers:
+  - url: http://localhost:9000
+    description: Local development envirornment
+paths:
+  /order-history:
+    get:
+      summary: Get all past buy and sell transactions.
+      description: Retrieve a history of all buy and sell transactions for a user.
+      responses:
+        '200':
+          description: A list of past transactions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+        '401':
+          description: Unauthorized access due to invalid or missing authentication token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /order-history/download:
+    post:
+      summary: Download order history.
+      description: Download the user's order history in a file format.
+      responses:
+        '200':
+          description: Order history download initiated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  downloadUrl:
+                    type: string
+                    description: URL to download the order history.
+                    example: "https://api.example.com/order-history/download/12345"
+        '400':
+          description: Bad request due to invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    TransactionResponse:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Unique identifier of the transaction.
+          example: "67890"
+        userId:
+          type: string
+          description: Unique identifier of the user.
+          example: "12345"
+        coinId:
+          type: string
+          description: Unique identifier of the coin.
+          example: "bitcoin"
+        type:
+          type: string
+          description: Type of transaction, either "buy" or "sell".
+          example: "buy"
+        quantity:
+          type: number
+          format: double
+          description: Quantity of the coin.
+          example: 1.5
+        price:
+          type: number
+          format: double
+          description: Price at which the transaction was completed.
+          example: 34000.0
+        timestamp:
+          type: string
+          format: date-time
+          description: The date and time when the transaction was completed.
+          example: "2024-11-12T15:30:00Z"
+
+    ErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A code representing the error.
+          example: "ERR_ORDER_HISTORY_NOT_FOUND"
+        message:
+          type: string
+          description: Human-readable message explaining the error.
+          example: "Order history not found for the user."
