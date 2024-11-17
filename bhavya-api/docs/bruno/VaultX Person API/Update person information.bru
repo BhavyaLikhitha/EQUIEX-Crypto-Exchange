@@ -1,0 +1,21 @@
+meta {
+  name: Update person information
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://localhost:3002/persons/673978ef1c4d41f0b6c16b1e
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "settings": {
+      "privacy": true,
+      "emailNotifications": false,
+      "securitySettings": "Two-factor authentication enabled"
+    }
+  }
+}

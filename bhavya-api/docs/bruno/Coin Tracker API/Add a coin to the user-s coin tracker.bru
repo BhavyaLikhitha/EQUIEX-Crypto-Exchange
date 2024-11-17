@@ -1,0 +1,19 @@
+meta {
+  name: Add a coin to the user-s coin tracker
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3002/user/673a16ae029fb9d457e14bdb/coin-tracker
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "coinId": "673a1bb692ba43e4b7ea353d",  
+    "amount": 2
+  }
+  
+}

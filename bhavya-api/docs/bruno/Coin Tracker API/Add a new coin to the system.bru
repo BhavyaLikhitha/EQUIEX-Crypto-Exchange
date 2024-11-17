@@ -1,0 +1,20 @@
+meta {
+  name: Add a new coin to the system
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3002/coins
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "price": 40000
+  }
+  
+}

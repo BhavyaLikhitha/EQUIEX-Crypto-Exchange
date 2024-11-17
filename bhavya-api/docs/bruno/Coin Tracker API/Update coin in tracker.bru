@@ -1,0 +1,22 @@
+meta {
+  name: Update coin in tracker
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{baseUrl}}/user/:userId/coin-tracker/:coinId
+  body: json
+  auth: none
+}
+
+params:path {
+  userId: 
+  coinId: 
+}
+
+body:json {
+  {
+    "amount": ""
+  }
+}
