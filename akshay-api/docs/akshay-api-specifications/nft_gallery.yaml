@@ -21,14 +21,12 @@ paths:
                 items:
                   $ref: '#/components/schemas/NFT'
               example:
-                - nftId: "1"
-                  name: "Digital Art Piece"
+                - name: "Digital Art Piece"
                   owner: "user123"
                   value: 0.5
                   status: "available"
                   metadata: "Unique digital asset metadata"
-                - nftId: "2"
-                  name: "Rare Collectible"
+                - name: "Rare Collectible"
                   owner: "user456"
                   value: 1.25
                   status: "available"
