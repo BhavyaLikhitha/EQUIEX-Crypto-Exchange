@@ -1,58 +1,67 @@
-// controllers/user-controller.js
-import { User } from '../models/user.js';
+import * as userService from "../services/user-service.js";
+import { setSucess, setError } from "./response-handler.js";
 
-export const signup = async (req, res) => {
-  const { name, email, password } = req.body;
-
-  try {
-    // Check if the email is already registered
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({
-        errorCode: 'EMAIL_ALREADY_EXISTS',
-        message: 'The email address is already registered.',
-      });
+// User registration
+export const postSignup = async (request, response) => {
+    try {
+        const userData = request.body;
+        const user = await userService.registerUser(userData);
+        setSucess(user, response);
+    } catch (error) {
+        setError(error, response);
     }
-
-    // Create a new user
-    const newUser = new User({ name, email, password });
-    const savedUser = await newUser.save();
-
-    res.status(201).json({
-      id: savedUser._id,
-      name: savedUser.name,
-      email: savedUser.email,
-    });
-  } catch (error) {
-    res.status(500).json({
-      errorCode: 'INTERNAL_SERVER_ERROR',
-      message: error.message,
-    });
-  }
 };
 
-
-export const login = async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const user = await User.findOne({ email });
-    if (!user || user.password !== password) { // Replace with hashed password comparison in production
-      return res.status(400).json({
-        errorCode: 'INVALID_CREDENTIALS',
-        message: 'The provided email or password is incorrect.',
-      });
+// User login
+export const postLogin = async (request, response) => {
+    try {
+        const { email, password } = request.body;
+        const user = await userService.loginUser(email, password);
+        setSucess(user, response);
+    } catch (error) {
+        setError(error, response);
     }
+};
 
-    res.status(200).json({
-      id: user._id,
-      name: user.name,
-      email: user.email,
-    });
-  } catch (error) {
-    res.status(500).json({
-      errorCode: 'INTERNAL_SERVER_ERROR',
-      message: error.message,
-    });
-  }
+// Get user details by email
+export const getUser = async (request, response) => {
+    try {
+        const { email } = request.params;
+        const user = await userService.getUserByEmail(email);
+        setSucess(user, response);
+    } catch (error) {
+        setError(error, response);
+    }
+};
+
+// Update user details
+export const putUser = async (request, response) => {
+    try {
+        const { email } = request.params;
+        const updateData = request.body;
+        const updatedUser = await userService.updateUser(email, updateData);
+        setSucess(updatedUser, response);
+    } catch (error) {
+        setError(error, response);
+    }
+};
+
+// Delete user
+export const deleteUser = async (request, response) => {
+    try {
+        const { email } = request.params;
+        const result = await userService.deleteUser(email);
+        setSucess(result, response);
+    } catch (error) {
+        setError(error, response);
+    }
+};
+// Get all users
+export const getAllUsers = async (request, response) => {
+    try {
+        const users = await userService.getAllUsers(); // Call service to get all users
+        setSucess(users, response); // Send success response with users data
+    } catch (error) {
+        setError(error, response); // Send error response
+    }
 };

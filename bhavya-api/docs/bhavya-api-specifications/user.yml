@@ -237,7 +237,28 @@ paths:
               example:
                 errorCode: "USER_NOT_FOUND"
                 message: "The user with the provided email does not exist."
-
+  /users:
+    get:
+      summary: "Get all users"
+      description: "Fetches a list of all users."
+      responses:
+        '200':
+          description: "Successful response with a list of users."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+              example:
+                - id: "12345"
+                  username: "JohnDoe"
+                  email: "user@example.com"
+                  phoneNumber: "+1234567890"
+                - id: "67890"
+                  username: "JaneDoe"
+                  email: "jane@example.com"
+                  phoneNumber: "+0987654321"
 components:
   schemas:
     User:
