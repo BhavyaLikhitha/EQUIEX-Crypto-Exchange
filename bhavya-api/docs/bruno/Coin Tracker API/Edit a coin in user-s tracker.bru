@@ -5,19 +5,16 @@ meta {
 }
 
 put {
-  url: {{baseUrl}}/users/:email/coins/:name
+  url: http://localhost:3002/users/anusha@gmail.com/coins/Verasity
   body: json
   auth: none
 }
 
-params:path {
-  email: 
-  name: 
-}
-
 body:json {
   {
-    "price": "",
-    "quantity": ""
+    "name" : "Verasity",
+    "symbol" : "VRA",
+    "price": "30000",
+    "quantity": "5"
   }
 }

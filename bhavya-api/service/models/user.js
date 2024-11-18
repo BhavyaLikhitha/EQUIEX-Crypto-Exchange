@@ -18,7 +18,25 @@ const userSchema = new mongoose.Schema({
     phoneNumber: {
         required: true,
         type: String
-    }
+    },
+    coins: [{
+        name: {
+            type: String,
+            required: true,
+        },
+        symbol: {
+            type: String,
+            required: true,
+        },
+        price: {
+            type: Number,
+            required: true,
+        },
+        quantity: {
+            type: Number,
+            required: true,
+        },
+    }],
 });
 
 // Hash password before saving to database

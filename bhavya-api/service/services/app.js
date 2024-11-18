@@ -13,6 +13,7 @@ const initialize = (app) => {
     // Define routes
     app.use("/users", userRoutes);  // Mount the user routes at '/users'
     app.use("/coins", coinRoutes);
+    app.use(coinRoutes);
    
 };
 

@@ -38,9 +38,12 @@ export const postUserCoin = async (req, res) => {
     try {
         const { email } = req.params;
         const coinData = req.body;
+        console.log(`Adding coin to user: ${email}`);
+        console.log(coinData);  // Log the data to verify the structure
         const result = await coinService.addCoinToUser(email, coinData);
         setSuccess(result, res);
     } catch (error) {
+        console.error(error);  // Log the error for better diagnostics
         setError(res, error);
     }
 };

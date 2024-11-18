@@ -21,14 +21,22 @@ export const getCoinByName = async (name) => {
     return coin;
 };
 
-// Add coin to user's tracker
+// // Add coin to user's tracker
+// export const addCoinToUser = async (email, coinData) => {
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//         throw new Error("User not found");
+//     }
+//     if (!user.coins) user.coins = [];
+//     user.coins.push(coinData);
+//     return await user.save();
+// };
 export const addCoinToUser = async (email, coinData) => {
     const user = await User.findOne({ email });
-    if (!user) {
-        throw new Error("User not found");
-    }
-    if (!user.coins) user.coins = [];
+    // Add coin to user's coins array
     user.coins.push(coinData);
+    
+    // Save the user after adding the coin
     return await user.save();
 };
 
