@@ -4,8 +4,11 @@ import { setSuccess, setError } from "./response-handler.js";
 // Add a new coin
 export const postCoin = async (req, res) => {
     try {
+          // Extract coin data from request body
         const coinData = req.body;
+        // Add the new coin using the coinService
         const coin = await coinService.addCoin(coinData);
+         // Respond with success if coin is added successfully
         setSuccess(coin, res);
     } catch (error) {
         setError(res, error);

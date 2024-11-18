@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-
+// Define the schema for the User model
 const userSchema = new mongoose.Schema({
     username: {
         required: true,
@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     coins: [{
+         // Array of coins the user owns, each coin has the following properties
         name: {
             type: String,
             required: true,
@@ -50,6 +51,7 @@ userSchema.pre('save', async function(next) {
 userSchema.methods.comparePassword = function(password) {
     return bcrypt.compare(password, this.password);
 };
-
+// Create the User model using the schema defined above
 const User = mongoose.model("User", userSchema);
+// Export the User model to use it in other parts of the application
 export default User;

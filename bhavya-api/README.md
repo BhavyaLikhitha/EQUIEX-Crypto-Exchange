@@ -114,18 +114,18 @@ final-project-random/
 ## Functionality Overview:
 
 ### User-related routes:
-- **Sign Up (POST /signup)**: The user signs up with their email, name, and password. This email will be the unique identifier for the user.
-- **Login (POST /login)**: The user can log in with the email and password, which authenticates their session.
-- **Get All Users (GET /users)**
-- **Update User Information (PUT /users/email)**
-- **Get User by Email (GET /users/email)**
-- **Delete User (DELETE /users/email)**
+- Sign Up (POST /signup)
+- Login (POST /login)
+- Get All Users (GET /users)
+- Update User Information (PUT /users/email)
+- Get User by Email (GET /users/email)
+- Delete User (DELETE /users/email)
 
 ### Coin-related routes:
-- **Add Coin (POST /coins)**: This allows the user to add a new coin.
-- **Get All Coins (GET /coins)**: Retrieves a list of all available coins.
-- **Get Coin Details (GET /coins/name)**: Retrieves details of a specific coin.
-- **Add Coin to User's Tracker (POST /users/email/coins)**: Adds a coin to the user's tracker using their email.
-- **Get User's Coin Tracker (GET /users/email/coins)**: Retrieves the list of coins in the user's tracker.
-- **Edit User's Coin (PUT /users/email/coins/name)**: Allows the user to edit a specific coin in their tracker.
-- **Delete Coin from User's Tracker (DELETE /users/email/coins/name)**: Removes a specific coin from the user's tracker.
+- Add Coin (POST /coins)
+- Get All Coins (GET /coins)
+- Get Coin Details (GET /coins/name)
+- Add Coin to User's Tracker (POST /users/email/coins)
+- Get User's Coin Tracker (GET /users/email/coins)
+- Edit User's Coin (PUT /users/email/coins/name)
+- Delete Coin from User's Tracker (DELETE /users/email/coins/name)
