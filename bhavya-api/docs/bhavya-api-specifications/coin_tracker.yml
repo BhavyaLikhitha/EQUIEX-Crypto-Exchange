@@ -122,18 +122,18 @@ paths:
                 errorCode: "INTERNAL_SERVER_ERROR"
                 message: "An error occurred on the server."
 
-  /user/{user_id}/coin-tracker:
+  /users/{email}/coins:
     get:
       summary: "Get a user's coin tracker"
       description: "Retrieve the coin tracker for a specific user, including coin details and their prices."
       parameters:
-        - name: user_id
+        - name: email
           in: path
           required: true
-          description: "The ID of the user whose coin tracker is to be retrieved."
+          description: "The email of the user whose coin tracker is to be retrieved."
           schema:
             type: string
-            example: "user123"
+            example: "user@example.com"
       responses:
         '200':
           description: "User's coin tracker with price and coin details."
@@ -143,47 +143,24 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/UserCoin"
-              example:
-                - coinId: "bitcoin"
-                  name: "Bitcoin"
-                  symbol: "BTC"
-                  price: 40000.00
-                  amount: 2
-                - coinId: "ethereum"
-                  name: "Ethereum"
-                  symbol: "ETH"
-                  price: 2500.00
-                  amount: 10
         '404':
           description: "User not found or coin tracker is empty."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "USER_NOT_FOUND"
-                message: "The user does not exist or has no coins in their tracker."
-        '500':
-          description: "Internal server error."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "INTERNAL_SERVER_ERROR"
-                message: "An error occurred on the server."
 
     post:
       summary: "Add a coin to the user's coin tracker"
       description: "Add a specific coin to a user's coin tracker, specifying the amount of coins they hold."
       parameters:
-        - name: user_id
+        - name: email
           in: path
           required: true
-          description: "The ID of the user to whom the coin should be added."
+          description: "The email of the user to whom the coin should be added."
           schema:
             type: string
-            example: "user123"
+            example: "user@example.com"
       requestBody:
         required: true
         content:
@@ -206,43 +183,31 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserCoin"
-              example:
-                coinId: "bitcoin"
-                name: "Bitcoin"
-                symbol: "BTC"
-                price: 40000.00
-                amount: 2
         '400':
           description: "Invalid coin or user."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "INVALID_COIN"
-                message: "The specified coin is invalid or not found."
         '500':
           description: "Internal server error."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "INTERNAL_SERVER_ERROR"
-                message: "An error occurred on the server."
 
-  /user/{user_id}/coin-tracker/{coinId}:
+  /users/{email}/coins/{coinId}:
     put:
       summary: "Update coin in tracker"
       description: "Update the amount of a specific coin in the user's coin tracker."
       parameters:
-        - name: user_id
+        - name: email
           in: path
           required: true
-          description: "The ID of the user whose tracker is being updated."
+          description: "The email of the user whose tracker is being updated."
           schema:
             type: string
-            example: "user123"
+            example: "user@example.com"
         - name: coinId
           in: path
           required: true
@@ -268,51 +233,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserCoin"
-              example:
-                coinId: "bitcoin"
-                name: "Bitcoin"
-                symbol: "BTC"
-                price: 40000.00
-                amount: 3
         '400':
           description: "Invalid input."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "INVALID_INPUT"
-                message: "The data provided is invalid."
         '404':
           description: "Coin or user not found."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "COIN_NOT_FOUND"
-                message: "The coin or user was not found."
-        '500':
-          description: "Internal server error."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "INTERNAL_SERVER_ERROR"
-                message: "An error occurred on the server."
 
     delete:
       summary: "Remove a coin from the user's coin tracker"
       description: "Remove a specific coin from the user's coin tracker."
       parameters:
-        - name: user_id
+        - name: email
           in: path
           required: true
-          description: "The ID of the user from whose tracker the coin should be removed."
+          description: "The email of the user from whose tracker the coin should be removed."
           schema:
             type: string
-            example: "user123"
+            example: "user@example.com"
         - name: coinId
           in: path
           required: true
@@ -327,31 +271,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserCoin"
-              example:
-                coinId: "bitcoin"
-                name: "Bitcoin"
-                symbol: "BTC"
-                price: 40000.00
-                amount: 0
         '404':
           description: "Coin or user not found."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "COIN_NOT_FOUND"
-                message: "The coin or user was not found."
         '500':
           description: "Internal server error."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "INTERNAL_SERVER_ERROR"
-                message: "An error occurred on the server."
-
 components:
   schemas:
     Coin:
