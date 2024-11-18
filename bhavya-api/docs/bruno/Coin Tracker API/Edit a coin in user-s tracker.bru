@@ -1,0 +1,23 @@
+meta {
+  name: Edit a coin in user-s tracker
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{baseUrl}}/users/:email/coins/:name
+  body: json
+  auth: none
+}
+
+params:path {
+  email: 
+  name: 
+}
+
+body:json {
+  {
+    "price": "",
+    "quantity": ""
+  }
+}

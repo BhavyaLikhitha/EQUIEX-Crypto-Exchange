@@ -1,0 +1,20 @@
+meta {
+  name: Add a coin to user-s tracker
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3002/users/virushka@gmail.com/coins
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Solona",
+    "symbol": "SOL",
+    "price": 2000,
+    "quantity": 3.0
+  }
+}

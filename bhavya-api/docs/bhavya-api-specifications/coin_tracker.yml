@@ -1,53 +1,37 @@
-openapi: 3.0.1
+openapi: 3.0.0
 info:
   title: Coin Tracker API
-  description: API for managing coins and tracking them in a user's coin tracker.
+  description: API for managing coins and associating them with user trackers.
   version: 1.0.0
 servers:
   - url: http://localhost:9000
-    description: Local development envirornment
+    description: Local development environment
+
 paths:
   /coins:
-    get:
-      summary: "List all available coins"
-      description: "Retrieve a list of all available coins."
-      responses:
-        '200':
-          description: "List of available coins."
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Coin"
-              example:
-                - id: "bitcoin"
-                  name: "Bitcoin"
-                  symbol: "BTC"
-                  price: 80000.00
-                - id: "ethereum"
-                  name: "Ethereum"
-                  symbol: "ETH"
-                  price: 2500.00
-        '500':
-          description: "Internal server error."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "INTERNAL_SERVER_ERROR"
-                message: "An error occurred on the server."
-
     post:
-      summary: "Add a new coin to the system"
-      description: "Add a new coin with price and other details to the system."
+      summary: "Add a new coin"
+      description: "Allows admin to add a new coin to the system."
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Coin"
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "Name of the coin."
+                  example: "Bitcoin"
+                symbol:
+                  type: string
+                  description: "Symbol of the coin."
+                  example: "BTC"
+                price:
+                  type: number
+                  format: float
+                  description: "Current price of the coin."
+                  example: 40000.00
       responses:
         '201':
           description: "Coin successfully added."
@@ -56,233 +40,242 @@ paths:
               schema:
                 $ref: "#/components/schemas/Coin"
               example:
-                id: "dogecoin"
-                name: "Dogecoin"
-                symbol: "DOGE"
-                price: 0.35
-        '400':
-          description: "Invalid input or missing data."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "INVALID_COIN_DATA"
-                message: "The coin data provided is invalid."
-        '500':
-          description: "Internal server error."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "INTERNAL_SERVER_ERROR"
-                message: "An error occurred on the server."
-
-  /coins/{coinId}:
-    get:
-      summary: "Get details about a specific coin"
-      description: "Retrieve detailed information about a specific coin by its ID."
-      parameters:
-        - name: coinId
-          in: path
-          required: true
-          description: "The ID of the coin to retrieve details for."
-          schema:
-            type: string
-            example: "bitcoin"
-      responses:
-        '200':
-          description: "Details of the specific coin."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Coin"
-              example:
-                coinId: "bitcoin"
+                id: "1"
                 name: "Bitcoin"
                 symbol: "BTC"
-                price: 35000.25
-        '404':
-          description: "Coin not found."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "COIN_NOT_FOUND"
-                message: "The coin with the provided ID does not exist."
-        '500':
-          description: "Internal server error."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-              example:
-                errorCode: "INTERNAL_SERVER_ERROR"
-                message: "An error occurred on the server."
-
-  /users/{email}/coins:
-    get:
-      summary: "Get a user's coin tracker"
-      description: "Retrieve the coin tracker for a specific user, including coin details and their prices."
-      parameters:
-        - name: email
-          in: path
-          required: true
-          description: "The email of the user whose coin tracker is to be retrieved."
-          schema:
-            type: string
-            example: "user@example.com"
-      responses:
-        '200':
-          description: "User's coin tracker with price and coin details."
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/UserCoin"
-        '404':
-          description: "User not found or coin tracker is empty."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-    post:
-      summary: "Add a coin to the user's coin tracker"
-      description: "Add a specific coin to a user's coin tracker, specifying the amount of coins they hold."
-      parameters:
-        - name: email
-          in: path
-          required: true
-          description: "The email of the user to whom the coin should be added."
-          schema:
-            type: string
-            example: "user@example.com"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                coinId:
-                  type: string
-                  description: "ID of the coin to add."
-                  example: "bitcoin"
-                amount:
-                  type: number
-                  description: "Amount of the coin being added."
-                  example: 2
-      responses:
-        '201':
-          description: "Coin successfully added to the user's tracker."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserCoin"
-        '400':
-          description: "Invalid coin or user."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        '500':
-          description: "Internal server error."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-  /users/{email}/coins/{coinId}:
-    put:
-      summary: "Update coin in tracker"
-      description: "Update the amount of a specific coin in the user's coin tracker."
-      parameters:
-        - name: email
-          in: path
-          required: true
-          description: "The email of the user whose tracker is being updated."
-          schema:
-            type: string
-            example: "user@example.com"
-        - name: coinId
-          in: path
-          required: true
-          description: "The ID of the coin to update."
-          schema:
-            type: string
-            example: "bitcoin"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                amount:
-                  type: number
-                  description: "New amount of the coin being tracked."
-                  example: 3
-      responses:
-        '200':
-          description: "Coin successfully updated in the user's tracker."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserCoin"
+                price: 40000.00
         '400':
           description: "Invalid input."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+
+    get:
+      summary: "Get all available coins"
+      description: "Retrieve a list of all coins in the system."
+      responses:
+        '200':
+          description: "List of all coins."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Coin"
+              example:
+                - id: "1"
+                  name: "Bitcoin"
+                  symbol: "BTC"
+                  price: 40000.00
+                - id: "2"
+                  name: "Ethereum"
+                  symbol: "ETH"
+                  price: 2500.00
+
+  /coins/{name}:
+    get:
+      summary: "Get coin details"
+      description: "Retrieve details of a specific coin by its name."
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          description: "The name of the coin."
+          example: "Bitcoin"
+      responses:
+        '200':
+          description: "Coin details retrieved successfully."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Coin"
+              example:
+                id: "1"
+                name: "Bitcoin"
+                symbol: "BTC"
+                price: 40000.00
         '404':
-          description: "Coin or user not found."
+          description: "Coin not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /users/{email}/coins:
+    post:
+      summary: "Add a coin to user's tracker"
+      description: "Allows a user to add a coin to their tracker."
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+            format: email
+          description: "The email of the user."
+          example: "user@example.com"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "Name of the coin."
+                  example: "Bitcoin"
+                symbol:
+                  type: string
+                  description: "Symbol of the coin."
+                  example: "BTC"
+                price:
+                  type: number
+                  format: float
+                  description: "Price of the coin at the time of tracking."
+                  example: 40000.00
+                quantity:
+                  type: number
+                  format: float
+                  description: "Quantity of the coin being tracked."
+                  example: 2.0
+      responses:
+        '201':
+          description: "Coin successfully added to user's tracker."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCoin"
+              example:
+                name: "Bitcoin"
+                symbol: "BTC"
+                price: 40000.00
+                quantity: 2.0
+        '404':
+          description: "User not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    get:
+      summary: "Get user's coin tracker"
+      description: "Retrieve the list of coins tracked by a user."
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+            format: email
+          description: "The email of the user."
+          example: "user@example.com"
+      responses:
+        '200':
+          description: "List of user's tracked coins."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserCoin"
+              example:
+                - name: "Bitcoin"
+                  symbol: "BTC"
+                  price: 40000.00
+                  quantity: 2.0
+                - name: "Ethereum"
+                  symbol: "ETH"
+                  price: 2500.00
+                  quantity: 5.0
+        '404':
+          description: "User not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /users/{email}/coins/{name}:
+    put:
+      summary: "Edit a coin in user's tracker"
+      description: "Allows a user to edit the details of a specific coin in their tracker."
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+            format: email
+          description: "The email of the user."
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          description: "The name of the coin."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                price:
+                  type: number
+                  format: float
+                  description: "Updated price of the coin."
+                  example: 45000.00
+                quantity:
+                  type: number
+                  format: float
+                  description: "Updated quantity of the coin."
+                  example: 3.0
+      responses:
+        '200':
+          description: "Coin successfully updated in user's tracker."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCoin"
+        '404':
+          description: "User or coin not found."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
     delete:
-      summary: "Remove a coin from the user's coin tracker"
-      description: "Remove a specific coin from the user's coin tracker."
+      summary: "Delete a coin from user's tracker"
+      description: "Remove a specific coin from the user's tracker."
       parameters:
-        - name: email
-          in: path
+        - in: path
+          name: email
           required: true
-          description: "The email of the user from whose tracker the coin should be removed."
           schema:
             type: string
-            example: "user@example.com"
-        - name: coinId
-          in: path
+            format: email
+        - in: path
+          name: name
           required: true
-          description: "The ID of the coin to remove."
           schema:
             type: string
-            example: "bitcoin"
       responses:
         '200':
-          description: "Coin successfully removed from the user's tracker."
+          description: "Coin successfully removed from user's tracker."
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserCoin"
+                $ref: "#/components/schemas/SuccessResponse"
         '404':
-          description: "Coin or user not found."
+          description: "User or coin not found."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-        '500':
-          description: "Internal server error."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     Coin:
@@ -293,39 +286,33 @@ components:
           description: "Unique identifier for the coin."
         name:
           type: string
-          description: "Name of the coin."
         symbol:
           type: string
-          description: "Symbol of the coin."
         price:
           type: number
-          description: "Price of the coin."
+          format: float
     UserCoin:
       type: object
       properties:
-        coinId:
-          type: string
-          description: "ID of the coin."
         name:
           type: string
-          description: "Name of the coin."
         symbol:
           type: string
-          description: "Symbol of the coin."
         price:
           type: number
-          description: "Price of the coin."
-        amount:
+          format: float
+        quantity:
           type: number
-          description: "Amount of the coin the user owns."
+          format: float
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
     ErrorResponse:
       type: object
       properties:
         errorCode:
           type: string
-          description: "A code representing the error."
-          example: "COIN_NOT_FOUND"
         message:
           type: string
-          description: "A message describing the error."
-          example: "Invalid input."

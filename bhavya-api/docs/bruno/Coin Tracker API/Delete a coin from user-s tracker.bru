@@ -1,0 +1,16 @@
+meta {
+  name: Delete a coin from user-s tracker
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{baseUrl}}/users/:email/coins/:name
+  body: none
+  auth: none
+}
+
+params:path {
+  email: 
+  name: 
+}

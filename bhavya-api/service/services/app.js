@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import express from "express";
 import userRoutes from "../routers/user-routers.js"; // Import user routes from a routes file
+import coinRoutes from "../routers/coin-routers.js";
 const initialize = (app) => {
     // Middleware setup
     app.use(express.json());  // To parse JSON request bodies
@@ -11,6 +12,8 @@ const initialize = (app) => {
   
     // Define routes
     app.use("/users", userRoutes);  // Mount the user routes at '/users'
+    app.use("/coins", coinRoutes);
+   
 };
 
 export default initialize;
