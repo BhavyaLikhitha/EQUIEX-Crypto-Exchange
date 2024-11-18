@@ -171,62 +171,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    patch:
-      summary: Partially update an NFT
-      description: Update specific fields of an NFT, such as its image or price, without modifying the entire resource.
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-          description: Unique identifier of the NFT to update.
-          example: "nft-001"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                image:
-                  type: string
-                  format: uri
-                  description: URL of the new image for the NFT.
-                  example: "https://example.com/new-image.png"
-                price:
-                  type: number
-                  format: float
-                  description: New price of the NFT.
-                  example: 450.75
-            example:
-              price: 450.75
-      responses:
-        '200':
-          description: NFT successfully updated.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NFT'
-        '400':
-          description: Invalid input.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: NFT not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal server error.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
     delete:
       summary: Delete an NFT
       description: Remove an NFT from the gallery by its ID.

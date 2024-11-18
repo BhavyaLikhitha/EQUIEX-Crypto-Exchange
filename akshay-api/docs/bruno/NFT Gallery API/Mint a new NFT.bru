@@ -1,0 +1,20 @@
+meta {
+  name: Mint a new NFT
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3002/nfts
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Bored ape",
+    "owner": "User789",
+    "value": 999999,
+    "metadata": "Unique bored ape nfts"
+  }
+}

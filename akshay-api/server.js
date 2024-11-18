@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
-import initialize from "./service/app.js";
+import initialize from "./service/services/app.js"; 
 
 dotenv.config();
 const app = express();

@@ -1,0 +1,19 @@
+meta {
+  name: Update an NFT
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3002/nfts/673bad3355ae18929e055394
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Crypto Punky",
+    "value": 10000000,
+    "status": "Owned"
+  }
+}
