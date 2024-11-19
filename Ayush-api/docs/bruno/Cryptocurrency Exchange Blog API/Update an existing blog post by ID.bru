@@ -1,0 +1,15 @@
+meta {
+  name: Update an existing blog post by ID
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/blogs/:blogId
+  body: json
+  auth: none
+}
+
+params:path {
+  blogId: 
+}
