@@ -1,0 +1,19 @@
+meta {
+  name: Update user details
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3002/users/bhavyalikhitha@gmail.com
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "Bhavyabubu",
+    "password": "bhavyabubu143",
+    "phoneNumber": ""
+  }
+}

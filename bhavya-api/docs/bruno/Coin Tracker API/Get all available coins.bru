@@ -1,0 +1,11 @@
+meta {
+  name: Get all available coins
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:3002/coins
+  body: json
+  auth: none
+}

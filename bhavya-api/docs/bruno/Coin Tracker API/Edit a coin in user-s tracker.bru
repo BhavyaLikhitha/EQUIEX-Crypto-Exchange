@@ -1,0 +1,20 @@
+meta {
+  name: Edit a coin in user-s tracker
+  type: http
+  seq: 6
+}
+
+put {
+  url: http://localhost:3002/users/anusha@gmail.com/coins/Verasity
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name" : "Verasity",
+    "symbol" : "VRA",
+    "price": "30000",
+    "quantity": "5"
+  }
+}
