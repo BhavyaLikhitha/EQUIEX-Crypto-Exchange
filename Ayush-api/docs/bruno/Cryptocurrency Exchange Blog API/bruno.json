@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Cryptocurrency Exchange Blog API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

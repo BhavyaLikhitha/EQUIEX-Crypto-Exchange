@@ -1,0 +1,15 @@
+meta {
+  name: Retrieve all blog posts authored by a specific user
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/blogs/author/:userId
+  body: none
+  auth: none
+}
+
+params:path {
+  userId: 
+}
