@@ -20,7 +20,8 @@ export const buyCoin = async (req, res) => {
             email,
             coinName,
             quantity,
-            value: coinPrice,
+            coinPrice, // Save coin price at the time of transaction
+            value: coinPrice * quantity,
             transactionType: 'BUY',
         });
 
@@ -52,7 +53,8 @@ export const sellCoin = async (req, res) => {
             email,
             coinName,
             quantity,
-            value: coinPrice,
+            coinPrice, // Save coin price at the time of transaction
+            value: coinPrice * quantity,
             transactionType: 'SELL',
         });
 

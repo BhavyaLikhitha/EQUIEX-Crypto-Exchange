@@ -5,6 +5,7 @@ const orderHistorySchema = new mongoose.Schema({
     email: { type: String, required: true },
     coinName: { type: String, required: true },
     quantity: { type: Number, required: true },
+    coinPrice: {type: Number},
     value: { type: Number, required: true }, // The value at the time of the transaction
     transactionType: {
         type: String,

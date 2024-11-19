@@ -1,5 +1,6 @@
 // buy-sell-services.js
 import User from '../models/user.js';
+// import OrderHistory from '../models/orderHistory.js'; // Import the OrderHistory model
 
 export const buyCoinService = async (email, coinName, coinSymbol, coinPrice, quantity) => {
     try {
@@ -34,6 +35,16 @@ export const buyCoinService = async (email, coinName, coinSymbol, coinPrice, qua
         }
 
         await user.save();
+        // // Add to order history
+        // const order = new OrderHistory({
+        //     email,
+        //     coinName,
+        //     quantity,
+        //     coinPrice, // Save coin price at the time of transaction
+        //     value: coinPrice * quantity, // Calculate the value of the transaction
+        //     transactionType: 'BUY',
+        // });
+        // await order.save();
 
         return { newBalance: user.usdtBalance };
 
@@ -79,6 +90,15 @@ export const sellCoinService = async (email, coinName, coinSymbol, coinPrice, qu
         }
 
         await user.save();
+        // // Add to order history for SELL transaction
+        // const order = new OrderHistory({
+        //     email,
+        //     coinName,
+        //     quantity,
+        //     coinPrice, // Save coin price at the time of transaction
+        //     value: coinPrice * quantity, // Calculate the value of the transaction
+        //     transactionType: 'SELL',
+        // });
 
         return { newBalance: user.usdtBalance };
 
