@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         type: String
     },
+    usdtBalance: {
+        type: Number,
+        default: 100000
+    },
     coins: [{
          // Array of coins the user owns, each coin has the following properties
         name: {
