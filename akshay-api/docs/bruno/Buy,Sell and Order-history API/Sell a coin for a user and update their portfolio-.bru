@@ -1,0 +1,20 @@
+meta {
+  name: Sell a coin for a user and update their portfolio-
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3002/orders/users/vireesha@gmail.com/coins/sell
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "coinName": "Binance",
+    "coinSymbol": "BNB",
+    "coinPrice": 100,
+    "quantity": 2
+  }
+}

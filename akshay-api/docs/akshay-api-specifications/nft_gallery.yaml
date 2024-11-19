@@ -1,0 +1,282 @@
+openapi: 3.0.3
+info:
+  title: NFT Gallery API
+  version: 1.0.0
+  description: API for managing NFTs, including viewing, minting, updating, and deleting NFTs in the gallery.
+servers:
+  - url: http://localhost:9000
+    description: Local development envirornment
+paths:
+  /nfts:
+    get:
+      summary: Retrieve all NFTs
+      description: Get a list of all NFTs available in the gallery.
+      responses:
+        200:
+          description: A list of all NFTs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NFT'
+              example:
+                - name: "Digital Art Piece"
+                  owner: "user123"
+                  value: 0.5
+                  status: "available"
+                  metadata: "Unique digital asset metadata"
+                - name: "Rare Collectible"
+                  owner: "user456"
+                  value: 1.25
+                  status: "available"
+                  metadata: "Collectible item metadata"
+        500:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    post:
+      summary: Mint a new NFT
+      description: Add a new NFT to the gallery.
+      requestBody:
+        description: NFT data to be added.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewNFT'
+            example:
+              name: "New Digital Collectible"
+              owner: "user789"
+              value: 2.5
+              metadata: "Unique collectible metadata"
+      responses:
+        201:
+          description: NFT successfully minted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NFT'
+              example:
+                nftId: "3"
+                name: "New Digital Collectible"
+                owner: "user789"
+                value: 2.5
+                status: "available"
+                metadata: "Unique collectible metadata"
+        400:
+          description: Invalid input.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /nfts/{id}:
+    get:
+      summary: View a specific NFT
+      description: Retrieve details of a specific NFT by its unique ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of the NFT to retrieve.
+          example: "nft-001"
+      responses:
+        '200':
+          description: Details of the specific NFT.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NFT'
+              example:
+                id: "nft-001"
+                owner: "user123"
+                value: 1.5
+                status: "active"
+                metadata: "Rare NFT"
+        '404':
+          description: NFT not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                errorCode: "NFT_NOT_FOUND"
+                message: "The NFT with the provided ID does not exist."
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                errorCode: "INTERNAL_ERROR"
+                message: "An error occurred while retrieving the NFT."
+
+    put:
+      summary: Update an NFT
+      description: Modify details of a specific NFT by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier for the NFT to update.
+          schema:
+            type: string
+            example: "1"
+      requestBody:
+        description: Updated NFT data.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NFTUpdate'
+            example:
+              name: "Updated Digital Art"
+              value: 3.0
+              status: "unavailable"
+      responses:
+        '200':
+          description: NFT details updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NFT'
+        '400':
+          description: Invalid input.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: NFT not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      summary: Delete an NFT
+      description: Remove an NFT from the gallery by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier of the NFT to delete.
+          schema:
+            type: string
+            example: "1"
+      responses:
+        '200':
+          description: NFT successfully deleted.
+        '404':
+          description: NFT not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    NFT:
+      type: object
+      properties:
+        nftId:
+          type: string
+          description: Unique identifier for the NFT.
+          example: "1"
+        name:
+          type: string
+          description: Name of the NFT.
+          example: "Digital Art Piece"
+        owner:
+          type: string
+          description: Owner of the NFT.
+          example: "user123"
+        value:
+          type: number
+          description: Value of the NFT in crypto or fiat currency.
+          example: 0.5
+        status:
+          type: string
+          description: Availability status of the NFT.
+          example: "available"
+        metadata:
+          type: string
+          description: Metadata containing unique details about the NFT.
+          example: "Unique digital asset metadata"
+    
+    NewNFT:
+      type: object
+      required:
+        - name
+        - owner
+        - value
+        - metadata
+      properties:
+        name:
+          type: string
+          description: Name of the NFT.
+          example: "New Digital Collectible"
+        owner:
+          type: string
+          description: User ID of the NFT owner.
+          example: "user789"
+        value:
+          type: number
+          description: Value of the NFT.
+          example: 2.5
+        metadata:
+          type: string
+          description: Metadata containing unique details about the NFT.
+          example: "Unique collectible metadata"
+    
+    NFTUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated name of the NFT.
+          example: "Updated Digital Art"
+        value:
+          type: number
+          description: Updated value of the NFT.
+          example: 3.0
+        status:
+          type: string
+          description: Updated status of the NFT.
+          example: "unavailable"
+    
+    ErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A code representing the error.
+          example: "NFT_NOT_FOUND"
+        message:
+          type: string
+          description: A message describing the error.
+          example: "The NFT with the provided ID does not exist."
