@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+// Define the schema for NFTS
 const nftSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -18,6 +19,7 @@ const nftSchema = new mongoose.Schema({
   },
 });
 
+// Create a Mongoose model for the nft schema
 const NFT = mongoose.model('NFT', nftSchema);
 
 export default NFT;

@@ -1,4 +1,3 @@
-// buy-sell-controller.js
 import { buyCoinService, sellCoinService } from '../services/buy-sell-services.js';
 import OrderHistory from '../models/orderHistory.js';
 
@@ -43,7 +42,7 @@ export const sellCoin = async (req, res) => {
     try {
         const { email } = req.params;
         const { coinName, coinSymbol, coinPrice, quantity } = req.body;
-
+        // Call the sellCoinService with correct params
         const result = await sellCoinService(email, coinName, coinSymbol, coinPrice, quantity);
         if (result.error) {
             return res.status(400).json({ error: result.error });
@@ -59,7 +58,7 @@ export const sellCoin = async (req, res) => {
         });
 
         await transaction.save();
-
+        // Respond with success and updated balance
         res.status(200).json({
             message: 'Coin sold successfully',
             balance: result.newBalance,
@@ -71,18 +70,27 @@ export const sellCoin = async (req, res) => {
     }
 };
 
+// Function to retrieve order history for a specific user
 export const getOrderHistory = async (req, res) => {
     try {
+        // Extract the user's email from the request parameters
         const { email } = req.params;
+
+        // Query the database to find all transactions associated with the email
         const transactions = await OrderHistory.find({ email });
 
+        // If no transactions are found, return a 404 response
         if (transactions.length === 0) {
             return res.status(404).json({ error: 'No transactions found for user' });
         }
 
+        // If transactions are found, return them in the response with a 200 status
         res.status(200).json(transactions);
     } catch (error) {
-        consoler.log(error)
+        // Log the error for debugging purposes
+        console.log(error); // Fixed typo from 'consoler' to 'console'
+
+        // Return a 500 response in case of server errors
         res.status(500).json({ error: 'Server error' });
     }
 };
