@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Buy,Sell and Order-history API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

@@ -1,215 +1,288 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
-  title: Buy and Sell API
-  description: API for managing buy and sell transactions for coins, updating USDT balance.
-  version: "1.0.0"
+  title: Buy,Sell and Order-history API
+  description: |
+    buying and selling coins.
+    Users can also track their transaction history, which records all buy and sell activities.
+  version: 1.0.0
+
 servers:
   - url: http://localhost:9000
     description: Local development envirornment
+
 paths:
-  /coins:
-    get:
-      summary: Get a list of all available coins.
-      description: Retrieve a list of all available coins with their current prices.
+  /users/{email}/coins/buy:
+    post:
+      summary: Buy a coin for a user and add it to their portfolio.
+      description: |
+        This endpoint allows users to purchase a specific coin. The transaction will be recorded in the order history,
+        and the user's portfolio will be updated. The user's balance (in USDT) will be deducted based on the value of the coin.
+      operationId: buyCoin
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: The email address of the user making the purchase.
+          schema:
+            type: string
+            format: email
+            example: "user@example.com"
+      requestBody:
+        description: The details of the coin to be purchased and its cost.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coinName:
+                  type: string
+                  description: The name of the coin to be purchased.
+                  example: "Bitcoin"
+                quantity:
+                  type: number
+                  format: float
+                  description: The number of coins to purchase.
+                  example: 2
+                value:
+                  type: number
+                  format: float
+                  description: The value of the coin in USDT to be deducted from the user's balance.
+                  example: 30000
+              required:
+                - coinName
+                - quantity
+                - value
       responses:
         '200':
-          description: A list of coins with details.
+          description: Coin purchased successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Confirmation message that the purchase was successful.
+                    example: "Coin purchased successfully"
+                  balance:
+                    type: number
+                    format: float
+                    description: The updated balance of the user after the transaction.
+                    example: 70000
+                  transactionId:
+                    type: string
+                    description: A unique identifier for the transaction.
+                    example: "64b12345abcd67890ef12345"
+        '400':
+          description: Insufficient balance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating why the transaction failed.
+                    example: "Insufficient balance"
+
+  /users/{email}/coins/sell:
+    post:
+      summary: Sell a coin for a user and update their portfolio.
+      description: |
+        This endpoint allows users to sell a specific coin. The user's balance will be updated with the sale value,
+        and the portfolio will be updated by removing the sold coins. The transaction will also be recorded in the order history.
+      operationId: sellCoin
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: The email address of the user selling the coin.
+          schema:
+            type: string
+            format: email
+            example: "user@example.com"
+      requestBody:
+        description: The details of the coin to be sold and its value.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coinName:
+                  type: string
+                  description: The name of the coin to be sold.
+                  example: "Bitcoin"
+                quantity:
+                  type: number
+                  format: float
+                  description: The number of coins to sell.
+                  example: 1
+                value:
+                  type: number
+                  format: float
+                  description: The value of the coin in USDT to be added to the user's balance.
+                  example: 35000
+              required:
+                - coinName
+                - quantity
+                - value
+      responses:
+        '200':
+          description: Coin sold successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Confirmation message that the sale was successful.
+                    example: "Coin sold successfully"
+                  balance:
+                    type: number
+                    format: float
+                    description: The updated balance of the user after the transaction.
+                    example: 135000
+                  transactionId:
+                    type: string
+                    description: A unique identifier for the transaction.
+                    example: "64b98765efgh12345abcd678"
+        '400':
+          description: Insufficient coin quantity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating why the transaction failed.
+                    example: "Insufficient coin quantity"
+
+  /users/{email}/order-history:
+    get:
+      summary: Retrieve a user's transaction history.
+      description: |
+        This endpoint retrieves all buy and sell transactions for a specific user, including details like coin name,
+        quantity, value, transaction type, and timestamp. It returns an array of transaction objects.
+      operationId: getOrderHistory
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: The email address of the user whose transaction history is being retrieved.
+          schema:
+            type: string
+            format: email
+            example: "user@example.com"
+      responses:
+        '200':
+          description: A list of all transactions for the user.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Coin'
-        '400':
-          description: Bad request due to invalid parameters.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal server error.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /transactions:
-    post:
-      summary: Place a buy or sell order.
-      description: Place a new buy or sell order for a specific coin and update the USDT balance of the user.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransactionRequest'
-            example:
-              userId: "12345"
-              coinId: "bitcoin"
-              type: "buy"
-              quantity: 1.5
-      responses:
-        '201':
-          description: Order successfully placed and USDT balance updated.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionResponse'
-        '400':
-          description: Invalid order request. Missing or invalid parameters.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: Unauthorized access due to invalid or missing authentication token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                  type: object
+                  properties:
+                    transactionId:
+                      type: string
+                      description: A unique identifier for the transaction.
+                      example: "64b12345abcd67890ef12345"
+                    coinName:
+                      type: string
+                      description: The name of the coin involved in the transaction.
+                      example: "Bitcoin"
+                    quantity:
+                      type: number
+                      format: float
+                      description: The number of coins bought or sold in the transaction.
+                      example: 2
+                    value:
+                      type: number
+                      format: float
+                      description: The value of the transaction in USDT.
+                      example: 30000
+                    transactionType:
+                      type: string
+                      enum:
+                        - "BUY"
+                        - "SELL"
+                      description: The type of the transaction (buy or sell).
+                      example: "BUY"
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: The timestamp when the transaction occurred.
+                      example: "2024-11-18T12:00:00.000Z"
         '404':
-          description: Coin or user not found.
+          description: No transactions found for the user.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal server error.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /transactions/{id}:
-    get:
-      summary: Retrieve transaction details.
-      description: Get the details of a specific transaction by ID.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: The unique ID of the transaction.
-      responses:
-        '200':
-          description: Details of the specified transaction.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionResponse'
-        '400':
-          description: Invalid transaction ID format.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Transaction not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal server error.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message when no transactions are found.
+                    example: "No transactions found for user"
 
 components:
   schemas:
-    Coin:
+    BuySellCoinRequest:
       type: object
       properties:
-        coinId:
+        coinName:
           type: string
-          description: Unique identifier for the coin.
-          example: "bitcoin"
-        name:
-          type: string
-          description: Name of the coin.
+          description: The name of the coin to buy or sell.
           example: "Bitcoin"
-        symbol:
-          type: string
-          description: Symbol of the coin.
-          example: "BTC"
-        price:
-          type: number
-          format: double
-          description: Current price of the coin.
-          example: 35000.25
-
-    TransactionRequest:
-      type: object
-      properties:
-        userId:
-          type: string
-          description: Unique identifier of the user placing the order.
-          example: "12345"
-        coinId:
-          type: string
-          description: Unique identifier of the coin.
-          example: "bitcoin"
-        type:
-          type: string
-          description: Type of the transaction, either "buy" or "sell".
-          enum: ["buy", "sell"]
-          example: "buy"
         quantity:
           type: number
-          format: double
-          description: Quantity of the coin for the transaction.
-          example: 1.5
+          format: float
+          description: The number of coins to buy or sell.
+          example: 2
+        value:
+          type: number
+          format: float
+          description: The value of the transaction in USDT.
+          example: 30000
+      required:
+        - coinName
+        - quantity
+        - value
 
-    TransactionResponse:
+    Transaction:
       type: object
       properties:
         transactionId:
           type: string
-          description: Unique identifier of the transaction.
-          example: "67890"
-        userId:
+          description: Unique identifier for the transaction.
+          example: "64b12345abcd67890ef12345"
+        coinName:
           type: string
-          description: Unique identifier of the user.
-          example: "12345"
-        coinId:
-          type: string
-          description: Unique identifier of the coin.
-          example: "bitcoin"
-        type:
-          type: string
-          description: Type of transaction, either "buy" or "sell".
-          example: "buy"
+          description: The name of the coin involved in the transaction.
+          example: "Bitcoin"
         quantity:
           type: number
-          format: double
-          description: Quantity of the coin.
-          example: 1.5
-        price:
+          format: float
+          description: The number of coins involved in the transaction.
+          example: 2
+        value:
           type: number
-          format: double
-          description: Price at which the transaction was completed.
-          example: 34000.0
-        usdtBalance:
-          type: number
-          format: double
-          description: The updated USDT balance of the user after the transaction.
-          example: 5000.75
-        timestamp:
+          format: float
+          description: The value of the transaction in USDT.
+          example: 30000
+        transactionType:
+          type: string
+          enum:
+            - "BUY"
+            - "SELL"
+          description: The type of transaction (buy or sell).
+          example: "BUY"
+        createdAt:
           type: string
           format: date-time
-          description: The date and time when the transaction was completed.
-          example: "2024-11-12T15:30:00Z"
-
-    ErrorResponse:
-      type: object
-      properties:
-        errorCode:
-          type: string
-          description: A code representing the error.
-          example: "ERR_TRANSACTION_NOT_FOUND"
-        message:
-          type: string
-          description: Human-readable message explaining the error.
-          example: "Transaction not found for the given ID."
+          description: The timestamp of when the transaction occurred.
+          example: "2024-11-18T12:00:00.000Z"
