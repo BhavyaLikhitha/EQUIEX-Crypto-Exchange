@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlogSpace</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">BlogSpace</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#categories">Categories</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="actions">
+      <button class="signup-btn">Sign Up</button>
+      <button class="login-btn">Login</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+      <div class="hero-text">
+        <h1>Create & Share Blogs</h1>
+        <p>Unleash your creativity and connect with the world.</p>
+        <div class="email-signup">
+          <input type="email" placeholder="Enter your email">
+          <button class="signup-cta">Sign Up</button>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="https://via.placeholder.com/600x400" alt="Blog Illustration">
+      </div>
+    </section>
+
+    <!-- Blog Management Section -->
+    <section class="blog-section" id="categories">
+      <h2>Manage Blogs</h2>
+      <div class="add-blog">
+        <input id="blogTitle" type="text" placeholder="Enter blog title">
+        <textarea id="blogContent" placeholder="Enter blog content"></textarea>
+        <button onclick="addBlog()">Add Blog</button>
+      </div>
+      <div class="blog-list" id="blogList"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
