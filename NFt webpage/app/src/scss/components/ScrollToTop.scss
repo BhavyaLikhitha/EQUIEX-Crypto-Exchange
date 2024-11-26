@@ -1,0 +1,47 @@
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--accent-color3);
+  color: var(--background); // Contrast color for the icon or text
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  &:hover {
+    background-color: var(--accent-color1); // Change on hover for effect
+    transform: translateY(-3px); // Subtle lift on hover
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: var(--background); // Icon color
+  }
+
+  @media screen and (max-width: 768px) {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}

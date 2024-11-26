@@ -1,0 +1,62 @@
+.clients {
+  padding: 4rem 2rem;
+  background-color: var(--background); // Section background color
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  .clients-heading {
+    text-align: center;
+    color: var(--accent-color3);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+  }
+
+  .clients-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+
+    .client-logo {
+      width: 120px; // Adjust logo size
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        filter: grayscale(100%); // Add a grayscale effect
+        transition: filter 0.3s ease;
+      }
+
+      &:hover {
+        transform: scale(1.1); // Slight zoom effect
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        img {
+          filter: grayscale(0); // Remove grayscale on hover
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .clients-logos {
+      gap: 1rem;
+
+      .client-logo {
+        width: 80px; // Adjust size for smaller screens
+      }
+    }
+
+    .clients-heading {
+      font-size: 1.25rem; // Adjust heading size for mobile
+    }
+  }
+}
