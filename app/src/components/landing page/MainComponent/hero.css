@@ -1,0 +1,228 @@
+.hero {
+    margin-top: 20px;
+    color: #444;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem 3rem;
+}
+
+.hero-heading {
+    margin-left: 70px;
+    font-size: 4vw;
+    position: relative; 
+}
+
+.typing-animation {
+    display: inline-block;
+    font-size: 4vw;
+    white-space: nowrap;
+    overflow: hidden; 
+    border-right: 3px solid var(--magenta); 
+    animation: typing 2s steps(22, end), blink-caret 0.5s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 60%; 
+    }
+}
+
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent; 
+    }
+    50% {
+        border-color: var(--magenta); 
+    }
+}
+
+.grow {
+    margin-left: 70px;
+    margin-top: -20px;
+    color: var(--magenta);
+    font-size: 4.4vw;
+    opacity: 0;
+    transform: translateX(-100%); 
+    animation: slide-in 2s ease-out forwards;
+    animation-delay: 1s; 
+}
+
+@keyframes slide-in {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.place {
+    margin-left: 70px;
+    margin-top: -20px;
+    font-size: 1.6vw;
+    color: #444;
+    opacity: 0; /* Initially hidden */
+    animation: fade-in 1s ease-in-out forwards;
+    animation-delay: 2s; /* Ensure it appears after 'grow' animation */
+    max-width: 80%; /* Add wrapping by restricting width */
+   
+    text-align: left; /* Align text to the left */
+}
+
+@keyframes fade-in {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Email Signup Section */
+.email-signup {
+    margin-left: 70px;
+    max-width: 80%;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0; /* Initially hidden */
+    animation: fade-in-signup 1s ease-in-out forwards;
+    animation-delay: 2s; /* Appear after .place animation */
+}
+
+.email-input {
+    padding: 0.8rem 0.5rem;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    font-size: 1.3vw;
+    width: 10px;
+    flex: 1;
+    transition: border-color 0.3s ease-in-out;
+
+    &:focus {
+        border-color: var(--magenta); /* Change border color to magenta on focus */
+        outline: none; /* Remove default outline */
+    }
+
+    &::placeholder {
+        color: #aaa; /* Placeholder text color */
+        font-size: 1.3vw;
+    }
+}
+
+.signup-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    background-color: var(--magenta);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.3vw;
+   
+    cursor: pointer;
+    gap: 5px;
+
+    &:hover {
+        background-color: var(--magenta);
+    }
+}
+
+.arrow-icon {
+    font-size: 1.6vw;
+}
+
+@keyframes fade-in-signup {
+    to {
+        opacity: 1;
+    }
+}
+
+.hero-right {
+    width: 100%;
+    height: 300px;
+}
+
+.jpg {
+    margin-top: 30px;
+    border-radius: 20px;
+    margin-left: 60px;
+    width: 550px;
+    height: 350px;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);  
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .hero {
+        flex-direction: column;
+        align-items: center; /* Align items to the left */
+        padding: 1rem;
+    }
+
+    .hero-heading {
+        text-align: center; /* Ensure heading aligns to the left */
+        font-size: 24px;
+    }
+
+    .grow {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .place {
+        text-align: center;
+    }
+
+    .email-input, .signup-button {
+        font-size: 14px;
+    }
+
+    .arrow-icon {
+        font-size: 18px;
+    }
+
+    .jpg {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .hero-heading, .grow {
+        font-size: 20px;
+    }
+
+    .place {
+        font-size: 16px;
+    }
+    .email-input, .signup-button {
+        font-size: 12px;
+    }
+  
+}
+
+@media only screen and (max-width: 400px) {
+    .hero-heading, .grow {
+        font-size: 18px;
+    }
+
+    .place {
+        font-size: 14px;
+    }
+    .email-input, .signup-button {
+        font-size: 8px;
+    }
+  
+}

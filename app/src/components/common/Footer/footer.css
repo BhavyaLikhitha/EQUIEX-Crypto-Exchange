@@ -1,0 +1,194 @@
+    .footer {
+      background-color: #d5a3ec;
+      color: var(--white);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    
+        .footer-left {
+          flex: 1;
+    
+          .footer-logo {
+            font-size: 3rem;
+            font-weight: bold;
+    
+            .highlight {
+              color: var(--white);
+            }
+          }
+    
+          .footer-social-icons {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+          }
+    
+          .footer-social-icons svg {
+            width: 40px; /* Adjust size as needed */
+            height: 40px;
+          }
+        }
+    
+        .footer-right {
+          flex: 2;
+          display: flex;
+          justify-content: space-around;
+    
+          .footer-section {
+            h3 {
+              font-size: 1.2rem;
+              margin-bottom: 1rem;
+              font-weight: bold;
+              color: #333;
+            }
+    
+            ul {
+              list-style: none;
+              padding: 0;
+    
+              li {
+                margin-bottom: 0.5rem;
+                font-size: 1rem;
+                color: white;
+                cursor: pointer;
+    
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+      }
+    
+      .footer-bottom {
+        text-align: left;
+        margin-top: 2rem;
+        font-size: 0.9rem;
+  
+      }
+    }
+    
+    @media only screen and (max-width: 768px) {
+      .footer-content {
+       
+    
+        .footer-left {
+          .footer-logo {
+            font-size: 2rem !important; 
+          }
+    
+          .footer-social-icons {
+            justify-content: center !important; 
+    
+            svg {
+              width: 25px !important; 
+              height: 25px !important; 
+            }
+          }
+        }
+    
+        .footer-right {
+          
+          .footer-section {
+            margin-bottom: 1.5rem !important; 
+            text-align: center !important;
+            h3 {
+              font-size: 0.9rem !important; 
+            }
+    
+            ul li {
+              font-size: 0.8rem !important;
+            }
+          }
+        }
+      }
+    
+      .footer-bottom {
+        text-align: center; 
+        font-size: 0.8rem !important;
+      }
+    }
+    
+    @media only screen and (max-width: 600px) {
+      .footer {
+        padding: 1rem !important; 
+      }
+    
+      .footer-content {
+        .footer-left {
+          .footer-logo {
+            font-size: 1.5rem !important;
+          }
+    
+          .footer-social-icons {
+            flex-direction: row !important; 
+            align-items: center !important;
+    
+            svg {
+              width: 20px !important;
+              height: 20px !important; 
+            }
+          }
+        }
+    
+        .footer-right {
+          .footer-section h3 {
+            font-size: 0.8rem !important; 
+          }
+    
+          .footer-section ul li {
+            font-size: 0.7rem !important; 
+          }
+        }
+      }
+    
+      .footer-bottom {
+        font-size: 0.7rem !important; 
+      }
+    }
+    
+    @media only screen and (max-width: 400px) {
+      .footer-content {
+        flex-direction: column !important; 
+        align-items: center !important;
+    
+        .footer-right {
+          flex-direction: row !important;
+          align-items: center !important;
+    
+          .footer-section {
+            width: 100% !important;
+            text-align: center !important;
+    
+            h3 {
+              text-align: center !important;
+              font-size: 0.9rem !important;
+            }
+    
+            ul {
+              display: flex !important;
+              flex-direction: column !important; 
+    
+              li {
+                font-size: 0.7rem !important;
+                margin-bottom: 0.4rem !important;
+              }
+            }
+          }
+        }
+      }
+    
+      .footer-bottom {
+      
+        font-size: 0.6rem !important;
+        text-align: center !important;
+      }
+    }
+    
