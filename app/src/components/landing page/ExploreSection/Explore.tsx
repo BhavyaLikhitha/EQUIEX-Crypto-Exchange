@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './explore.scss';
+import './explore.css';
 import EastRoundedIcon from '@mui/icons-material/EastRounded';
 import trade from '../../../assets/trade.jpg';
 import nft from '../../../assets/nft.jpg';

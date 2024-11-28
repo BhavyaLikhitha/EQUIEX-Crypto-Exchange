@@ -6,7 +6,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import { Box, createTheme, ThemeProvider } from "@mui/material";
 import Grid from "../Grid/Grid";
 import List from "../List/List";
-import './tabs.scss';
+import './tabs.css';
 
 // Define the type for a single coin object
 interface Coin {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './signup.scss';
+import './signup.css';
 
 // Define the prop types for the Signup component
 interface SignupProps {

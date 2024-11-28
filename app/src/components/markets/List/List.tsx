@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 // Define an interface for the coin prop
 interface Coin {
   id: string;
-  image: string;
+  image?: string;
   symbol: string;
   name: string;
   price_change_percentage_24h: number;
