@@ -11,6 +11,8 @@ export const registerUser = async (userData) => {
     return await newUser.save();
 };
 
+
+
 // Login a user
 export const loginUser = async (email, password) => {
     const user = await User.findOne({ email });
@@ -33,26 +35,3 @@ export const getUserByEmail = async (email) => {
     return user;
 };
 
-// Update user details
-export const updateUser = async (email, updateData) => {
-    const user = await User.findOneAndUpdate({ email }, updateData, { new: true });
-    if (!user) {
-        throw new Error("User not found");
-    }
-    return user;
-};
-
-// Delete user
-export const deleteUser = async (email) => {
-    const user = await User.findOneAndDelete({ email });
-    if (!user) {
-        throw new Error("User not found");
-    }
-    return { message: "User successfully deleted" };
-};
-// user-service.js
-
-// Get all users
-export const getAllUsers = async () => {
-    return await User.find(); // Fetch all users from the database
-};

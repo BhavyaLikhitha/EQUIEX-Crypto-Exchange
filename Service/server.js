@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
-import initialize from "./service/services/app.js"; // Correct import for initialize function
+import initialize from "./services/app.js"; // Correct import for initialize function
 
 dotenv.config();
 
