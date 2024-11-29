@@ -4,8 +4,11 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import logo from "../../../assets/logo.png";
 import AnchorTemporaryDrawer from './drawer';
+import '../Button/login.css';
+import '../Button/signup.css';
 import Login from '../Button/Login';
 import Signup from '../Button/Signup';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 // Define types for the props passed to Login and Signup components, if needed.
 interface ButtonProps {
@@ -14,6 +17,7 @@ interface ButtonProps {
 }
 
 function Header(): JSX.Element {
+  const navigate = useNavigate();
   return (
     <div className="navbar">
       <img src={logo} alt="Logo" className="logo" />
@@ -28,8 +32,17 @@ function Header(): JSX.Element {
           <Button variant="text" href="/" className="link">Rewards</Button>
           {/* Outlined button for Rewards */}
         </Stack>
-        <a href="#"><Login text={"Login"} onClick={() => console.log("Btn Clicked")} /></a>
-        <a href="#"><Signup text={"Signup"} onClick={() => console.log("Btn Clicked")} /></a>
+
+       
+      <button className="signup" onClick={() => navigate('/signup')}>
+        Signup
+      </button>
+      <button className="login" onClick={() => navigate('/login')}>
+        Login
+      </button>
+ 
+
+      
       </div>
       <div className="mobile-drawer">
         <AnchorTemporaryDrawer />
