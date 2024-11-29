@@ -16,17 +16,17 @@ export const postSignup = async (request, response) => {
 };
 
 
-// // User login
-// export const postLogin = async (request, response) => {
-//     try {
-//         const { email, password } = request.body;
-//         const user = await userService.loginUser(email, password);
-//         setSuccess(user, response);
-//     } catch (error) {
-//         console.log(error);
-//         setError(error, response);
-//     }
-// };
+// User login
+export const postLogin = async (request, response) => {
+    try {
+        const { email, password } = request.body;
+        const user = await userService.loginUser(email, password);
+        setSuccess(user, response);
+    } catch (error) {
+        console.log(error);
+        setError(error, response);
+    }
+};
 // // Get all users
 // export const getAllUsers = async (request, response) => {
 //     try {

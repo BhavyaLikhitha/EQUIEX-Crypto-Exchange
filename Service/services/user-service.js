@@ -12,7 +12,6 @@ export const registerUser = async (userData) => {
 };
 
 
-
 // Login a user
 export const loginUser = async (email, password) => {
     const user = await User.findOne({ email });

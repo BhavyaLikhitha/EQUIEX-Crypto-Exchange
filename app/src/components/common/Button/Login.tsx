@@ -74,36 +74,38 @@
 
 
 import React, { useState } from 'react';
-// import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
 import './login.css';
 import login from '../../../assets/login.jpg';
+import axios from 'axios';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [forgotPassword, setForgotPassword] = useState(false);
-
   const navigate = useNavigate(); // Initialize useNavigate
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === 'test@example.com' && password === 'password') {
+
+    // Log the email and password to the console
+    console.log('Email:', email);
+    console.log('Password:', password);
+    axios.post('http://localhost:3002/users/login', { email, password })
+    .then(result=> {console.log(result)
       toast.success('User successfully logged in!');
       setTimeout(() => {
         navigate('/'); // Redirect to the home page
-      }, 2000); // Delay to show the toast message
-    } else {
-      toast.error('Incorrect email or password!');
-    }
-  };
+      }, 2000);
+    })
+    .catch(err=>console.log(err))
+  }
+  
 
   const handleForgotPassword = () => {
-    setForgotPassword(true);
     toast.info('A reset link has been sent to your email!');
+    // Implement your logic for password reset if needed
   };
 
   return (
@@ -149,6 +151,7 @@ function Login() {
           </p>
         </form>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }
