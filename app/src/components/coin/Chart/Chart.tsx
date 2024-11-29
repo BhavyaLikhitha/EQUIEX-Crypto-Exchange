@@ -34,7 +34,7 @@ const Chart: React.FC<ChartProps> = ({ chartData, multiAxis }) => {
   const options: ChartOptions<"line"> = {
     plugins: {
       legend: {
-        display: multiAxis,
+        display: false,
       },
     },
     responsive: true,
