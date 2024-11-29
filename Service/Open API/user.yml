@@ -1,0 +1,305 @@
+openapi: 3.0.0
+info:
+  title: User API
+  description: API for user authentication and managing user details such as username, password, phone number, and email.
+  version: 1.0.0
+servers:
+  - url: http://localhost:9000
+    description: Local development environment
+
+paths:
+  /users/login:
+    post:
+      summary: "User Login"
+      description: "Authenticate a user with email and password."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: "The user's email address."
+                  example: "user@example.com"
+                password:
+                  type: string
+                  description: "The user's password."
+                  example: "Password123!"
+      responses:
+        '200':
+          description: "Successful authentication, returns user details."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example:
+                id: "12345"
+                username: "JohnDoe"
+                email: "user@example.com"
+                phoneNumber: "+1234567890"
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        '400':
+          description: "Invalid email or password."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INVALID_CREDENTIALS"
+                message: "The provided email or password is incorrect."
+        '404':
+          description: "User not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "USER_NOT_FOUND"
+                message: "The user with the provided email does not exist."
+
+  /users/signup:
+    post:
+      summary: "User Signup"
+      description: "Register a new user with email, password, and phone number."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: "The user's username."
+                  example: "JohnDoe"
+                email:
+                  type: string
+                  format: email
+                  description: "The user's email address."
+                  example: "user@example.com"
+                password:
+                  type: string
+                  description: "The user's password."
+                  example: "Password123!"
+                phoneNumber:
+                  type: string
+                  description: "The user's phone number."
+                  example: "+1234567890"
+      responses:
+        '201':
+          description: "User successfully registered."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example:
+                id: "12345"
+                username: "JohnDoe"
+                email: "user@example.com"
+                phoneNumber: "+1234567890"
+        '400':
+          description: "Invalid input or already registered email."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "EMAIL_ALREADY_EXISTS"
+                message: "The email address is already registered."
+
+  /users/{email}:
+    get:
+      summary: "Retrieve user details by email"
+      description: "Fetches details of a user by their email address."
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+            format: email
+          description: "The email address of the user."
+          example: "user@example.com"
+      responses:
+        '200':
+          description: "Successful response with user details."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example:
+                id: "12345"
+                username: "JohnDoe"
+                email: "user@example.com"
+                phoneNumber: "+1234567890"
+        '404':
+          description: "User not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "USER_NOT_FOUND"
+                message: "No user exists with the provided email."
+
+    put:
+      summary: "Update user details"
+      description: "Update the user's details such as username, password, and phone number."
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+            format: email
+          description: "The email address of the user."
+          example: "user@example.com"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: "The user's new username."
+                  example: "JohnUpdated"
+                password:
+                  type: string
+                  description: "The user's new password."
+                  example: "NewPassword123!"
+                phoneNumber:
+                  type: string
+                  description: "The user's new phone number."
+                  example: "+1987654321"
+      responses:
+        '200':
+          description: "User details successfully updated."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example:
+                id: "12345"
+                username: "JohnUpdated"
+                email: "user@example.com"
+                phoneNumber: "+1987654321"
+        '400':
+          description: "Invalid input or user not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "INVALID_INPUT"
+                message: "The provided data is invalid."
+        '404':
+          description: "User not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "USER_NOT_FOUND"
+                message: "The user with the provided email does not exist."
+
+    delete:
+      summary: "Delete user"
+      description: "Delete the user with the given email."
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+            format: email
+          description: "The email address of the user to delete."
+          example: "user@example.com"
+      responses:
+        '200':
+          description: "User successfully deleted."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+              example:
+                message: "User successfully deleted."
+        '404':
+          description: "User not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                errorCode: "USER_NOT_FOUND"
+                message: "The user with the provided email does not exist."
+  /users:
+    get:
+      summary: "Get all users"
+      description: "Fetches a list of all users."
+      responses:
+        '200':
+          description: "Successful response with a list of users."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+              example:
+                - id: "12345"
+                  username: "JohnDoe"
+                  email: "user@example.com"
+                  phoneNumber: "+1234567890"
+                - id: "67890"
+                  username: "JaneDoe"
+                  email: "jane@example.com"
+                  phoneNumber: "+0987654321"
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "Unique identifier for the user."
+          example: "12345"
+        username:
+          type: string
+          description: "The user's username."
+          example: "JohnDoe"
+        email:
+          type: string
+          format: email
+          description: "The user's email address."
+          example: "user@example.com"
+        phoneNumber:
+          type: string
+          description: "The user's phone number."
+          example: "+1234567890"
+        token:
+          type: string
+          description: "JWT token used for authenticated requests."
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "Success message."
+          example: "User successfully deleted."
+    ErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: "Error code representing the issue."
+          example: "INVALID_CREDENTIALS"
+        message:
+          type: string
+          description: "Detailed message describing the error."
+          example: "The provided email or password is incorrect."
