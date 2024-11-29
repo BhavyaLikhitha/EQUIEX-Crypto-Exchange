@@ -48,3 +48,5 @@ export default tseslint.config({
   },
 })
 ```
+
+npm install bootstrap axios react-router-dom
