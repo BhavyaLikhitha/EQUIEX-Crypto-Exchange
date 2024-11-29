@@ -1,96 +1,107 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Header from '../components/common/Header';
-import Loader from '../components/common/Loader/Loader';
-import axios from 'axios';
-import { coinObject } from '../functions/coinObject';
-import List from '../components/markets/List/List';
-import Footer from '../components/common/Footer';
-import CoinInfo from '../components/coin/CoinInfo/CoinInfo';
-import './coinpage.css';
-import Chart from '../components/coin/Chart/Chart';
-import { convertDate } from '../functions/convertDate';
-import SelectDays from '../components/coin/selectDays/SelectDays';
-import { settingChartData } from '../functions/settingChartData';
-import { SelectChangeEvent } from '@mui/material/Select'; // Import SelectChangeEvent
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Header from "../components/common/Header";
+import Loader from "../components/common/Loader/Loader";
+import axios from "axios";
+import { coinObject } from "../functions/coinObject";
+import List from "../components/markets/List/List";
+import Footer from "../components/common/Footer";
+import "./coinpage.css";
+import Chart from "../components/coin/Chart/Chart";
+import SelectDays from "../components/coin/selectDays/SelectDays";
+import { settingChartData } from "../functions/settingChartData";
+import { SelectChangeEvent } from '@mui/material/Select';
 
-// Define types for coin data structure
 interface CoinData {
   id: string;
   name: string;
   symbol: string;
-  current_price: number;
+  image: string;
+  desc: string;
   price_change_percentage_24h: number;
-  market_cap: number;
   total_volume: number;
+  current_price: number;
+  market_cap: number;
   circulating_supply: number;
-  [key: string]: any; // Allow other fields to be included as well
 }
 
-// Define the component's state types
-interface CoinPageParams {
-  id: string;
+interface ChartData {
+  labels: string[];
+  datasets: {
+    data: number[];
+    borderColor: string;
+    backgroundColor: string;
+    borderWidth: string;
+    fill: string;
+    tension: string;
+    pointRadius: number;
+  }[];
 }
 
 function CoinPage() {
   const [loading, setLoading] = useState<boolean>(true);
-  const [coinData, setCoinData] = useState<CoinData | undefined>();
+  const { id } = useParams<{ id: string }>();
+  const [coinData, setCoinData] = useState<CoinData | null>(null);
   const [days, setDays] = useState<number>(30);
-  const [chartData, setChartData] = useState<{ labels: string[]; datasets: any[] }>({ labels: [], datasets: [] });
-  const { id } = useParams();
+  const [chartData, setChartData] = useState<ChartData | null>(null);
 
   useEffect(() => {
     if (id) {
       setLoading(true);
+
+      // Fetch coin data
       axios
         .get(`https://api.coingecko.com/api/v3/coins/${id}`)
         .then((response) => {
           console.log("RESPONSE>>>", response.data);
-          coinObject(setCoinData, response.data);
+          coinObject(response.data, setCoinData);
         })
         .catch((error) => {
-          console.log("ERROR>>>", error.message);
-          setLoading(false);
+          console.error("ERROR>>>", error.message);
         });
 
+      // Fetch chart data
       axios
-        .get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}&interval=daily`)
+        .get(
+          `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}&interval=daily`
+        )
         .then((response) => {
           console.log("Prices", response.data.prices);
           settingChartData(setChartData, response.data.prices);
           setLoading(false);
         })
         .catch((error) => {
-          console.log("ERROR>>>", error.message);
+          console.error("ERROR>>>", error.message);
           setLoading(false);
         });
     }
   }, [id, days]);
 
-  const handleDaysChange = (event: SelectChangeEvent<number>) => { // Update type here
-    const selectedDays = Number(event.target.value);
-    setDays(selectedDays);
+  const handleDaysChange = (event: SelectChangeEvent<number>) => {
+    const newDays = Number(event.target.value);
+    setDays(newDays);
     setLoading(true);
 
     axios
-      .get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${selectedDays}&interval=daily`)
+      .get(
+        `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${newDays}&interval=daily`
+      )
       .then((response) => {
         console.log("Prices", response.data.prices);
         settingChartData(setChartData, response.data.prices);
         setLoading(false);
       })
       .catch((error) => {
-        console.log("ERROR>>>", error.message);
+        console.error("ERROR>>>", error.message);
         setLoading(false);
       });
   };
 
-  // Conditional rendering based on loading and data
   if (loading) {
     return (
       <div>
         <Header />
-        <Loader /> {/* Show loader when data is loading */}
+        <Loader />
       </div>
     );
   }
@@ -99,7 +110,7 @@ function CoinPage() {
     return (
       <div>
         <Header />
-        <p>Error: Coin data not found.</p> {/* Handle error or invalid data */}
+        <p>Error: Coin data not found.</p>
       </div>
     );
   }
@@ -107,18 +118,16 @@ function CoinPage() {
   return (
     <div>
       <Header />
-      <div className='wrapper'>
+      <div className="wrapper">
         <List coin={coinData} />
       </div>
-      <div className='chart-wrapper'>
+      <div className="chart-wrapper">
         <SelectDays days={days} handleDaysChange={handleDaysChange} />
-        <Chart key={days} chartData={chartData} multiAxis={true} />
+        {chartData && <Chart key={days} chartData={chartData} multiAxis />}
       </div>
-      {/* Table for Coin Data */}
       <div className="coin-info-table">
         <h2>Coin Stats</h2>
         <table>
-          <thead></thead>
           <tbody>
             <tr>
               <td>ID</td>

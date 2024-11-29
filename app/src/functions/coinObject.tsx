@@ -1,4 +1,8 @@
 // Define CoinData type properly
+import { Dispatch, SetStateAction } from "react";
+// import { CoinData } from "../pages/CoinPage";
+// import CoinData from "../pages/CoinPage";
+
 interface CoinData {
   id: string;
   name: string;
@@ -12,18 +16,20 @@ interface CoinData {
   circulating_supply: number;
 }
 
-// Adjust the coinObject function
-export const coinObject = (data: any,setCoinData: React.Dispatch<React.SetStateAction<CoinData | undefined>>) => {
+export const coinObject = (
+  data: any,
+  setCoinData: Dispatch<SetStateAction<CoinData | null>>
+) => {
   setCoinData({
     id: data.id,
     name: data.name,
     symbol: data.symbol,
-    image: data.image.large, // Assuming 'large' is the property for the image URL
-    desc: data.description.en,
-    price_change_percentage_24h: data.price_change_percentage_24h,
-    total_volume: data.total_volume,
-    current_price: data.current_price,
-    market_cap: data.market_cap,
-    circulating_supply: data.circulating_supply,
+    image: data.image?.large,
+    desc: data.description?.en,
+    price_change_percentage_24h: data.market_data?.price_change_percentage_24h,
+    total_volume: data.market_data?.total_volume?.usd,
+    current_price: data.market_data?.current_price?.usd,
+    market_cap: data.market_data?.market_cap?.usd,
+    circulating_supply: data.market_data?.circulating_supply,
   });
 };

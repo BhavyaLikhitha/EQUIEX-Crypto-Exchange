@@ -1,6 +1,6 @@
-import React from 'react';
 import './list.css';
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
+import bitcoin from '../../../assets/bitcoin.png'
 import TrendingDownRoundedIcon from "@mui/icons-material/TrendingDownRounded";
 import { convertNumber } from '../../../functions/ConvertNumbers';
 import { Link } from 'react-router-dom';
@@ -27,6 +27,11 @@ function List({ coin }: ListProps): JSX.Element {
       <tr className='list-row'>
         <td className='td-image'>
           <img src={coin.image} alt={coin.name} className='coin-logo' />
+          {/* <img
+            src={coin.image || '/bitcoin.png'} 
+            alt={coin.name || 'Coin'}
+            className='coin-logo'
+          /> */}
         </td>
         <td>
           <div className='name-col'>

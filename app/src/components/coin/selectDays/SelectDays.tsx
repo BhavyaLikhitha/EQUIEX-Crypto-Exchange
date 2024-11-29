@@ -1,15 +1,12 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import './selectdays.css';
 
 // Define the prop types
 interface SelectDaysProps {
   days: number; // The current selected value, should be a number
-  handleDaysChange: (event: SelectChangeEvent<number>) => any; // Correct type for onChange event
+  handleDaysChange: (event: SelectChangeEvent<number>) => void; // Correct type for onChange event
 }
 
 export default function SelectDays({ days, handleDaysChange }: SelectDaysProps) {
@@ -22,7 +19,7 @@ export default function SelectDays({ days, handleDaysChange }: SelectDaysProps) 
         id="demo-simple-select"
         value={days}
         label="Days"
-        onChange={handleDaysChange} // This should now work with the correct type
+        onChange={handleDaysChange}
         sx={{
           marginTop: "10px",
           marginLeft: "10px",
@@ -42,11 +39,11 @@ export default function SelectDays({ days, handleDaysChange }: SelectDaysProps) 
             },
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "var(--magenta)", // Set the desired color for focus state
+            borderColor: "var(--magenta)",
           },
         }}
       >
-        <MenuItem value={1}>1 Days</MenuItem>
+        <MenuItem value={1}>1 Day</MenuItem>
         <MenuItem value={7}>1 Week</MenuItem>
         <MenuItem value={30}>30 Days</MenuItem>
         <MenuItem value={60}>60 Days</MenuItem>

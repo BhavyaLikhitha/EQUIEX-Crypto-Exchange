@@ -168,7 +168,11 @@ const TradePage: React.FC<{}> = () => {
         {/* Chart and Days Selector */}
         <div className="chart-section">
           <SelectDays days={days} handleDaysChange={handleDaysChange} />
-          <Chart key={days} chartData={chartData} multiAxis={true} />
+          {chartData ? (
+            <Chart key={days} chartData={chartData} multiAxis={true} />
+          ) : (
+            <p>Loading chart data...</p>
+          )}
         </div>
 
         {/* Buy/Sell Panel */}
@@ -231,7 +235,7 @@ const TradePage: React.FC<{}> = () => {
                 <td>{order.quantity}</td>
                 <td>${order.price.toFixed(2)}</td>
                 <td>${order.total.toFixed(2)}</td>
-              </tr>
+                </tr>
             ))}
           </tbody>
         </table>

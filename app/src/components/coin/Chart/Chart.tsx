@@ -3,12 +3,25 @@ import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   ChartOptions,
-  CoreChartOptions,
-  PluginChartOptions,
-  DatasetChartOptions,
-  ScaleChartOptions,
-  LineControllerChartOptions,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
 } from "chart.js/auto";
+
+// Register the required components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 // Define the props interface
 interface ChartProps {
@@ -29,17 +42,14 @@ const Chart: React.FC<ChartProps> = ({ chartData, multiAxis }) => {
       mode: "index", // Correctly typed as one of the allowed values
       intersect: false,
     },
-    // Uncomment and type the scales if needed
-    // scales: {
-    //   crypto1: {
-    //     position: "left",
-    //   },
-    //   crypto2: multiAxis
-    //     ? {
-    //         position: "right",
-    //       }
-    //     : undefined,
-    // },
+    scales: {
+      x: {
+        type: 'category'
+      },
+      y: {
+        type: 'linear'
+      }
+    }
   };
 
   return <Line data={chartData} options={options} />;
