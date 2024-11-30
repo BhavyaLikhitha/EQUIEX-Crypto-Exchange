@@ -89,29 +89,33 @@ function Login() {
     e.preventDefault();
 
     try {
-     
-      const result = await axios.post('http://localhost:3002/users/login', { email, password });
-      console.log(result);
-      toast.success('User successfully logged in!');
-      setTimeout(() => {
-        navigate('/'); // Redirect to the home page
-      }, 2000);
-    } catch (error:any) {
-      console.error(error.response);
-      // Check if the error has a response and handle it accordingly
-      console.error("Signup error:", error.response || error.message);
-        if (error.response) {
-          // Specific error message for email duplication
-          if (error.response.data.message === 'Invalid credentials') {
-            toast.error('Invalid credentials.');
-          } else {
-            toast.error(error.response.data.message || 'An error occurred during login.');
-          }
+        const result = await axios.post('http://localhost:3002/users/login', { email, password });
+        console.log(result); // Check the response in the console
+
+        const token = result.data.token; // Extract token from the response
+
+        if (token) {
+            localStorage.setItem('userToken', token); // Store token in localStorage
+            toast.success('User successfully logged in!');
+            setTimeout(() => {
+                navigate('/'); // Redirect to the home page
+            }, 2000);
         } else {
-          toast.error('An unexpected error occurred.');
+            toast.error('Token not found in response');
+        }
+    } catch (error: any) {
+        console.error(error.response);
+        if (error.response) {
+            if (error.response.data.message === 'Invalid credentials') {
+                toast.error('Invalid credentials.');
+            } else {
+                toast.error(error.response.data.message || 'An error occurred during login.');
+            }
+        } else {
+            toast.error('An unexpected error occurred.');
         }
     }
-  };
+};
 
   const handleForgotPassword = () => {
     toast.info('A reset link has been sent to your email!');
