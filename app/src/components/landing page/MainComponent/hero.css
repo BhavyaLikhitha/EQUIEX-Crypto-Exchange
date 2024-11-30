@@ -226,3 +226,73 @@
     }
   
 }
+
+.referral-section {
+    
+    /* margin-top: 20px; */
+    text-align: center;
+    opacity: 0; 
+    animation: fade-in-referral 1s ease-in-out forwards;
+    animation-delay: 3s; /* Appears after other elements */
+    padding: 10px; 
+    border: 2px solid var(--magenta); /* Adds a border */
+    border-radius: 10px; /* Rounds the corners */
+    background-color: #f9f9f9; /* Light background for the box */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds subtle shadow */
+    width: 470px; /* Set the desired width */
+    height: 50px; /* Set the desired height */
+    margin-left: 60px; 
+    margin-right: auto; 
+    margin-bottom: 30px;
+    &:hover {
+        transform: translateY(-5px); 
+        box-shadow: 0 8px 15px rgba(255, 0, 255, 0.5);
+      }
+
+  
+  }
+  
+  .referral-link {
+    /* margin-left: 80px; */
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    /* justify-content: center; */
+    
+  }
+  .ref{
+    margin-left: 10px;
+  }
+  .copy-button {
+    margin-left: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color:var(--magenta);
+  }
+  
+  .copy-button:hover {
+    color: var(--magenta);
+  }
+  
+  .round-btn {
+    display: flex;
+    align-items: center;
+   
+    margin-left: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .share-button:hover {
+    background-color: #218838;
+  }
+  /* Keyframe for Fade-In Animation of Referral Section */
+@keyframes fade-in-referral {
+    to {
+        opacity: 1;
+    }
+}
