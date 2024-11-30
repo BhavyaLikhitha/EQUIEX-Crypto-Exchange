@@ -50,3 +50,5 @@ export default tseslint.config({
 ```
 
 npm install bootstrap axios react-router-dom
+npm install qrcode.react
+npm install react-virtual-keyboard
