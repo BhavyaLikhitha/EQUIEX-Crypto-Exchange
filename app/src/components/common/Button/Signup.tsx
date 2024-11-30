@@ -134,9 +134,20 @@ function Signup() {
       setDialogVisible(true);
       // Optionally show a toast notification
       toast.success("User registered successfully!");
-    } catch (error) {
-      console.error(error);
-      toast.error("An error occurred during signup. Please try again.");
+    } catch (error:any) {
+      console.error(error.response);
+      // Check if the error has a response and handle it accordingly
+      console.error("Signup error:", error.response || error.message);
+        if (error.response) {
+          // Specific error message for email duplication
+          if (error.response.data.message === 'Email already exists') {
+            toast.error('This email is already exists. Please try another one.');
+          } else {
+            toast.error(error.response.data.message || 'An error occurred during signup.');
+          }
+        } else {
+          toast.error('An unexpected error occurred.');
+        }
     }
   };
 
