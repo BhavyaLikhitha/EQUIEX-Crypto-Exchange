@@ -2,8 +2,14 @@ import React from 'react';
 import "./hero.css";
 import ArrowOutwardRoundedIcon from '@mui/icons-material/ArrowOutwardRounded';
 import right from "../../../assets/hero-right.jpg";
+import { useNavigate } from 'react-router-dom';
 
 const Hero: React.FC = () => {
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
+  const handleClick = () => {
+    navigate('/signup'); // Navigate to the /signup page when the button is clicked
+  };
   return (
     <div className='hero'>
       <div className='left-component'>
@@ -19,7 +25,7 @@ const Hero: React.FC = () => {
             className='email-input'
             placeholder='Enter your Email'
           />
-          <button className='signup-button'>
+          <button className='signup-button' onClick={handleClick}>
             Sign Up
             <ArrowOutwardRoundedIcon className='arrow-icon' />
           </button>
