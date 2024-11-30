@@ -168,7 +168,7 @@ function Header(): JSX.Element {
 
   return (
     <div className="navbar">
-      <img src={logo} alt="Logo" className="logo" />
+      <img src={logo} alt="Logo" className="logo" onClick={() => navigate('/')}/>
       <div className="links">
         <Stack spacing={1} direction="row" className="links">
           {/* Text variant buttons for Markets, Trade, NFT Gallery, and Academy */}
