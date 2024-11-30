@@ -72,7 +72,6 @@
 
 // export default Login;
 
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -89,23 +88,33 @@ function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Log the email and password to the console
-    console.log('Email:', email);
-    console.log('Password:', password);
-    axios.post('http://localhost:3002/users/login', { email, password })
-    .then(result=> {console.log(result)
+    try {
+     
+      const result = await axios.post('http://localhost:3002/users/login', { email, password });
+      console.log(result);
       toast.success('User successfully logged in!');
       setTimeout(() => {
         navigate('/'); // Redirect to the home page
       }, 2000);
-    })
-    .catch(err=>console.log(err))
-  }
-  
+    } catch (error:any) {
+      console.error(error.response);
+      // Check if the error has a response and handle it accordingly
+      console.error("Signup error:", error.response || error.message);
+        if (error.response) {
+          // Specific error message for email duplication
+          if (error.response.data.message === 'Invalid credentials') {
+            toast.error('Invalid credentials.');
+          } else {
+            toast.error(error.response.data.message || 'An error occurred during login.');
+          }
+        } else {
+          toast.error('An unexpected error occurred.');
+        }
+    }
+  };
 
   const handleForgotPassword = () => {
     toast.info('A reset link has been sent to your email!');
-    // Implement your logic for password reset if needed
   };
 
   return (
