@@ -42,17 +42,36 @@ export const postSignup = async (req, res) => {
   }
 };
 
+// // User login
+// export const postLogin = async (request, response) => {
+//     try {
+//         const { email, password } = request.body;
+//         const user = await userService.loginUser(email, password);
+//         setSuccess(user, response);
+//     } catch (error) {
+//         console.log(error);
+//         setError(error, response);
+//     }
+// };
+
 // User login
 export const postLogin = async (request, response) => {
     try {
         const { email, password } = request.body;
         const user = await userService.loginUser(email, password);
-        setSuccess(user, response);
+        setSuccess(user, response);  // Assuming setSuccess sends a success response
     } catch (error) {
-        console.log(error);
-        setError(error, response);
+        if (error.message === 'Invalid credentials') {
+            // Return specific message for email duplication
+            return response.status(400).json({ message: 'Invalid credentials' });
+          }
+          response.status(500).json({ message: 'Internal server error', details: error.message });
+        // console.log('Login error:', error.message);  // Log the error message for debugging
+        // setError(error, response);  // Send the error response
     }
 };
+
+
 // // Get all users
 // export const getAllUsers = async (request, response) => {
 //     try {
