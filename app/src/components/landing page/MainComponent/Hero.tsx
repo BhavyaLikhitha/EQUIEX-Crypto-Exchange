@@ -92,6 +92,15 @@ const Hero: React.FC = () => {
     }
   };
 
+   // Handle navigation for the new buttons
+   const handlePortfolioClick = () => {
+    navigate('/portfolio');
+  };
+
+  const handleCoinTrackerClick = () => {
+    navigate('/watchlist');
+  };
+
   return (
     <div className='hero'>
       <div className='left-component'>
@@ -125,6 +134,15 @@ const Hero: React.FC = () => {
                 <ShareRoundedIcon onClick={handleShareClick} className='round-btn'/>
               </button>
             </p>
+               {/* Added new buttons after login */}
+               <div className='my-port'>
+              <button className='port-button' onClick={handlePortfolioClick}>
+                My Portfolio
+              </button>
+              <button className='port-button' onClick={handleCoinTrackerClick}>
+                Coin Tracker
+              </button>
+            </div>
           </div>
         )}
       </div>

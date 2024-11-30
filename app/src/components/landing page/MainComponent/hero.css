@@ -235,20 +235,15 @@
     animation: fade-in-referral 1s ease-in-out forwards;
     animation-delay: 3s; /* Appears after other elements */
     padding: 10px; 
-    border: 2px solid var(--magenta); /* Adds a border */
+    /* border: 2px solid var(--magenta);  */
     border-radius: 10px; /* Rounds the corners */
-    background-color: #f9f9f9; /* Light background for the box */
+    background-color: var(--white); /* Light background for the box */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds subtle shadow */
     width: 470px; /* Set the desired width */
     height: 50px; /* Set the desired height */
     margin-left: 60px; 
     margin-right: auto; 
     margin-bottom: 30px;
-    &:hover {
-        transform: translateY(-5px); 
-        box-shadow: 0 8px 15px rgba(255, 0, 255, 0.5);
-      }
-
   
   }
   
@@ -296,3 +291,28 @@
         opacity: 1;
     }
 }
+.my-port {
+
+    display: flex; /* Arrange buttons side by side */
+    gap: 30px; /* Space between buttons */
+    margin-top: 40px; /* Add some space above the buttons */
+  }
+  
+  .port-button {
+    background-color: var(--magenta);
+    margin-right: 20px;
+    border: var(--magenta);
+    color:var(--white);
+    padding: 10px 20px;
+    border-radius: 3rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 16px;
+
+    &:hover{
+        box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); 
+        transition: all 0.5s ease-in-out;
+    }
+  }
+  
