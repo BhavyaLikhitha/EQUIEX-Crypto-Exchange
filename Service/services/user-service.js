@@ -25,6 +25,7 @@ export const loginUser = async (email, password) => {
     return user;
 };
 
+
 // Get user by email
 export const getUserByEmail = async (email) => {
     const user = await User.findOne({ email });
