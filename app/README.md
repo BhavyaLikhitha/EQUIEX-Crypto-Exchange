@@ -53,4 +53,6 @@ npm install bootstrap axios react-router-dom
 npm install qrcode.react
 npm install react-virtual-keyboard
 npm install @reduxjs/toolkit react-redux
+npm install i18next react-i18next
+
 
