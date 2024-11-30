@@ -54,23 +54,39 @@ export const postSignup = async (req, res) => {
 //     }
 // };
 
+// // User login
+// export const postLogin = async (request, response) => {
+//     try {
+//         const { email, password } = request.body;
+//         const user = await userService.loginUser(email, password);
+//         setSuccess(user, response);  // Assuming setSuccess sends a success response
+//     } catch (error) {
+//         if (error.message === 'Invalid credentials') {
+//             // Return specific message for email duplication
+//             return response.status(400).json({ message: 'Invalid credentials' });
+//           }
+//           response.status(500).json({ message: 'Internal server error', details: error.message });
+//         // console.log('Login error:', error.message);  // Log the error message for debugging
+//         // setError(error, response);  // Send the error response
+//     }
+// };
+
 // User login
 export const postLogin = async (request, response) => {
-    try {
-        const { email, password } = request.body;
-        const user = await userService.loginUser(email, password);
-        setSuccess(user, response);  // Assuming setSuccess sends a success response
-    } catch (error) {
-        if (error.message === 'Invalid credentials') {
-            // Return specific message for email duplication
-            return response.status(400).json({ message: 'Invalid credentials' });
-          }
-          response.status(500).json({ message: 'Internal server error', details: error.message });
-        // console.log('Login error:', error.message);  // Log the error message for debugging
-        // setError(error, response);  // Send the error response
-    }
+  try {
+      const { email, password } = request.body;
+      const result = await userService.loginUser(email, password); // Get token here
+      return response.status(200).json({
+          message: 'Login successful',
+          token: result.token,  // Send the token in the response
+      });
+  } catch (error) {
+      if (error.message === 'Invalid credentials') {
+          return response.status(400).json({ message: 'Invalid credentials' });
+      }
+      response.status(500).json({ message: 'Internal server error', details: error.message });
+  }
 };
-
 
 // // Get all users
 // export const getAllUsers = async (request, response) => {
