@@ -25,7 +25,8 @@ export const setSuccess = (data, response) => {
 };
 
 // Function to handle error responses
-export const setError = (response, error, statusCode = 500) => {
+export const setError = (response, error, statusCode=500) => {
+  console.log('Sending error:', error.message, statusCode);
   // Check if the response object is valid
   if (response && response.status) {
     // Determine appropriate error status and message
