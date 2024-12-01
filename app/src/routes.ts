@@ -7,6 +7,7 @@ import TradePage from "./pages/TradePage";
 import PortfolioPage from "./pages/PortfolioPage";
 import Signup from "./components/common/Button/Signup";
 import Login from "./components/common/Button/Login";
+import TabsComponent from "./components/portfolio/TabsComponent/TabsComponent";
 
 export const routes = createBrowserRouter([
   {
@@ -41,6 +42,7 @@ export const routes = createBrowserRouter([
         path: "login",
         Component: Login,
       },
+      
     ],
   },
 ]);
