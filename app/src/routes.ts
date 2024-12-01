@@ -8,6 +8,7 @@ import PortfolioPage from "./pages/PortfolioPage";
 import Signup from "./components/common/Button/Signup";
 import Login from "./components/common/Button/Login";
 import TabsComponent from "./components/portfolio/TabsComponent/TabsComponent";
+import Watchlist from "./components/Watchlist/Watchlist";
 
 export const routes = createBrowserRouter([
   {
@@ -42,7 +43,10 @@ export const routes = createBrowserRouter([
         path: "login",
         Component: Login,
       },
-      
+      {
+        path:"coin-tracker",
+        Component:Watchlist,
+      }
     ],
   },
 ]);
