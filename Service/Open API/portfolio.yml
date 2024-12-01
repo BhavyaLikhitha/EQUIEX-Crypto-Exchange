@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Crypto Project API
+  title: Equiex Project API
   version: 1.2.0
   description: REST API for managing crypto wallet, transactions, and portfolio in a crypto trading platform with order types and detailed portfolio summary.
 
