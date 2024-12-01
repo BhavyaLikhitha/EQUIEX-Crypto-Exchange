@@ -1,0 +1,52 @@
+.watchlist-container {
+    padding: 20px;
+  }
+  
+  .coin-list {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .coin-list th, .coin-list td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .coin-list th {
+    background-color: #f4f4f4;
+    
+  }
+  
+  .list-row {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .tr-head th {
+    text-align: left; /* Explicitly set to left-align the headers */
+  }
+  
+  .tr-head .th-coin {
+    width: 30%; /* Adjust width for the coin column */
+  }
+  
+  .tr-head .th-change {
+    /* text-align: left; */
+    /* padding-left: 2px; */
+    width: 17%; 
+  }
+  
+  .tr-head .th-price {
+    /* text-align: left; */
+    width: 5%; /* Adjust width for Price column */
+
+  }
+  
+  .tr-head .th-vol {
+   
+    width: 9%; 
+  }
+  
+  .tr-head .th-mc {
+    width:5%; /* Adjust width for Market Cap column */
+  }
+ 
