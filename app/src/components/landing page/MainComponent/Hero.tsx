@@ -98,7 +98,7 @@ const Hero: React.FC = () => {
   };
 
   const handleCoinTrackerClick = () => {
-    navigate('/watchlist');
+    navigate('/coin-tracker');
   };
 
   return (
