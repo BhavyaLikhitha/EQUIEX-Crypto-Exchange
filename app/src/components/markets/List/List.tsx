@@ -1,9 +1,13 @@
+import React, { useState, useEffect } from 'react';
 import './list.css';
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import bitcoin from '../../../assets/bitcoin.png'
 import TrendingDownRoundedIcon from "@mui/icons-material/TrendingDownRounded";
 import { convertNumber } from '../../../functions/ConvertNumbers';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import GradeIcon from '@mui/icons-material/Grade';
 
 // Define an interface for the coin prop
 interface Coin {
@@ -22,11 +26,43 @@ interface ListProps {
 }
 
 function List({ coin }: ListProps): JSX.Element {
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  // Fetch the favorite status from localStorage on initial render
+  useEffect(() => {
+    const favoriteCoins = JSON.parse(localStorage.getItem('favoriteCoins') || '[]');
+    const isCoinFavorite = favoriteCoins.some((favoriteCoin: Coin) => favoriteCoin.id === coin.id);
+    setIsFavorite(isCoinFavorite);
+  }, [coin.id]);
+
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent navigation when clicking the star
+    let favoriteCoins = JSON.parse(localStorage.getItem('favoriteCoins') || '[]');
+
+    if (isFavorite) {
+      // Remove from favorites
+      favoriteCoins = favoriteCoins.filter((favoriteCoin: Coin) => favoriteCoin.id !== coin.id);
+      toast.error(`${coin.name} removed from watchlist`);
+    } else {
+      // Add to favorites
+      favoriteCoins.push(coin);
+      toast.success(`${coin.name} added to watchlist`);
+    }
+
+    // Update localStorage and state
+    localStorage.setItem('favoriteCoins', JSON.stringify(favoriteCoins));
+    setIsFavorite(!isFavorite);
+  };
   return (
-    <Link to={`/coins/${coin.id}`}>
-      <tr className='list-row'>
-        <td className='td-image'>
+    <tr className='list-row'>
+      <td className="favorite-icon" onClick={toggleFavorite}>
+        {isFavorite ? <GradeIcon style={{ color: 'red' }} /> : <StarOutlineIcon />}
+      </td>
+      <td className='td-image'>
+        <Link to={`/coins/${coin.id}`}>
+       
           <img src={coin.image} alt={coin.name} className='coin-logo' />
+          </Link>
           {/* <img
             src={coin.image || '/bitcoin.png'} 
             alt={coin.name || 'Coin'}
@@ -73,8 +109,9 @@ function List({ coin }: ListProps): JSX.Element {
         <td className='mobile-td-mkt'>
           <p className='market_cap td-right td-market'>${convertNumber(coin.market_cap)}</p>
         </td>
-      </tr>
-    </Link>
+     
+   
+    </tr>
   );
 }
 
