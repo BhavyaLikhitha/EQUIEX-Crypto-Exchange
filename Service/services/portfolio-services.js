@@ -301,6 +301,8 @@
 // export default PortfolioService;
 
 import Portfolio from '../models/portfolio.js';
+import { Parser } from 'json2csv';
+
 
 class PortfolioService {
   static async saveWalletAddress(walletAddress) {
@@ -371,6 +373,62 @@ class PortfolioService {
         throw new Error('Wallet not found');
       }
       return wallet.tradingBalanceUSD;
+    }
+
+    static async addTransaction(walletAddress, orderType, coinDetails) {
+      const wallet = await Portfolio.findOne({ walletAddress });
+      if (!wallet) {
+        throw new Error('Wallet not found');
+      }
+  
+      const transaction = {
+        orderType,
+        coinDetails,
+        transactionDate: new Date(),
+      };
+  
+      wallet.transactions.push(transaction);
+      await wallet.save();
+      return transaction;
+    }
+  
+    static async getTransactionHistory(walletAddress) {
+      const wallet = await Portfolio.findOne({ walletAddress });
+      if (!wallet) {
+        throw new Error('Wallet not found');
+      }
+      return wallet.transactions;
+    }
+  
+    static async getTransactionHistoryCSV(walletAddress) {
+      const wallet = await Portfolio.findOne({ walletAddress });
+      if (!wallet) {
+        throw new Error('Wallet not found');
+      }
+  
+      const transactions = wallet.transactions.map((txn) => ({
+        orderType: txn.orderType,
+        coinName: txn.coinDetails.coinName,
+        price: txn.coinDetails.price,
+        quantity: txn.coinDetails.quantity,
+        value: txn.coinDetails.value,
+        transactionDate: txn.transactionDate.toISOString(),
+      }));
+  
+      const parser = new Parser();
+      return parser.parse(transactions);
+    }
+    
+    static async updateTradingBalanceUSD(walletAddress, newBalance) {
+      const wallet = await Portfolio.findOne({ walletAddress });
+      if (!wallet) {
+        throw new Error('Wallet not found');
+      }
+    
+      wallet.tradingBalanceUSD = newBalance;
+      await wallet.save();
+    
+      return wallet;
     }
 }
 
