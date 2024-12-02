@@ -7,8 +7,8 @@
     margin-left: auto;
     margin-right: auto;
     background-color: var(--magenta);
-    padding: 0.75rem 1.5rem;
-
+    padding: 0.2rem 1.5rem;
+  margin-top: 40px;
     border-radius: 2rem;
     margin-bottom: 1.5rem;
 }
@@ -49,3 +49,26 @@
     color: var(--magenta);
     margin: 2rem 0;
   }
+.my-fav{
+  margin-top: 20px;
+  background-color: var(--white);
+  margin-right: 60px;
+  border: var(--magenta);
+  color:var(--black);
+  padding: 15px 30px;
+  border-radius: 3rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 16px;
+  &:hover {
+    box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); 
+    transition: all 0.5s ease-in-out;
+}
+}
+  
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

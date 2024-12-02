@@ -1,6 +1,8 @@
 import React from 'react';
 import "./search.css";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 // Define the prop types for the Search component
 interface SearchProps {
@@ -10,7 +12,10 @@ interface SearchProps {
 }
 
 function Search({ search, onSearchChange, onClearSearch }: SearchProps): JSX.Element {
+  const navigate = useNavigate();
+
   return (
+    <div className='search-container'>
     <div className='search-flex'>
       <SearchRoundedIcon />
       <input
@@ -25,6 +30,12 @@ function Search({ search, onSearchChange, onClearSearch }: SearchProps): JSX.Ele
           Clear
         </button>
       )}
+      
+    </div>
+    {/* <Button variant="text" href="/coin-tracker" className="my-fav">My Favorites</Button> */}
+    <button className="my-fav" onClick={() => navigate('/coin-tracker')}>
+              My Favorites
+            </button>
     </div>
   );
 }
