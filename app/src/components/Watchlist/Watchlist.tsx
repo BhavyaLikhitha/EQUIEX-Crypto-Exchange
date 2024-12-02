@@ -83,7 +83,7 @@ function Watchlist() {
       <Header />
       <div className="watchlist-container">
         <ToastContainer />
-        <h1>My Watchlist</h1>
+        <h1 className='watch-head'>Watchlist</h1>
         <table className="coin-list">
             <tr className="tr-head">
               <th className="th-coin">Coin</th>
