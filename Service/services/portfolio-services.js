@@ -354,17 +354,30 @@ class PortfolioService {
     return { wallet, newTradingBalance: wallet.tradingBalance };
   }
 
-  static async updateTradingBalance(walletAddress, newBalance) {
+  // static async updateTradingBalance(walletAddress, newBalance) {
+  //   const wallet = await Portfolio.findOne({ walletAddress });
+  //   if (!wallet) {
+  //     throw new Error('Wallet not found');
+  //   }
+
+  //   wallet.tradingBalance = newBalance;
+  //   await wallet.save();
+
+  //   return wallet;
+  // }
+  static async updateTradingBalance(walletAddress, newBalance, newBalanceUSD) {
     const wallet = await Portfolio.findOne({ walletAddress });
     if (!wallet) {
       throw new Error('Wallet not found');
     }
-
+  
     wallet.tradingBalance = newBalance;
+    wallet.tradingBalanceUSD = newBalanceUSD; // Update the trading balance in USD
     await wallet.save();
-
+  
     return wallet;
   }
+  
 }
 
 export default PortfolioService;

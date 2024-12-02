@@ -1,7 +1,4 @@
-// Define CoinData type properly
 import { Dispatch, SetStateAction } from "react";
-// import { CoinData } from "../pages/CoinPage";
-// import CoinData from "../pages/CoinPage";
 
 interface CoinData {
   id: string;

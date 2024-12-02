@@ -43,13 +43,13 @@ const portfolioSchema = new mongoose.Schema({
       unique: true,
       required: true,
     },
-    walletBalance: {  // The field for general wallet balance
-      type: Number,
-      default: 0,
-    },
     tradingBalance: { // The field for trading-specific balance
       type: Number,
       default: 0,
+    },
+    tradingBalanceUSD: { // New field for trading balance in USD 
+      type: Number,
+       default: 0,
     },
     transactions: [transactionSchema],
     portfolio: [

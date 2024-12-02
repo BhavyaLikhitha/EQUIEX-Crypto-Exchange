@@ -15,15 +15,10 @@
 // export default router;
 import express from 'express';
 import PortfolioController from '../controllers/portfolio-controller.js';
-
 const router = express.Router();
-
 router.post('/connect-wallet', PortfolioController.connectWallet);
 router.get('/fetch-wallet-balance', PortfolioController.fetchWalletBalance);
 router.post('/deposit', PortfolioController.deposit);
 router.post('/withdraw', PortfolioController.withdraw);
 router.post('/update-trading-balance', PortfolioController.updateTradingBalance);
-
-
-
 export default router;
