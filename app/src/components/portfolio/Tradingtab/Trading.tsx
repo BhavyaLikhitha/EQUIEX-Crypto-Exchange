@@ -253,7 +253,7 @@ function Trading() {
         setTradingBalance(newBalance);
         await updateTradingBalance(newBalance);
         toast.success('Deposit Successful!');
-        setTransactionStatus('Deposit successful!');
+        // setTransactionStatus('Deposit successful!');
       } catch (error) {
         console.error('Error processing deposit:', error);
         toast.error('Error processing deposit.!');
@@ -275,7 +275,7 @@ function Trading() {
         setTradingBalance(newBalance);
         await updateTradingBalance(newBalance);
         toast.success('Withdrawl Successful!');
-        setTransactionStatus('Withdrawal successful!');
+        // setTransactionStatus('Withdrawal successful!');
       } catch (error) {
         console.error('Error processing withdrawal:', error);
         toast.error('Error processing withdrawal.');
@@ -322,7 +322,7 @@ function Trading() {
             value={transactionAmount}
             onChange={(e) => setTransactionAmount(e.target.value)}
           />
-         
+        
         </div>
         {transactionStatus}
       </div>
