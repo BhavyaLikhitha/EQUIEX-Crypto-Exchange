@@ -21,4 +21,5 @@ router.get('/fetch-wallet-balance', PortfolioController.fetchWalletBalance);
 router.post('/deposit', PortfolioController.deposit);
 router.post('/withdraw', PortfolioController.withdraw);
 router.post('/update-trading-balance', PortfolioController.updateTradingBalance);
+router.get('/fetch-trading-balance-usd', PortfolioController.fetchTradingBalanceUSD);
 export default router;

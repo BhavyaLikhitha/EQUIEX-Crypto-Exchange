@@ -394,24 +394,6 @@ class PortfolioController {
       res.status(500).json({ message: 'Server error' });
     }
   }
-
-  // static async updateTradingBalance(req, res) {
-  //   try {
-  //     const { walletAddress, newBalance } = req.body;
-  //     if (!walletAddress || newBalance < 0) {
-  //       return res.status(400).json({ message: 'Invalid wallet address or balance' });
-  //     }
-
-  //     const wallet = await PortfolioService.updateTradingBalance(walletAddress, newBalance);
-  //     res.status(200).json({
-  //       message: 'Trading balance updated successfully',
-  //       data: wallet,
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ message: 'Server error' });
-  //   }
-  // }
   static async updateTradingBalance(req, res) {
     try {
       const { walletAddress, newBalance, newBalanceUSD } = req.body;
@@ -429,6 +411,17 @@ class PortfolioController {
       res.status(500).json({ message: 'Server error' });
     }
   }
+      static async fetchTradingBalanceUSD(req, res) {
+        try {
+          const walletAddress = "0xc744bc7bdbae39ad2d372df6abaf974d81e4914d"; // Use the stored wallet address
+    
+          const tradingBalanceUSD = await PortfolioService.getTradingBalanceUSD(walletAddress);
+          res.status(200).json({ message: 'Trading balance in USD fetched successfully', data: tradingBalanceUSD });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Server error' });
+        }
+      }
   
 }
 

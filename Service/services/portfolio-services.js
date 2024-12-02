@@ -353,18 +353,6 @@ class PortfolioService {
 
     return { wallet, newTradingBalance: wallet.tradingBalance };
   }
-
-  // static async updateTradingBalance(walletAddress, newBalance) {
-  //   const wallet = await Portfolio.findOne({ walletAddress });
-  //   if (!wallet) {
-  //     throw new Error('Wallet not found');
-  //   }
-
-  //   wallet.tradingBalance = newBalance;
-  //   await wallet.save();
-
-  //   return wallet;
-  // }
   static async updateTradingBalance(walletAddress, newBalance, newBalanceUSD) {
     const wallet = await Portfolio.findOne({ walletAddress });
     if (!wallet) {
@@ -376,8 +364,15 @@ class PortfolioService {
     await wallet.save();
   
     return wallet;
-  }
-  
+  }  
+    static async getTradingBalanceUSD(walletAddress) {
+      const wallet = await Portfolio.findOne({ walletAddress });
+      if (!wallet) {
+        throw new Error('Wallet not found');
+      }
+      return wallet.tradingBalanceUSD;
+    }
 }
+
 
 export default PortfolioService;
