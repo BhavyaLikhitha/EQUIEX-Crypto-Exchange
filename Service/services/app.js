@@ -5,6 +5,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import userRoutes from "../routers/user-routers.js"; // Import user routes from a routes file
 import router from "../routers/portfolio-routers.js";
+import watchlistRouter from "../routers/watchlist-routers.js";
 
 const initialize = (app) => {
     // Middleware setup
@@ -18,6 +19,7 @@ const initialize = (app) => {
         .catch(err => console.error("MongoDB connection error:", err));
     app.use("/users", userRoutes);  // Mount the user routes at '/users'
     app.use("/portfolio",router);
+    app.use("/tracker",watchlistRouter);
 };
 
 export default initialize;
