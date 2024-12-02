@@ -422,6 +422,67 @@ class PortfolioController {
           res.status(500).json({ message: 'Server error' });
         }
       }
+
+      static async addTransaction(req, res) {
+        try {
+          const { walletAddress, orderType, coinDetails } = req.body;
+          if (!walletAddress || !orderType || !coinDetails) {
+            return res.status(400).json({ message: 'Invalid transaction data' });
+          }
+    
+          const transaction = await PortfolioService.addTransaction(walletAddress, orderType, coinDetails);
+          res.status(201).json({ message: 'Transaction added successfully', data: transaction });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Server error' });
+        }
+      }
+    
+      static async fetchTransactionHistory(req, res) {
+        try {
+          const { walletAddress } = req.query;
+          if (!walletAddress) {
+            return res.status(400).json({ message: 'Wallet address is required' });
+          }
+    
+          const transactions = await PortfolioService.getTransactionHistory(walletAddress);
+          res.status(200).json({ message: 'Transaction history fetched successfully', data: transactions });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Server error' });
+        }
+      }
+    
+      static async downloadTransactionHistory(req, res) {
+        try {
+          const { walletAddress } = req.query;
+          if (!walletAddress) {
+            return res.status(400).json({ message: 'Wallet address is required' });
+          }
+    
+          const csvData = await PortfolioService.getTransactionHistoryCSV(walletAddress);
+          res.setHeader('Content-Disposition', 'attachment; filename="transaction-history.csv"');
+          res.setHeader('Content-Type', 'text/csv');
+          res.status(200).send(csvData);
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Server error' });
+        }
+      }
+      static async updateTradingBalanceUSD(req, res) {
+        try {
+          const { walletAddress, newBalance } = req.body;
+          if (!walletAddress || newBalance < 0) {
+            return res.status(400).json({ message: 'Invalid wallet address or balance' });
+          }
+      
+          const wallet = await PortfolioService.updateTradingBalanceUSD(walletAddress, newBalance);
+          res.status(200).json({ message: 'Trading balance in USD updated successfully', data: wallet });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Server error' });
+        }
+      }
   
 }
 
