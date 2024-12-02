@@ -1,0 +1,84 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Watchlist API",
+    "version": "1.0.0",
+    "description": "API to manage a cryptocurrency watchlist"
+  },
+  "paths": {
+    "/watchlist": {
+      "post": {
+        "summary": "Add coin to watchlist",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "symbol": { "type": "string" },
+                  "name": { "type": "string" },
+                  "image": { "type": "string" },
+                  "price_change_percentage_24h": { "type": "number" },
+                  "current_price": { "type": "number" },
+                  "total_volume": { "type": "number" },
+                  "market_cap": { "type": "number" }
+                },
+                "required": ["symbol", "name", "price_change_percentage_24h", "current_price", "total_volume", "market_cap"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Coin added to watchlist" },
+          "500": { "description": "Failed to add coin to watchlist" }
+        }
+      },
+      "get": {
+        "summary": "Get watchlist",
+        "responses": {
+          "200": {
+            "description": "Watchlist retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "symbol": { "type": "string" },
+                      "name": { "type": "string" },
+                      "image": { "type": "string" },
+                      "price_change_percentage_24h": { "type": "number" },
+                      "current_price": { "type": "number" },
+                      "total_volume": { "type": "number" },
+                      "market_cap": { "type": "number" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": { "description": "Failed to retrieve watchlist" }
+        }
+      }
+    },
+    "/watchlist/{symbol}": {
+      "delete": {
+        "summary": "Remove coin from watchlist",
+        "parameters": [
+          {
+            "name": "symbol",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Coin removed from watchlist" },
+          "500": { "description": "Failed to remove coin from watchlist" }
+        }
+      }
+    }
+  }
+}
