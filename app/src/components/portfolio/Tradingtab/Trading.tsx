@@ -584,20 +584,22 @@ function Trading() {
         <p className='usd-add'>Trading Balance (USD): ${usdBalance}</p>
 
         <div className='transaction-controls'>
-          <button onClick={handleDeposit} className='deposit-btn'>
-            Deposit
-          </button>
-          <button onClick={handleWithdraw} className='with-btn'>
-            Withdraw
-          </button>
-          <div></div>
-          <input
+        <input
             className='amount'
             type='number'
             placeholder='Enter amount in ETH'
             value={transactionAmount}
             onChange={(e) => setTransactionAmount(e.target.value)}
           />
+          <div></div>
+          <button onClick={handleDeposit} className='deposit-btn'>
+            Deposit
+          </button>
+          <button onClick={handleWithdraw} className='with-btn'>
+            Withdraw
+          </button>
+          
+         
         </div>
         {transactionStatus}
       </div>

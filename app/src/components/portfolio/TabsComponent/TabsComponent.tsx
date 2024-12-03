@@ -10,7 +10,7 @@ import Spot from "../SpotTab/Spot";
 import "./tabscom.css";
 
 export default function TabsComponent(): JSX.Element {
-  const [value, setValue] = useState<string>("trading");
+  const [value, setValue] = useState<string>("spot");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string): void => {
     setValue(newValue);
