@@ -9,6 +9,7 @@ import Signup from "./components/common/Button/Signup";
 import Login from "./components/common/Button/Login";
 import TabsComponent from "./components/portfolio/TabsComponent/TabsComponent";
 import Watchlist from "./components/Watchlist/Watchlist";
+import settings from "./components/settings/settings";
 
 export const routes = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ export const routes = createBrowserRouter([
       {
         path:"coin-tracker",
         Component:Watchlist,
+      },
+      {
+        path:"settings",
+        Component:settings,
       }
     ],
   },
