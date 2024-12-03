@@ -41,11 +41,11 @@
     }
   
     .trade-panel {
-      height: 370px;
+      height: 400px;
       flex: 1;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: left;
       background-color: whitesmoke;
       padding: 20px;
       border-radius: 10px;
@@ -54,6 +54,7 @@
       h2 {
         font-size: 1.5rem;
         margin-bottom: 15px;
+        text-align: center;
         color: var(--text-primary);
       }
   
@@ -95,6 +96,7 @@
       }
 
       .buy {
+        margin-top: 20px;
         width: 150px;
         margin-right: 10px;
         padding: 10px 20px;
@@ -191,4 +193,13 @@
       }
     }
   }
+}
+
+.input-trade{
+  width: 150px;
+  margin-left: 20px;
+}
+
+.trade-bal{
+  align-items: left;
 }
