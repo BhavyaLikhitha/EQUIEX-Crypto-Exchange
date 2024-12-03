@@ -483,6 +483,25 @@ class PortfolioController {
           res.status(500).json({ message: 'Server error' });
         }
       }
+
+      static async fetchPortfolio(req, res) {
+        try {
+          const { walletAddress } = req.query;
+          if (!walletAddress) {
+            return res.status(400).json({ message: 'Wallet address is required' });
+          }
+      
+          const { portfolio, totalValue } = await PortfolioService.getPortfolio(walletAddress);
+          res.status(200).json({
+            message: 'Portfolio fetched successfully',
+            data: { portfolio, totalValue },
+          });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Server error' });
+        }
+      }
+      
   
 }
 

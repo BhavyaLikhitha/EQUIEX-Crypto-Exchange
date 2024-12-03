@@ -375,23 +375,69 @@ class PortfolioService {
       return wallet.tradingBalanceUSD;
     }
 
+    // static async addTransaction(walletAddress, orderType, coinDetails) {
+    //   const wallet = await Portfolio.findOne({ walletAddress });
+    //   if (!wallet) {
+    //     throw new Error('Wallet not found');
+    //   }
+  
+    //   const transaction = {
+    //     orderType,
+    //     coinDetails,
+    //     transactionDate: new Date(),
+    //   };
+  
+    //   wallet.transactions.push(transaction);
+    //   await wallet.save();
+    //   return transaction;
+    // }
     static async addTransaction(walletAddress, orderType, coinDetails) {
       const wallet = await Portfolio.findOne({ walletAddress });
       if (!wallet) {
         throw new Error('Wallet not found');
       }
-  
-      const transaction = {
+    
+      const { coinId, coinName, price, quantity, imageUrl } = coinDetails;
+    
+      // Update portfolio
+      const existingCoin = wallet.portfolio.find((coin) => coin.coinId === coinId);
+      if (orderType === 'buy') {
+        if (existingCoin) {
+          existingCoin.quantity += quantity;
+          existingCoin.value = existingCoin.quantity * price;
+        } else {
+          wallet.portfolio.push({
+            coinId,
+            coinName,
+            quantity,
+            price,
+            value: quantity * price,
+            imageUrl,
+          });
+        }
+      } else if (orderType === 'sell') {
+        if (existingCoin && existingCoin.quantity >= quantity) {
+          existingCoin.quantity -= quantity;
+          if (existingCoin.quantity === 0) {
+            wallet.portfolio = wallet.portfolio.filter((coin) => coin.coinId !== coinId);
+          } else {
+            existingCoin.value = existingCoin.quantity * price;
+          }
+        } else {
+          throw new Error('Not enough coins to sell');
+        }
+      }
+    
+      wallet.transactions.push({
         orderType,
         coinDetails,
         transactionDate: new Date(),
-      };
-  
-      wallet.transactions.push(transaction);
+      });
+    
       await wallet.save();
-      return transaction;
+      return wallet;
     }
-  
+    
     static async getTransactionHistory(walletAddress) {
       const wallet = await Portfolio.findOne({ walletAddress });
       if (!wallet) {
@@ -430,6 +476,27 @@ class PortfolioService {
     
       return wallet;
     }
+
+    static async getPortfolio(walletAddress) {
+      const wallet = await Portfolio.findOne({ walletAddress });
+      if (!wallet) {
+        throw new Error('Wallet not found');
+      }
+    
+      const portfolio = wallet.portfolio.map((coin) => ({
+        coinId: coin.coinId,
+        coinName: coin.coinName,
+        imageUrl: coin.imageUrl,
+        quantity: coin.quantity,
+        price: coin.price,
+        value: coin.quantity * coin.price,
+      }));
+    
+      const totalValue = portfolio.reduce((sum, coin) => sum + coin.value, 0);
+    
+      return { portfolio, totalValue };
+    }
+    
 }
 
 

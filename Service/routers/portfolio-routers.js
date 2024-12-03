@@ -26,4 +26,6 @@ router.post('/add-transaction', PortfolioController.addTransaction);
 router.get('/fetch-transaction-history', PortfolioController.fetchTransactionHistory);
 router.get('/download-transaction-history', PortfolioController.downloadTransactionHistory);
 router.put('/usd-balance-update', PortfolioController.updateTradingBalanceUSD);
+router.get('/fetch-portfolio', PortfolioController.fetchPortfolio);
+
 export default router;
