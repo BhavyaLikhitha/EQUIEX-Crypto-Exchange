@@ -667,7 +667,6 @@
 
 // export default TradePage;
 
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
@@ -718,72 +717,6 @@ const TradePage: React.FC = () => {
       console.error('Error fetching transaction history:', error);
     }
   };
-
-  // const handleBuy = async () => {
-  //   if (amount <= 0 || !coinPrice) {
-  //     alert('Enter a valid amount');
-  //     return;
-  //   }
-
-  //   const quantity = amount / coinPrice;
-
-  //   try {
-  //     await fetch('http://localhost:3002/portfolio/add-transaction', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({
-  //         walletAddress,
-  //         orderType: 'buy',
-  //         coinDetails: {
-  //           coinId: 'bitcoin',
-  //           coinName: 'Bitcoin',
-  //           price: coinPrice,
-  //           quantity,
-  //           value: amount,
-  //         },
-  //       }),
-  //     });
-  //     await fetchTradingBalanceUSD();
-  //     await fetchTransactionHistory();
-  //     alert('Transaction successful!');
-  //   } catch (error) {
-  //     console.error('Error processing buy transaction:', error);
-  //     alert('Transaction failed');
-  //   }
-  // };
-
-  // const handleSell = async () => {
-  //   if (amount <= 0 || !coinPrice) {
-  //     alert('Enter a valid amount');
-  //     return;
-  //   }
-
-  //   const quantity = amount / coinPrice;
-
-  //   try {
-  //     await fetch('http://localhost:3002/portfolio/add-transaction', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({
-  //         walletAddress,
-  //         orderType: 'sell',
-  //         coinDetails: {
-  //           coinId: 'bitcoin',
-  //           coinName: 'Bitcoin',
-  //           price: coinPrice,
-  //           quantity,
-  //           value: amount,
-  //         },
-  //       }),
-  //     });
-  //     await fetchTradingBalanceUSD();
-  //     await fetchTransactionHistory();
-  //     alert('Transaction successful!');
-  //   } catch (error) {
-  //     console.error('Error processing sell transaction:', error);
-  //     alert('Transaction failed');
-  //   }
-  // };
 
   const updateTradingBalance = async (newBalance: number) => {
     try {
@@ -874,20 +807,6 @@ const TradePage: React.FC = () => {
     }
   };
   
-
-  // const updateTradingBalance = async (newBalance: number) => {
-  //   try {
-  //     await fetch('http://localhost:3002/portfolio/usd-balance-update', {
-  //       method: 'PUT',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({ walletAddress: '0xc744bc7bdbae39ad2d372df6abaf974d81e4914d', newBalance }),
-  //     });
-  //     console.log('Trading balance updated successfully');
-  //   } catch (error) {
-  //     console.error('Error updating trading balance:', error);
-  //   }
-  // };
-  
   const handleDownloadHistory = async () => {
     try {
       const response = await fetch(
@@ -921,19 +840,33 @@ const TradePage: React.FC = () => {
           <button onClick={handleSell}>Sell</button>
         </div>
         <h3>Transaction History</h3>
-        <ul className="transaction-history">
-          {transactions.length > 0 ? (
-            transactions.map((txn, index) => (
-              <li key={index}>
-                {txn.orderType.toUpperCase()} - {txn.coinDetails.quantity.toFixed(6)} BTC @ $
-                {txn.coinDetails.price.toFixed(2)} - Total: ${txn.coinDetails.value.toFixed(2)}
-              </li>
-            ))
-          ) : (
-            <p>No transactions yet</p>
-          )}
-        </ul>
-        <button onClick={handleDownloadHistory}>Download Transaction History</button>
+         <div className="order-history">
+        <h2>Order History</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Order type</th>
+              <th>quantity</th>
+              <th>Bought Price</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {transactions.map((txn, index) => (
+              <tr key={index}>
+                {/* <td>{txn.transactionDate.toLocaleString()}</td> */}
+                <td>{new Date(txn.transactionDate).toLocaleString()}</td>
+                <td>{txn.orderType.toUpperCase()}</td>
+                <td>{txn.coinDetails.quantity.toFixed(5)} BTC</td>
+                <td>${txn.coinDetails.price}</td>
+                <td>${txn.coinDetails.value.toFixed(2)}</td>
+                </tr>
+            ))}
+          </tbody>
+        </table>
+        <button onClick={handleDownloadHistory}>Download History</button>
+      </div>
       </div>
       <Footer />
     </div>
