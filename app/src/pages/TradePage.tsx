@@ -672,17 +672,55 @@ import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 import Chart from '../components/coin/Chart/Chart';
 import './tradingpage.css';
+import List from '../components/markets/List/List';
+import SelectDays from '../components/coin/selectDays/SelectDays';
+import { convertDate } from '../functions/convertDate';
+import './portfoliopage.css';
+import { SelectChangeEvent } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+interface CoinData {
+  id: string;
+  name: string;
+  symbol: string;
+  image: string;
+  desc: string;
+  price_change_percentage_24h: number;
+  total_volume: number;
+  current_price: number;
+  market_cap: number;
+  circulating_supply: number;
+}
+interface ChartData {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    borderColor: string;
+    backgroundColor: string;
+    borderWidth: number;
+    fill: boolean;
+    tension: number;
+    pointRadius: number;
+  }[];
+}
 
 const TradePage: React.FC = () => {
+  const navigate = useNavigate();
   const walletAddress = '0xc744bc7bdbae39ad2d372df6abaf974d81e4914d';
   const [tradingBalanceUSD, setTradingBalanceUSD] = useState<number | null>(null);
   const [transactions, setTransactions] = useState<any[]>([]);
   const [amount, setAmount] = useState<number>(0);
   const [coinPrice, setCoinPrice] = useState<number>(0);
+  const [coinData, setCoinData] = useState<CoinData | null>(null); // Coin data for List component
+  const [selectedCrypto, setSelectedCrypto] = useState<string>('bitcoin'); 
+  const [chartData, setChartData] = useState<ChartData | null>(null); // Chart data
+  const [days, setDays] = useState<number>(7); // Default selected days
 
   useEffect(() => {
     fetchTradingBalanceUSD();
-    fetchCoinData();
+    // fetchCoinData();
     fetchTransactionHistory();
   }, []);
 
@@ -696,15 +734,44 @@ const TradePage: React.FC = () => {
     }
   };
 
-  const fetchCoinData = async () => {
-    try {
-      const response = await fetch(`https://api.coingecko.com/api/v3/coins/bitcoin`);
-      const data = await response.json();
-      setCoinPrice(data.market_data.current_price.usd);
-    } catch (error) {
-      console.error('Error fetching Bitcoin price:', error);
-    }
-  };
+  // const fetchCoinData = async () => {
+  //   try {
+  //     const response = await fetch(`https://api.coingecko.com/api/v3/coins/bitcoin`);
+  //     const data = await response.json();
+  //     setCoinPrice(data.market_data.current_price.usd);
+  //   } catch (error) {
+  //     console.error('Error fetching Bitcoin price:', error);
+  //   }
+  // };
+
+   // Fetch coin data for Bitcoin
+   useEffect(() => {
+    const fetchCoinData = async () => {
+      try {
+        const response = await fetch(`https://api.coingecko.com/api/v3/coins/${selectedCrypto}`);
+        const data = await response.json();
+        setCoinData({
+          id: data.id,
+          name: data.name,
+          symbol: data.symbol,
+          image: data.image.large,
+          desc: data.description.en,
+          price_change_percentage_24h: data.market_data.price_change_percentage_24h,
+          total_volume: data.market_data.total_volume.usd,
+          current_price: data.market_data.current_price.usd,
+          market_cap: data.market_data.market_cap.usd,
+          circulating_supply: data.market_data.circulating_supply,
+
+        });
+        setCoinPrice(data.market_data.current_price.usd);
+      } catch (error) {
+        console.error('Error fetching coin data:', error);
+      }
+    };
+
+    fetchCoinData();
+  }, [selectedCrypto]);
+
 
   const fetchTransactionHistory = async () => {
     try {
@@ -762,10 +829,12 @@ const TradePage: React.FC = () => {
   
       await fetchTradingBalanceUSD();
       await fetchTransactionHistory();
-      alert('Transaction successful!');
+      toast.success("Buy transaction successful!");
+      // alert('Transaction successful!');
     } catch (error) {
       console.error('Error processing buy transaction:', error);
-      alert('Transaction failed');
+      toast.error("Buy transaction failed!");
+      // alert('Transaction failed');
     }
   };
   
@@ -800,10 +869,12 @@ const TradePage: React.FC = () => {
   
       await fetchTradingBalanceUSD();
       await fetchTransactionHistory();
-      alert('Transaction successful!');
+      // alert('Transaction successful!');
+      toast.success("Sell Transaction Successful!");
     } catch (error) {
       console.error('Error processing sell transaction:', error);
-      alert('Transaction failed');
+      // alert('Transaction failed');
+      toast.error("sell transaction failed!")
     }
   };
   
@@ -821,25 +892,117 @@ const TradePage: React.FC = () => {
       console.error('Error downloading transaction history:', error);
     }
   };
+// Fetch chart data based on selected crypto and days
+useEffect(() => {
+  const fetchChartData = async () => {
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${selectedCrypto}/market_chart?vs_currency=usd&days=${days}`
+      );
+      const data = await response.json();
+      setChartData({
+        labels: data.prices.map((price: [number, number]) => convertDate(price[0])),
+        datasets: [
+          {
+            label: `${selectedCrypto} Price (USD)`,
+            data: data.prices.map((price: [number, number]) => price[1]),
+            borderColor: '#3a80e9',
+            backgroundColor: 'transparent',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.25,
+            pointRadius: 0,
+          },
+        ],
+      });
+    } catch (error) {
+      console.error('Error fetching chart data:', error);
+    }
+  };
+  fetchChartData();
+}, [selectedCrypto, days]);
+
+const handleDaysChange = (event: SelectChangeEvent<number>) => {
+  const newDays = Number(event.target.value);
+  setDays(newDays);
+
+  axios
+    .get(
+      `https://api.coingecko.com/api/v3/coins/${selectedCrypto}/market_chart?vs_currency=usd&days=${newDays}&interval=daily`
+    )
+    .then((response) => {
+      console.log("Prices", response.data.prices);
+
+      const labels = response.data.prices.map((price: [number, number]) =>
+        new Date(price[0]).toLocaleDateString()
+      );
+
+      const data = response.data.prices.map((price: [number, number]) => price[1]);
+
+      setChartData({
+        labels: labels,
+        datasets: [
+          {
+            data: data,
+            borderColor: "#3a80e9",
+            backgroundColor: "rgba(58, 128, 233, 0.5)",
+            borderWidth: 2,
+            fill: true,
+            tension: "1",
+            pointRadius: 0,
+          }
+        ]
+      });
+
+    })
+    .catch((error) => {
+      console.error("ERROR>>>", error.message);
+    });
+};
+
 
   return (
     <div className="trade-page">
       <Header />
+       {/* Coin Data List */}
+       <div className="wrapper">
+        {coinData && <List coin={coinData} />}
+      </div>
+      <div className="main-content">
+      <div className="chart-section">
+          <SelectDays days={days} handleDaysChange={handleDaysChange} />
+          {chartData ? (
+            <Chart key={days} chartData={chartData} multiAxis={true} />
+          ) : (
+            <p>Loading chart data...</p>
+          )}
+        </div>
       <div className="trade-panel">
         <h2>Trade Bitcoin</h2>
-        <p>Balance (USD): {tradingBalanceUSD !== null ? `$${tradingBalanceUSD.toFixed(2)}` : 'Loading...'}</p>
-        <p>Current Price (USD): {coinPrice ? `$${coinPrice.toFixed(2)}` : 'Loading...'}</p>
-        <input
-          type="number"
+        <p className='trade-bal'>Balance (USD): {tradingBalanceUSD !== null ? `$${tradingBalanceUSD.toFixed(2)}` : 'Loading...'}</p>
+        <p className='trade-price'>Current Price (USD): {coinPrice ? `$${coinPrice.toFixed(0)}` : 'Loading...'}</p>
+        <p>Amount
+        <input className='input-trade'
+          type="text"
           placeholder="Enter amount in USD"
-          value={amount}
+          value={amount === 0 ? "" : amount} 
+          // value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
         />
+        </p>
         <div className="trade-buttons">
-          <button onClick={handleBuy}>Buy</button>
-          <button onClick={handleSell}>Sell</button>
+          <button className='buy' onClick={handleBuy}>Buy</button>
+          <button className='sell' onClick={handleSell}>Sell</button>
         </div>
-        <h3>Transaction History</h3>
+        <button
+              className="portfolio-button"
+              onClick={() => navigate("/portfolio")}
+            >
+              View Portfolio
+            </button>
+        </div>
+        </div>
+        
          <div className="order-history">
         <h2>Order History</h2>
         <table>
@@ -867,8 +1030,9 @@ const TradePage: React.FC = () => {
         </table>
         <button onClick={handleDownloadHistory}>Download History</button>
       </div>
-      </div>
+    
       <Footer />
+      <ToastContainer position="top-right" autoClose={2000} /> 
     </div>
   );
 };
