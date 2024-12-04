@@ -680,6 +680,7 @@ import { SelectChangeEvent } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import bitcoin from '../assets/bitcoin.png';
 interface CoinData {
   id: string;
   name: string;
@@ -733,16 +734,6 @@ const TradePage: React.FC = () => {
       console.error('Error fetching trading balance:', error);
     }
   };
-
-  // const fetchCoinData = async () => {
-  //   try {
-  //     const response = await fetch(`https://api.coingecko.com/api/v3/coins/bitcoin`);
-  //     const data = await response.json();
-  //     setCoinPrice(data.market_data.current_price.usd);
-  //   } catch (error) {
-  //     console.error('Error fetching Bitcoin price:', error);
-  //   }
-  // };
 
    // Fetch coin data for Bitcoin
    useEffect(() => {
@@ -831,6 +822,12 @@ const TradePage: React.FC = () => {
       await fetchTransactionHistory();
       toast.success("Buy transaction successful!");
       // alert('Transaction successful!');
+
+       // Show notification
+    showNotification("Buy Transaction Successful!", {
+      body: `You purchased ${quantity.toFixed(5)} BTC for $${amount.toFixed(2)}.`,
+      icon: {bitcoin}, // Replace with your app's icon URL
+    });
     } catch (error) {
       console.error('Error processing buy transaction:', error);
       toast.error("Buy transaction failed!");
@@ -871,6 +868,11 @@ const TradePage: React.FC = () => {
       await fetchTransactionHistory();
       // alert('Transaction successful!');
       toast.success("Sell Transaction Successful!");
+       // Show notification
+    showNotification("Buy Transaction Successful!", {
+      body: `You sold ${quantity.toFixed(5)} BTC for $${amount.toFixed(2)}.`,
+      icon: {bitcoin}, // Replace with your app's icon URL
+    });
     } catch (error) {
       console.error('Error processing sell transaction:', error);
       // alert('Transaction failed');
@@ -958,6 +960,25 @@ const handleDaysChange = (event: SelectChangeEvent<number>) => {
     .catch((error) => {
       console.error("ERROR>>>", error.message);
     });
+};
+
+useEffect(() => {
+  if ("Notification" in window) {
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        console.log("Notification permission granted!");
+      } else {
+        console.warn("Notification permission denied!");
+      }
+    });
+  }
+}, []);
+const showNotification = (title, options) => {
+  if (Notification.permission === "granted") {
+    new Notification(title, options);
+  } else {
+    console.warn("Notifications are not enabled by the user.");
+  }
 };
 
 
