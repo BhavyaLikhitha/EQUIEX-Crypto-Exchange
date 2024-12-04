@@ -176,7 +176,7 @@ function Header(): JSX.Element {
           <Button variant="text" href="/trade/bitcoin" className="link">Trade</Button>
           <Button variant="text" href="/" className="link">NFT Gallery</Button>
           <Button variant="text" href="/" className="link">Academy</Button>
-          <Button variant="text" href="/" className="link">Rewards</Button>
+          <Button variant="text" href="/rewards" className="link">Rewards</Button>
         </Stack>
 
         {/* Conditionally render Login/Signup buttons or Settings/Notifications icons */}
