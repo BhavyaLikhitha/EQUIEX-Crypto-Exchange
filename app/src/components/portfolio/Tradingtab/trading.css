@@ -6,7 +6,7 @@
 
 .connect-btn{
     background-color: var(--magenta);
-    margin-right: 10px;
+    margin-left:auto;
     color:var(--white);
     padding: 8px 15px;
     border-radius: 3rem;
