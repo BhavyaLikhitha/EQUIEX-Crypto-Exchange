@@ -10,6 +10,7 @@ import Login from "./components/common/Button/Login";
 import TabsComponent from "./components/portfolio/TabsComponent/TabsComponent";
 import Watchlist from "./components/Watchlist/Watchlist";
 import settings from "./components/settings/settings";
+import RewardsPage from "./components/Rewards/Rewards";
 
 export const routes = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ export const routes = createBrowserRouter([
       {
         path:"settings",
         Component:settings,
+      },
+      {
+        path:'rewards',
+        Component:RewardsPage,
       }
     ],
   },
