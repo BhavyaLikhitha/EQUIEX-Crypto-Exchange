@@ -1,7 +1,10 @@
 import React from 'react'
-import "./footer.css"
+import "./footer.css";
+import { useTranslation } from "react-i18next";
 function Footer() {
+  const { t } = useTranslation();
   return (
+   
     <div className="footer">
       <div className="footer-content">
         {/* Left Section */}
@@ -33,37 +36,39 @@ function Footer() {
           </div>
         </div>
 
+  
         {/* Right Section */}
         <div className="footer-right">
           <div className="footer-section">
-            <h3>Products</h3>
+            <h3>{t('footer.products')}</h3>
             <ul>
-              <li>Buy and Sell</li>
-              <li>Compare Coins</li>
-              <li>Blogs</li>
-              <li>NFT Marketplace</li>
+              <li>{t('footer.buyAndSell')}</li>
+              <li>{t('footer.compareCoins')}</li>
+              <li>{t('footer.blogs')}</li>
+              <li>{t('footer.nftMarketplace')}</li>
             </ul>
           </div>
           <div className="footer-section">
-            <h3>Support</h3>
+            <h3>{t('footer.support')}</h3>
             <ul>
-              <li>FAQ's</li>
-              <li>Help Center</li>
-              <li>Chatbot</li>
-              <li>User Feedback</li>
+              <li>{t('footer.faqs')}</li>
+              <li>{t('footer.helpCenter')}</li>
+              <li>{t('footer.chatbot')}</li>
+              <li>{t('footer.userFeedback')}</li>
             </ul>
           </div>
           <div className="footer-section">
-            <h3>Learn and Earn</h3>
+            <h3>{t('footer.learnAndEarn')}</h3>
             <ul>
-              <li>Blockchain</li>
-              <li>Bitcoin</li>
-              <li>Ethereum</li>
-              <li>NFT</li>
+              <li>{t('footer.blockchain')}</li>
+              <li>{t('footer.bitcoin')}</li>
+              <li>{t('footer.ethereum')}</li>
+              <li>{t('footer.nft')}</li>
             </ul>
           </div>
         </div>
       </div>
+
 
       {/* Footer Bottom */}
       <div className="footer-bottom">
