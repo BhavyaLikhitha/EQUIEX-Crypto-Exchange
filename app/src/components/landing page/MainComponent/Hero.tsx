@@ -222,7 +222,7 @@ const Hero: React.FC = () => {
     <div className='hero'>
       <div className='left-component'>
         <h1 className='hero-heading'>
-          <span className='typing-animation'>{t("tradeHeading")}</span>
+          <span className='typing-animation'>{t("tradeh")}</span>
         </h1>
         <h1 className='grow'>
           {t("growPortfolio")}<span>.</span>
