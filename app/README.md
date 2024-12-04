@@ -58,3 +58,6 @@ npm install i18next react-i18next
 npm install ethers
 
 npm i -s i18next react-i18next i18next-http-backend
+npm install -D @vite-pwa/assets-generator
+ npm install -D vite-plugin-pwa
+ npm i @vite-pwa/assets-generator -D 
