@@ -354,7 +354,7 @@ function Header(): JSX.Element {
                     className="dropdown-item"
                     onClick={() => handleLanguageSelect("hi")}
                   >
-                    {t("hindi")}
+                    {t("Hindi")}
                   </div>
                 </div>
               )}
