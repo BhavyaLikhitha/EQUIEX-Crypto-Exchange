@@ -13,20 +13,6 @@ export const registerUser = async (userData) => {
     return await newUser.save();
 };
 
-
-// // Login a user
-// export const loginUser = async (email, password) => {
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//         throw new Error("User not found");
-//     }
-//     const isPasswordMatch = await user.comparePassword(password);
-//     if (!isPasswordMatch) {
-//         throw new Error("Invalid credentials");
-//     }
-//     return user;
-// };
-
 import jwt from 'jsonwebtoken';  // Import jsonwebtoken
 
 // Login a user
