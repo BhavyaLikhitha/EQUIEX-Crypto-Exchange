@@ -12,7 +12,7 @@ import {
   Legend
 } from "chart.js/auto";
 
-// Register the required components
+// Register the required components with ChartJS to enable their functionality
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,21 +23,22 @@ ChartJS.register(
   Legend
 );
 
-// Define the props interface
+
+// Define the props interface for the Chart component
 interface ChartProps {
-  chartData: any; // Replace with the exact type of your chart data if known
-  multiAxis: boolean;
+  chartData: any; // The data to be rendered in the chart (type can be replaced with specific structure)
+  multiAxis: boolean; // Indicates if multiple axes are required
 }
 
 const Chart: React.FC<ChartProps> = ({ chartData, multiAxis }) => {
-  // Define options with proper typing
+   // Define the options for the chart, ensuring proper typing with ChartOptions
   const options: ChartOptions<"line"> = {
     plugins: {
       legend: {
         display: false,
       },
     },
-    responsive: true,
+    responsive: true, // Makes the chart responsive to container size
     interaction: {
       mode: "index", // Correctly typed as one of the allowed values
       intersect: false,
@@ -52,6 +53,7 @@ const Chart: React.FC<ChartProps> = ({ chartData, multiAxis }) => {
     }
   };
 
+  // Render the Line chart component with the provided data and options
   return <Line data={chartData} options={options} />;
 };
 

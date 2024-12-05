@@ -181,7 +181,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../store/slices/authSlice'; // Update path as necessary
 import { RootState, AppDispatch } from '../../../store/store'; // Update path as necessary
 
+
+// Define the Login component
 function Login() {
+  // State for managing form inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -190,11 +193,13 @@ function Login() {
   // Access Redux state
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Dispatch login action with email and password
     dispatch(loginUser({ email, password }))
-      .unwrap()
+      .unwrap() // Unwrap the promise to handle resolved or rejected state
       .then((response: { token: string; username: string; email: string }) => {
         toast.success('User successfully logged in!');
         localStorage.setItem('userToken', response.token);
@@ -207,12 +212,13 @@ function Login() {
       });
   };
 
+   // Handle forgot password functionality
   const handleForgotPassword = () => {
     toast.info('A reset link has been sent to your email!');
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container"> {/* Main container for the login page */}
       <div className="login-left">
         <img src={login} alt="Login" className="login-image" />
       </div>
@@ -225,24 +231,24 @@ function Login() {
               type="email"
               placeholder="Enter your email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)} // Update email state on input
               required
-              disabled={loading}
+              disabled={loading} // Disable input if loading
             />
           </div>
-          <div className="form-group">
+          <div className="form-group"> {/* Password input field */}
             <label>Password</label>
             <input
               type="password"
               placeholder="Enter your password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)} // Update password state on input
               required
               disabled={loading}
             />
           </div>
           <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Logging in...' : 'Login'} {/* Show loading state if applicable */}
           </button>
           <p>
             Forgot password?{' '}
@@ -255,10 +261,10 @@ function Login() {
               Reset here
             </button>
           </p>
-          {error && <p className="error-message">{error}</p>}
+          {error && <p className="error-message">{error}</p>} {/* Display error message if any */}
         </form>
       </div>
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={3000} /> {/* Toast notifications */}
     </div>
   );
 }

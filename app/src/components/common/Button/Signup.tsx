@@ -434,33 +434,45 @@ import 'react-simple-keyboard/build/css/index.css';
 import KeyboardHideRoundedIcon from '@mui/icons-material/KeyboardHideRounded';
 
 function Signup() {
+  // State variables for form fields
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false); // For toggling password visibility
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false); // Toggle virtual keyboard
   const [inputFocus, setInputFocus] = useState<string>('');
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch(); // Redux dispatch hook
   const { loading, error, success } = useAppSelector((state) => state.signup);
+
    // Keyboard layout
    const keyboardLayout = {
     default: ['q w e r t y u i o p', 'a s d f g h j k l', 'z x c v b n m', '{bksp} {space} {enter}'],
   };
+
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(signupUser({ username, email, password }));
   };
+
+  // Toggle password visibility
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
+
+  // Handle virtual keyboard input
   const handleKeyboardInput = (input: string) => {
     if (inputFocus === 'username') setUsername((prev) => prev + input);
     else if (inputFocus === 'email') setEmail((prev) => prev + input);
     else if (inputFocus === 'password') setPassword((prev) => prev + input);
   };
 
+  // Toggle virtual keyboard visibility
   const toggleKeyboard = () => setIsKeyboardVisible((prev) => !prev);
 
   const handleInputFocus = (field: string) => setInputFocus(field);
+
+
+  // Side effect to handle success and error state
   useEffect(() => {
     if (success) {
       toast.success('User registered successfully!');
@@ -475,14 +487,14 @@ function Signup() {
   }, [success, error, dispatch]);
 
   return (
-    <div className="signup-container">
+    <div className="signup-container"> {/* Main container */}
       <div className="signup-left">
         <img src={signup} alt="Signup" className="signup-image" />
       </div>
-      <div className="signup-right">
+      <div className="signup-right"> {/* Right section with form */}
         <form onSubmit={handleSubmit} className="signup-form">
           <h2 className="signup-heading">Register</h2>
-          <div className="form-group">
+          <div className="form-group"> {/* Username input */}
             <label>Username</label>
             <input
               type="text"
@@ -502,7 +514,7 @@ function Signup() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group"> {/* Password input with toggle */}
             <label>Password</label>
             <div className="password-container">
               <input
@@ -514,12 +526,12 @@ function Signup() {
                 required
               />
               <span onClick={togglePasswordVisibility} className="password-toggle-icon">
-                {showPassword ? '🙈' : '👁️'}
+                {showPassword ? '🙈' : '👁️'} {/* Toggle icon */}
               </span>
             </div>
           </div>
           <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? 'Signing up...' : 'Sign Up'}
+            {loading ? 'Signing up...' : 'Sign Up'} {/* Show loading state */}
           </button>
           <p>
           <KeyboardHideRoundedIcon onClick={toggleKeyboard} className="keyboard-icon" />
@@ -545,7 +557,7 @@ function Signup() {
           </div>
         )}
       </div>
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={3000} /> {/* Toast notifications */}
     </div>
   );
 }
