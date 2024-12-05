@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Define the schema for a single transaction
 const transactionSchema = new mongoose.Schema({
   orderType: {
     type: String,
@@ -37,18 +38,19 @@ const transactionSchema = new mongoose.Schema({
   },
 });
 
+// Define the schema for a user's portfolio
 const portfolioSchema = new mongoose.Schema({
     walletAddress: {
-      type: String,
+      type: String, // Wallet address associated with the portfolio
       unique: true,
       required: true,
     },
-    tradingBalance: { // The field for trading-specific balance
-      type: Number,
+    tradingBalance: { 
+      type: Number, // Balance available for trading
       default: 0,
     },
-    tradingBalanceUSD: { // New field for trading balance in USD 
-      type: Number,
+    tradingBalanceUSD: { 
+      type: Number, // Balance in USD for trading
        default: 0,
     },
     transactions: [transactionSchema],
@@ -81,6 +83,7 @@ const portfolioSchema = new mongoose.Schema({
     ],
   });
   
+  // Create and export the Portfolio model
   const Portfolio = mongoose.model('Portfolio', portfolioSchema);
   
   export default Portfolio;

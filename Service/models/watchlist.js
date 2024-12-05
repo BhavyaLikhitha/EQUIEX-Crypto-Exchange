@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Define the schema for the watchlist
 const watchlistSchema = new mongoose.Schema({
   symbol: { type: String, required: true, unique: true },
   name: { type: String, required: true },
@@ -10,6 +11,7 @@ const watchlistSchema = new mongoose.Schema({
   market_cap: { type: Number, required: true },
 }, { timestamps: true });
 
+// Create the Watchlist model using the schema defined above
 const Watchlist = mongoose.model('Watchlist', watchlistSchema);
 
 export default Watchlist;
