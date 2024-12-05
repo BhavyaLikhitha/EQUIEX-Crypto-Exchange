@@ -75,12 +75,15 @@ export const postSignup = async (req, res) => {
 export const postLogin = async (request, response) => {
   try {
       const { email, password } = request.body;
-      const result = await userService.loginUser(email, password); // Get token here
+      const result = await userService.loginUser(email, password);// Authenticate the user and retrieve the token 
+
+      // Respond with a success message and the token
       return response.status(200).json({
           message: 'Login successful',
-          token: result.token,  // Send the token in the response
+          token: result.token,  
       });
   } catch (error) {
+    // Handle invalid credentials error
       if (error.message === 'Invalid credentials') {
           return response.status(400).json({ message: 'Invalid credentials' });
       }
