@@ -1,5 +1,3 @@
-
-
 export interface SignupData {
   username: string;
   email: string;
