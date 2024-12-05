@@ -193,13 +193,14 @@ export default defineConfig({
                 new RegExp(route.replace(/:id/, '[^/]+')).test(url.pathname)
               );
             },
-            handler: 'NetworkFirst', // For dynamic pages
+            handler: 'CacheFirst', // For dynamic pages
+            // handler:'NetworkFirst',
             method: 'GET',
             options: {
               cacheName: 'dynamic-pages',
               expiration: {
                 maxAgeSeconds: 2592000, // 30 days
-                maxEntries: 100,
+                maxEntries: 1000,
               },
               cacheableResponse: {
                 statuses: [0, 200],
@@ -219,7 +220,7 @@ export default defineConfig({
               cacheName: 'api-calls',
               expiration: {
                 maxAgeSeconds: 2592000, // 30 day
-                maxEntries: 100,
+                maxEntries: 1000,
               },
               cacheableResponse: {
                 statuses: [0, 200],
