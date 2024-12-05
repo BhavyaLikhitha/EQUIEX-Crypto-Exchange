@@ -191,7 +191,7 @@
       transition: background-color 0.3s ease;
 
       &:hover {
-        background-color: var(--green-dark);
+        background-color: var(--magenta);
       }
     }
   }
