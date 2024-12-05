@@ -97,6 +97,7 @@ import punks from '../../../assets/punks.jpg';
 import patrons from '../../../assets/patron.jpeg';
 import penguin from '../../../assets/penguin.png';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 // Define an interface for the NFT data
 interface Nft {
@@ -106,6 +107,7 @@ interface Nft {
 }
 
 function Nft(): JSX.Element {
+  const navigate = useNavigate();
   const [nfts, setNfts] = useState<Nft[]>([]);
   const { t } = useTranslation();
 
@@ -172,7 +174,10 @@ function Nft(): JSX.Element {
           </div>
         ))}
       </div>
-      <button className="visit-button">
+      <button className="visit-button"
+      onClick={() => navigate('/nft')}
+      role="button"
+      tabIndex={0}>
         {t('visitGallery')}
         <ArrowOutwardRoundedIcon className="arrow-icon" />
       </button>

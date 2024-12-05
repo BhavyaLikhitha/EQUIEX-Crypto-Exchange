@@ -107,8 +107,11 @@ import nft from '../../../assets/nft.jpg';
 import blogs from '../../../assets/blogs.jpg';
 import rewards from '../../../assets/rewards.jpg';
 import { useTranslation } from 'react-i18next';
+import { Navigate, useNavigate } from 'react-router-dom';
+
 
 const Explore: React.FC = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -131,6 +134,10 @@ const Explore: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <div className="explore">
       <h2 className="explore-heading">
@@ -141,7 +148,11 @@ const Explore: React.FC = () => {
           <div className="explore-text">
             <h3>{t('tradeHeading')}</h3>
             <p>{t('tradeDescription')}</p>
-            <div className="learn-more">
+            <div className="learn-more"
+            onClick={() => navigate('/trade/bitcoin')}
+              role="button"
+              tabIndex={0}
+              >
               {t('learnMore')} <EastRoundedIcon />
             </div>
           </div>
@@ -153,7 +164,11 @@ const Explore: React.FC = () => {
           <div className="explore-text">
             <h3>{t('blogsHeading')}</h3>
             <p>{t('blogsDescription')}</p>
-            <div className="learn-more">
+            <div className="learn-more"
+              onClick={() => navigate('/blogs')}
+              role="button"
+              tabIndex={0}
+              >
               {t('readMore')} <EastRoundedIcon />
             </div>
           </div>
@@ -165,7 +180,9 @@ const Explore: React.FC = () => {
           <div className="explore-text">
             <h3>{t('rewardsHeading')}</h3>
             <p>{t('rewardsDescription')}</p>
-            <div className="learn-more">
+            <div className="learn-more" onClick={() => handleNavigation('/rewards')}
+              role="button"
+              tabIndex={0}>
               {t('startEarning')} <EastRoundedIcon />
             </div>
           </div>
@@ -177,7 +194,9 @@ const Explore: React.FC = () => {
           <div className="explore-text">
             <h3>{t('nftHeading')}</h3>
             <p>{t('nftDescription')}</p>
-            <div className="learn-more">
+            <div className="learn-more" onClick={() => handleNavigation('/nft')}
+              role="button"
+              tabIndex={0}>
               {t('exploreNow')} <EastRoundedIcon />
             </div>
           </div>
