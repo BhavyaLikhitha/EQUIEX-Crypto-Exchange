@@ -305,6 +305,7 @@ import { Parser } from 'json2csv';
 
 
 class PortfolioService {
+  // Save or create a wallet for a given wallet address
   static async saveWalletAddress(walletAddress) {
     let wallet = await Portfolio.findOne({ walletAddress });
     if (!wallet) {
@@ -314,6 +315,7 @@ class PortfolioService {
     return wallet;
   }
 
+  // Retrieve the wallet balance for a given wallet address
   static async getWalletBalance(walletAddress) {
     const wallet = await Portfolio.findOne({ walletAddress });
     if (!wallet) {
@@ -322,6 +324,7 @@ class PortfolioService {
     return wallet;
   }
 
+  // Deposit funds into the trading balance from the wallet balance
   static async deposit(walletAddress, amount) {
     const wallet = await Portfolio.findOne({ walletAddress });
     if (!wallet) {
@@ -329,16 +332,17 @@ class PortfolioService {
     }
 
     if (wallet.walletBalance < amount) {
-      throw new Error('Insufficient funds in wallet');
+      throw new Error('Insufficient funds in wallet'); // Error if there are insufficient funds
     }
 
     wallet.walletBalance -= amount;
     wallet.tradingBalance += amount;
     await wallet.save();
 
-    return { wallet, newTradingBalance: wallet.tradingBalance };
+    return { wallet, newTradingBalance: wallet.tradingBalance }; // Return updated wallet and trading balance
   }
 
+  // Withdraw funds from the trading balance to the wallet balance
   static async withdraw(walletAddress, amount) {
     const wallet = await Portfolio.findOne({ walletAddress });
     if (!wallet) {
@@ -355,6 +359,9 @@ class PortfolioService {
 
     return { wallet, newTradingBalance: wallet.tradingBalance };
   }
+
+
+  // Update the trading balance and USD equivalent balance for a wallet
   static async updateTradingBalance(walletAddress, newBalance, newBalanceUSD) {
     const wallet = await Portfolio.findOne({ walletAddress });
     if (!wallet) {
@@ -367,6 +374,8 @@ class PortfolioService {
   
     return wallet;
   }  
+
+    // Retrieve the USD trading balance for a given wallet address
     static async getTradingBalanceUSD(walletAddress) {
       const wallet = await Portfolio.findOne({ walletAddress });
       if (!wallet) {
@@ -391,6 +400,8 @@ class PortfolioService {
     //   await wallet.save();
     //   return transaction;
     // }
+
+    // Add a transaction (buy/sell) to the wallet's transaction history
     static async addTransaction(walletAddress, orderType, coinDetails) {
       const wallet = await Portfolio.findOne({ walletAddress });
       if (!wallet) {
@@ -399,12 +410,12 @@ class PortfolioService {
     
       const { coinId, coinName, price, quantity, imageUrl } = coinDetails;
     
-      // Update portfolio
+      // Update the portfolio based on buy/sell action
       const existingCoin = wallet.portfolio.find((coin) => coin.coinId === coinId);
       if (orderType === 'buy') {
         if (existingCoin) {
-          existingCoin.quantity += quantity;
-          existingCoin.value = existingCoin.quantity * price;
+          existingCoin.quantity += quantity; // Increase quantity for existing coin
+          existingCoin.value = existingCoin.quantity * price; // Recalculate the value
         } else {
           wallet.portfolio.push({
             coinId,
@@ -413,13 +424,13 @@ class PortfolioService {
             price,
             value: quantity * price,
             imageUrl,
-          });
+          }); // Add new coin to portfolio if not already present
         }
       } else if (orderType === 'sell') {
         if (existingCoin && existingCoin.quantity >= quantity) {
           existingCoin.quantity -= quantity;
           if (existingCoin.quantity === 0) {
-            wallet.portfolio = wallet.portfolio.filter((coin) => coin.coinId !== coinId);
+            wallet.portfolio = wallet.portfolio.filter((coin) => coin.coinId !== coinId); // Remove coin if quantity is 0
           } else {
             existingCoin.value = existingCoin.quantity * price;
           }
@@ -428,6 +439,7 @@ class PortfolioService {
         }
       }
     
+      // Add the transaction to the wallet's transaction history
       wallet.transactions.push({
         orderType,
         coinDetails,
@@ -438,6 +450,7 @@ class PortfolioService {
       return wallet;
     }
     
+    // Retrieve the transaction history for a given wallet address
     static async getTransactionHistory(walletAddress) {
       const wallet = await Portfolio.findOne({ walletAddress });
       if (!wallet) {
@@ -446,12 +459,14 @@ class PortfolioService {
       return wallet.transactions;
     }
   
+     // Get the transaction history as a CSV string
     static async getTransactionHistoryCSV(walletAddress) {
       const wallet = await Portfolio.findOne({ walletAddress });
       if (!wallet) {
         throw new Error('Wallet not found');
       }
   
+      // Map transaction history to a format suitable for CSV
       const transactions = wallet.transactions.map((txn) => ({
         orderType: txn.orderType,
         coinName: txn.coinDetails.coinName,
@@ -465,6 +480,7 @@ class PortfolioService {
       return parser.parse(transactions);
     }
     
+    // Update the USD trading balance for a wallet
     static async updateTradingBalanceUSD(walletAddress, newBalance) {
       const wallet = await Portfolio.findOne({ walletAddress });
       if (!wallet) {
@@ -477,12 +493,14 @@ class PortfolioService {
       return wallet;
     }
 
+    // Retrieve the portfolio of a wallet, including total value
     static async getPortfolio(walletAddress) {
       const wallet = await Portfolio.findOne({ walletAddress });
       if (!wallet) {
         throw new Error('Wallet not found');
       }
     
+      // Map portfolio coins to a user-friendly format
       const portfolio = wallet.portfolio.map((coin) => ({
         coinId: coin.coinId,
         coinName: coin.coinName,
@@ -492,6 +510,7 @@ class PortfolioService {
         value: coin.quantity * coin.price,
       }));
     
+      // Calculate total portfolio value
       const totalValue = portfolio.reduce((sum, coin) => sum + coin.value, 0);
     
       return { portfolio, totalValue };
