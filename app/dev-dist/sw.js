@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-47da91e0'], (function (workbox) { 'use strict';
+define(['./workbox-e755d862'], (function (workbox) { 'use strict';
 
   self.skipWaiting();
   workbox.clientsClaim();
@@ -82,7 +82,7 @@ define(['./workbox-47da91e0'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "index.html",
-    "revision": "0.rgpla7i1qqo"
+    "revision": "0.b434o5o4kno"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
@@ -90,7 +90,7 @@ define(['./workbox-47da91e0'], (function (workbox) { 'use strict';
   }));
   workbox.registerRoute(({
     url
-  }) => url.pathname.includes("assets"), new workbox.CacheFirst({
+  }) => url.pathname.includes("assets"), new workbox.NetworkFirst({
     "cacheName": "static-assets",
     plugins: [new workbox.ExpirationPlugin({
       maxAgeSeconds: 2592000,
@@ -104,7 +104,7 @@ define(['./workbox-47da91e0'], (function (workbox) { 'use strict';
   }) => {
     const routes = ["/", "/markets", "/coins/:id", "/trade/bitcoin", "/portfolio", "/signup", "/login", "/coin-tracker", "/settings", "/rewards"];
     return routes.some(route => new RegExp(route.replace(/:id/, "[^/]+")).test(url.pathname));
-  }, new workbox.CacheFirst({
+  }, new workbox.NetworkFirst({
     "cacheName": "dynamic-pages",
     plugins: [new workbox.ExpirationPlugin({
       maxAgeSeconds: 2592000,

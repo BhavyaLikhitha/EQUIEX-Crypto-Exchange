@@ -161,7 +161,8 @@ export default defineConfig({
           // Cache static assets
           {
             urlPattern: ({ url }) => url.pathname.includes('assets'),
-            handler: 'CacheFirst',
+            handler: 'NetworkFirst',
+            // handler: 'CacheFirst',
             method: 'GET',
             options: {
               cacheName: 'static-assets',
@@ -193,8 +194,8 @@ export default defineConfig({
                 new RegExp(route.replace(/:id/, '[^/]+')).test(url.pathname)
               );
             },
-            handler: 'CacheFirst', // For dynamic pages
-            // handler:'NetworkFirst',
+            // handler: 'CacheFirst', // For dynamic pages
+            handler:'NetworkFirst',
             method: 'GET',
             options: {
               cacheName: 'dynamic-pages',
