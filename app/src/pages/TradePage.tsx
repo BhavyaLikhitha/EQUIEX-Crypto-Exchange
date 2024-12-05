@@ -869,7 +869,7 @@ const TradePage: React.FC = () => {
       // alert('Transaction successful!');
       toast.success("Sell Transaction Successful!");
        // Show notification
-    showNotification("Buy Transaction Successful!", {
+    showNotification("Sell Transaction Successful!", {
       body: `You sold ${quantity.toFixed(5)} BTC for $${amount.toFixed(2)}.`,
       icon: {bitcoin}, // Replace with your app's icon URL
     });
@@ -973,7 +973,7 @@ useEffect(() => {
     });
   }
 }, []);
-const showNotification = (title, options) => {
+const showNotification = (title:any, options:any) => {
   if (Notification.permission === "granted") {
     new Notification(title, options);
   } else {
