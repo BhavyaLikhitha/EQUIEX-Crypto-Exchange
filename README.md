@@ -151,8 +151,8 @@ The application includes essential functionalities like market trend tracking, t
 ---
 
 ### **CRUD Operations**
-- **NFT Section**: Allows users to create, read, update, and delete NFTs.
-- **Blogs Section**: Implements CRUD operations for blogs management.
+- **NFT Page**: Allows users to create, read, update, and delete NFTs.
+- **Blogs Page**: Implements CRUD operations for blogs management.
 
 ---
 
