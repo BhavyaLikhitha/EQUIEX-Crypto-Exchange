@@ -152,7 +152,7 @@ The application includes essential functionalities like market trend tracking, t
 
 ### **CRUD Operations**
 - **NFT Section**: Allows users to create, read, update, and delete NFTs.
-- **Rewards Section**: Implements CRUD operations for streak management.
+- **Blogs Section**: Implements CRUD operations for blogs management.
 
 ---
 
@@ -348,12 +348,6 @@ classDiagram
         +Decimal marketCap
     }
 
-    class ChatBot {
-        +UUID chatbotId
-        +String question
-        +String answer
-    }
-
     Person "1" --> "1" Portfolio : has
     Person "1" --> "0..*" CoinTracker : tracks
     Person "1" --> "0..*" Blog : creates
@@ -371,7 +365,6 @@ classDiagram
     Menu "1" --> "0..*" Person : accessible by
     MarketTrendsToday "1" --> "0..*" CoinStats : tracks
     Settings "1" --> "1" Person : connected to
-    ChatBot "0..*" --> "1" Person : assists
     CoinTracker "1" --> "0..*" CoinStats : contains
 
 ```
