@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Blog } from '../types/types';
+import { Blog } from './types';
 
 interface AddBlogProps {
   setBlogs: React.Dispatch<React.SetStateAction<Blog[]>>;
