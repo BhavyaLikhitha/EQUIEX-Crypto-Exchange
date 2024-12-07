@@ -312,10 +312,10 @@ function Header(): JSX.Element {
           <Button variant="text" href="/trade/bitcoin" className="link">
             {t("trade")}
           </Button>
-          <Button variant="text" href="/" className="link">
+          <Button variant="text" href="/nfts" className="link">
             {t("nftGallery")}
           </Button>
-          <Button variant="text" href="/" className="link">
+          <Button variant="text" href="/blogs" className="link">
             {t("academy")}
           </Button>
           <Button variant="text" href="/rewards" className="link">
