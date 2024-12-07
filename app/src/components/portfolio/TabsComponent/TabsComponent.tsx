@@ -10,12 +10,15 @@ import Spot from "../SpotTab/Spot";
 import "./tabscom.css";
 
 export default function TabsComponent(): JSX.Element {
+   // State to manage the selected tab
   const [value, setValue] = useState<string>("spot");
 
+  // Function to handle tab changes
   const handleChange = (event: React.SyntheticEvent, newValue: string): void => {
     setValue(newValue);
   };
 
+  // Tab styles
   const style = {
     color: "var(--magenta)",
     fontFamily: "Inter, sans-serif",
@@ -23,6 +26,7 @@ export default function TabsComponent(): JSX.Element {
     fontWeight: 600,
   };
 
+  // Custom theme for Material-UI components
   const theme = createTheme({
     palette: {
       primary: {
@@ -33,19 +37,20 @@ export default function TabsComponent(): JSX.Element {
 
   return (
     <ThemeProvider theme={theme}>
+       {/* Tab Context to manage the state of active tab */}
       <TabContext value={value}>
-        {/* Tab List */}
+         {/* Tab List for the actual tab buttons */}
         <TabList onChange={handleChange} variant="fullWidth">
           <Tab label="TRADING ACCOUNT" value="trading" sx={style} />
           <Tab label="SPOT ACCOUNT" value="spot" sx={style} />
         </TabList>
 
-        {/* Tab Panels */}
+        {/* Tab Panels for displaying content based on active tab */}
         <TabPanel value="trading">
-          <Trading />
+          <Trading />  {/* Trading account content */}
         </TabPanel>
         <TabPanel value="spot">
-          <Spot />
+          <Spot />   {/* Spot account content */}
         </TabPanel>
       </TabContext>
     </ThemeProvider>

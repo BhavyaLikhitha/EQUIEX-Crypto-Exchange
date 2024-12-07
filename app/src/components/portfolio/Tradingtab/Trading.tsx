@@ -340,6 +340,7 @@ import './trading.css';
 import { toast, ToastContainer } from 'react-toastify';
 
 function Trading() {
+  // State variables for managing wallet, balance, and transaction details
   const [account, setAccount] = useState('');
   const [balance, setBalance] = useState('');
   const [tradingBalance, setTradingBalance] = useState('0'); // Initial trading balance set to 0
@@ -348,8 +349,10 @@ function Trading() {
   const [transactionAmount, setTransactionAmount] = useState(''); // Input for deposit/withdrawal
   const [transactionStatus, setTransactionStatus] = useState(''); // Status message
 
+  // useEffect hook to handle account change and fetch necessary data on mount
   useEffect(() => {
     if (window.ethereum) {
+      // Listen for changes in Ethereum accounts (MetaMask)
       window.ethereum.on('accountsChanged', function (accounts: any) {
         setAccount(accounts[0]);
         loadBalance(accounts[0]);
@@ -361,6 +364,7 @@ function Trading() {
     fetchEthPrice();
   }, []);
 
+  // Function to load wallet balance (ETH) from the blockchain
   const loadBalance = async (account: any) => {
     try {
       const web3 = new Web3(window.ethereum);
@@ -371,6 +375,7 @@ function Trading() {
     }
   };
 
+  // Function to send a transaction (Deposit/Withdrawal)
   const sendTransaction = async (amount: any, recipient: any) => {
     try {
       if (!window.ethereum) throw new Error('MetaMask not installed!');
@@ -382,14 +387,15 @@ function Trading() {
         value: web3.utils.toWei(amount, 'ether'),
       });
       setTransactionStatus(`Transaction Sent! Hash: ${tx.transactionHash}`);
-      setTradingBalance((parseFloat(tradingBalance) + parseFloat(amount)).toFixed(4));
-      loadBalance(accounts[0]); // Update wallet balance
-      updateUsdBalance();
+      setTradingBalance((parseFloat(tradingBalance) + parseFloat(amount)).toFixed(4)); // Update trading balance
+      loadBalance(accounts[0]); // Update wallet balance after transaction
+      updateUsdBalance(); // Update USD balance
     } catch (error: any) {
       setTransactionStatus(`Error: ${error.message}`);
     }
   };
 
+    // Function to connect the wallet (MetaMask)
   const connectWallet = async () => {
     if (window.ethereum) {
       try {
@@ -401,7 +407,7 @@ function Trading() {
         setAccount(accounts[0]);
         loadBalance(accounts[0]);
 
-        // Send wallet address to backend
+        // Send wallet address to backend to register
         const response = await axios.post('http://localhost:3002/portfolio/connect-wallet', {
           walletAddress: accounts[0],
         });
@@ -417,19 +423,21 @@ function Trading() {
     }
   };
 
+  // Function to fetch the wallet's trading balance from the backend
   const fetchWalletBalance = async (walletAddress: string) => {
     try {
       const response = await axios.get('http://localhost:3002/portfolio/fetch-wallet-balance', {
         params: { walletAddress },
       });
-      setTradingBalance(response.data.data.tradingBalance);
-      updateUsdBalance(response.data.data.tradingBalance);
+      setTradingBalance(response.data.data.tradingBalance); // Set trading balance from backend response
+      updateUsdBalance(response.data.data.tradingBalance); // Update USD balance based on ETH balance
       console.log('Wallet balance fetched from server:', response.data.data);
     } catch (error) {
       console.error('Error fetching wallet balance from backend:', error);
     }
   };
 
+  // Function to fetch the current ETH price from CoinGecko API
   const fetchEthPrice = async () => {
     try {
       const response = await axios.get('https://api.coingecko.com/api/v3/simple/price', {
@@ -444,6 +452,7 @@ function Trading() {
     }
   };
 
+ // Function to disconnect the wallet
   const disconnectWallet = () => {
     setAccount('');
     setBalance('');
@@ -451,17 +460,7 @@ function Trading() {
     setUsdBalance('0');
   };
 
-  // const updateTradingBalance = async (newBalance: string) => {
-  //   try {
-  //     const response = await axios.post('http://localhost:3002/portfolio/update-trading-balance', {
-  //       walletAddress: account,
-  //       newBalance,
-  //     });
-  //     console.log(response.data.message);
-  //   } catch (error) {
-  //     console.error('Error updating trading balance:', error);
-  //   }
-  // };
+   // Function to update the trading balance in the backend
   const updateTradingBalance = async (newBalance: string, newBalanceUSD: string) => {
     try {
       const response = await axios.post('http://localhost:3002/portfolio/update-trading-balance', {
@@ -475,57 +474,17 @@ function Trading() {
     }
   };
   
-  // const handleDeposit = async () => {
-  //   const depositValue = parseFloat(transactionAmount);
-  //   if (depositValue > 0 && depositValue <= parseFloat(balance)) {
-  //     try {
-  //       await sendTransaction(depositValue.toString(), account);
-  //       const newBalance = (parseFloat(tradingBalance) + depositValue).toFixed(4);
-  //       setTradingBalance(newBalance);
-  //       updateUsdBalance(newBalance);
-  //       await updateTradingBalance(newBalance);
-  //       toast.success('Deposit Successful!');
-  //       // setTransactionStatus('Deposit successful!');
-  //     } catch (error) {
-  //       console.error('Error processing deposit:', error);
-  //       toast.error('Error processing deposit.!');
-  //       setTransactionStatus('Error processing deposit.');
-  //     }
-  //   } else {
-  //     alert('Invalid deposit amount!');
-  //   }
-  // };
-
-  // const handleWithdraw = async () => {
-  //   const withdrawValue = parseFloat(transactionAmount);
-  //   if (withdrawValue > 0 && withdrawValue <= parseFloat(tradingBalance)) {
-  //     try {
-  //       await sendTransaction(withdrawValue.toString(), account); // Self-transfer for testing
-  //       const newBalance = (parseFloat(tradingBalance) - withdrawValue).toFixed(4);
-  //       setTradingBalance(newBalance);
-  //       updateUsdBalance(newBalance);
-  //       await updateTradingBalance(newBalance);
-  //       toast.success('Withdrawal Successful!');
-  //       // setTransactionStatus('Withdrawal successful!');
-  //     } catch (error) {
-  //       console.error('Error processing withdrawal:', error);
-  //       toast.error('Error processing withdrawal.');
-  //       setTransactionStatus('Error processing withdrawal.');
-  //     }
-  //   } else {
-  //     alert('Invalid withdrawal amount!');
-  //   }
-  // };
+  // Function to handle deposit transactions
   const handleDeposit = async () => {
     const depositValue = parseFloat(transactionAmount);
     if (depositValue > 0 && depositValue <= parseFloat(balance)) {
       try {
         await sendTransaction(depositValue.toString(), account);
-        const newBalance = (parseFloat(tradingBalance) + depositValue).toFixed(4);
+        const newBalance = (parseFloat(tradingBalance) + depositValue).toFixed(4); // Update trading balance
         const newBalanceUSD = (parseFloat(newBalance) * ethPrice).toFixed(2); // Calculate new USD balance
         setTradingBalance(newBalance);
         updateUsdBalance(newBalance);
-        await updateTradingBalance(newBalance, newBalanceUSD); // Pass USD balance
+        await updateTradingBalance(newBalance, newBalanceUSD); // Update backend with new balance
         toast.success('Deposit Successful!');
       } catch (error) {
         console.error('Error processing deposit:', error);
@@ -536,6 +495,7 @@ function Trading() {
     }
   };
   
+  // Function to handle withdrawal transactions
   const handleWithdraw = async () => {
     const withdrawValue = parseFloat(transactionAmount);
     if (withdrawValue > 0 && withdrawValue <= parseFloat(tradingBalance)) {
@@ -556,6 +516,7 @@ function Trading() {
     }
   };
   
+  // Function to update USD balance based on ETH balance
   const updateUsdBalance = (ethBalance = tradingBalance) => {
     const usdValue = (parseFloat(ethBalance) * ethPrice).toFixed(2);
     setUsdBalance(usdValue);
@@ -599,10 +560,12 @@ function Trading() {
             Withdraw
           </button>
           
-         
+          
         </div>
+         {/* Display transaction status */}
         {transactionStatus}
       </div>
+      {/* Toast notifications for success or error messages */}
       <ToastContainer position="top-right" autoClose={2000} />
     </div>
   );

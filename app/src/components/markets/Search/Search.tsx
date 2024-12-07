@@ -8,15 +8,15 @@ import { Button } from '@mui/material';
 interface SearchProps {
   search: string;
   onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onClearSearch: () => void;
+  onClearSearch: () => void; // Function to clear the search term
 }
 
 function Search({ search, onSearchChange, onClearSearch }: SearchProps): JSX.Element {
   const navigate = useNavigate();
 
   return (
-    <div className='search-container'>
-    <div className='search-flex'>
+    <div className='search-container'> {/* Container for the entire search section */}
+    <div className='search-flex'> {/* Flex container for input and search icon */}
       <SearchRoundedIcon />
       <input
         className='search-input'
@@ -25,6 +25,8 @@ function Search({ search, onSearchChange, onClearSearch }: SearchProps): JSX.Ele
         value={search}
         onChange={onSearchChange}
       />
+
+       {/* Clear button visible only when there's text in the search field */}
       {search && (
         <button className="clear-btn" onClick={onClearSearch}>
           Clear
@@ -32,7 +34,7 @@ function Search({ search, onSearchChange, onClearSearch }: SearchProps): JSX.Ele
       )}
       
     </div>
-    {/* <Button variant="text" href="/coin-tracker" className="my-fav">My Favorites</Button> */}
+    {/* Button to navigate to the 'My Favorites' page */}
     <button className="my-fav" onClick={() => navigate('/coin-tracker')}>
               My Favorites
             </button>

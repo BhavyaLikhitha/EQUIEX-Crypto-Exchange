@@ -113,7 +113,7 @@ import TrendingDownRoundedIcon from "@mui/icons-material/TrendingDownRounded";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-// Define an interface for the coin data
+// Interface to define the structure of a cryptocurrency object
 interface Coin {
   id: string;
   name: string;
@@ -123,19 +123,23 @@ interface Coin {
 }
 
 function Markets(): JSX.Element {
+   // State to store the list of coins fetched from the API
   const [coins, setCoins] = useState<Coin[]>([]);
+
+  // Navigation hook to programmatically navigate between routes
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  // Fetch data from CoinGecko API
+  // Effect to fetch cryptocurrency data from the CoinGecko API
   useEffect(() => {
     const fetchCoinData = async (): Promise<void> => {
       try {
+        // API call to get market data for selected cryptocurrencies
         const response: AxiosResponse<Coin[]> = await axios.get(
           'https://api.coingecko.com/api/v3/coins/markets',
           {
             params: {
-              vs_currency: 'usd',
+              vs_currency: 'usd', // Currency in which prices are displayed
               ids: 'bitcoin,ethereum,tether,solana,binancecoin,ripple,dogecoin,cardano',
               order: 'market_cap_desc',
               per_page: 8,
@@ -146,20 +150,24 @@ function Markets(): JSX.Element {
             },
           }
         );
+        // Update state with the fetched data
         setCoins(response.data);
       } catch (error) {
         console.error(t("errorFetchingData"), error);
       }
     };
-    fetchCoinData();
-  }, [t]);
 
-  // Scroll animation logic
+    // Call the fetch function on component mount
+    fetchCoinData(); 
+  }, [t]); // Dependency array includes `t` to ensure translations are updated
+
+  // Effect to add scroll animation for UI elements
   useEffect(() => {
     const handleScroll = (): void => {
       const exploreHeading = document.querySelector('.markets-heading');
       const exploreCards = document.querySelectorAll('.markets-card');
 
+       // Function to add 'show' class if the element is in the viewport
       const showElement = (element: Element | null): void => {
         if (element) {
           const rect = element.getBoundingClientRect();
@@ -169,6 +177,7 @@ function Markets(): JSX.Element {
         }
       };
 
+      // Trigger animation for the heading and each card
       showElement(exploreHeading);
       exploreCards.forEach((card) => showElement(card));
     };
@@ -182,27 +191,37 @@ function Markets(): JSX.Element {
       <h2 className="markets-heading">
         {t("marketTrends")}<span className="highlight"> {t("today")}</span>
       </h2>
+      {/* Grid to display cryptocurrency cards */}
       <div className="markets-grid">
+        {/* Map through the coins array and render each coin */}
         {coins.map((coin) => (
           <div className="markets-card" key={coin.id}>
             <img src={coin.image} alt={coin.name} className="coins-image" />
             <h3 className="coin-name">{coin.name}</h3>
+
+             {/* Current price formatted to 2 decimal places */}
             <p className="coin-price">${coin.current_price.toFixed(2)}</p>
+
+            {/* Price change percentage with conditional styling */}
             <div
               className={`coin-change ${
                 coin.price_change_percentage_24h >= 0 ? "positive" : "negative"
               }`}
             >
+              {/* Display up or down arrow based on the price change */}
               {coin.price_change_percentage_24h >= 0 ? (
                 <TrendingUpRoundedIcon className="change-icon" />
               ) : (
                 <TrendingDownRoundedIcon className="change-icon" />
               )}
+              {/* Percentage change formatted to 2 decimal places */}
               <span>{coin.price_change_percentage_24h.toFixed(2)}%</span>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Button to navigate to the detailed markets page */}
       <button
         className="get-started-button"
         onClick={() => navigate("/markets")}

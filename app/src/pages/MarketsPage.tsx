@@ -17,36 +17,66 @@ interface Coin {
   price_change_percentage_24h: number;
   total_volume: number;
   market_cap: number;
-  [key: string]: any; // Allow other fields to be included as well
+  [key: string]: any; // Allows additional properties in the Coin object
 }
 
 const MarketsPage: React.FC = () => {
+  // State to store the list of all coins
   const [coins, setCoins] = useState<Coin[]>([]);
+
+  // State to manage the user's search query
   const [search, setSearch] = useState<string>("");
+
+  // State to manage the current page number for pagination
   const [page, setPage] = useState<number>(1);
+
+  // State to store the list of coins to be displayed on the current page
   const [paginatedCoins, setPaginatedCoins] = useState<Coin[]>([]);
+
+  // State to manage the loading state while fetching data from the API
   const [loading, setLoading] = useState<boolean>(true);
 
+  /**
+   * Handles page change for pagination.
+   * @param event - The event triggered by the page change
+   * @param value - The new page number
+   */
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    const initialCount = (value - 1) * 10;
+    const initialCount = (value - 1) * 10; // Calculate the starting index for the current page
     setPaginatedCoins(coins.slice(initialCount, initialCount + 10));
   };
 
+  /**
+   * Handles changes in the search input field.
+   * @param e - The event triggered when the input value changes
+   */
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
+  /**
+   * Filters coins based on the search query.
+   * Filters by name or symbol, converting both to lowercase to make the search case-insensitive.
+   */
   const filteredCoins = coins.filter(
     (coin) =>
       coin.name.toLowerCase().includes(search.trim().toLowerCase()) ||
       coin.symbol.toLowerCase().includes(search.trim().toLowerCase())
   );
 
+  /**
+   * Clears the search input field.
+   * Resets the search state to an empty string.
+   */
   const onClearSearch = () => {
     setSearch(""); // Clear the search input
   };
 
+  /**
+   * Fetches the list of coins from the CoinGecko API when the component mounts.
+   * The coins are ordered by market cap in descending order and limited to 100 coins.
+   */
   useEffect(() => {
     axios
       .get(
@@ -67,6 +97,7 @@ const MarketsPage: React.FC = () => {
   return (
     <div>
       <Header />
+       {/* Render the search input for filtering coins */}
       <Search search={search} onSearchChange={onSearchChange} onClearSearch={onClearSearch} />
       
       {/* Show filtered coins when search is present, else show paginated coins */}
@@ -81,7 +112,7 @@ const MarketsPage: React.FC = () => {
           {/* Show paginated coins when no search query */}
           <Tabs coins={paginatedCoins} />
           
-          {/* Show pagination component when there's no search */}
+           {/* Display the pagination component to navigate between pages */}
           <Page page={page} handlePageChange={handlePageChange} />
         </>
       )}

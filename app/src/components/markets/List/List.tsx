@@ -267,6 +267,7 @@ import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import TrendingDownRoundedIcon from "@mui/icons-material/TrendingDownRounded";
 import { convertNumber } from '../../../functions/ConvertNumbers';
 
+// Interface to define the structure of a Coin object
 interface Coin {
   id: string;
   image?: string;
@@ -278,22 +279,27 @@ interface Coin {
   market_cap: number;
 }
 
+// Interface to define the props structure for the List component
 interface ListProps {
   coin: Coin;
 }
 
 function List({ coin }: ListProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const { watchlist } = useAppSelector((state) => state.watchlist);
+  const { watchlist } = useAppSelector((state) => state.watchlist); // Access watchlist state from Redux
 
+  // Check if the coin is already in the watchlist
   const isFavorite = watchlist.some((item) => item.symbol === coin.symbol);
 
+  // Fetch the watchlist data when the component mounts
   useEffect(() => {
     dispatch(fetchWatchlist());
   }, [dispatch]);
 
+
+  // Handle adding/removing a coin from the watchlist
   const toggleFavorite = (e: React.MouseEvent) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevent event propagation to parent elements
     dispatch(toggleWatchlist(coin))
       .unwrap()
       .then(({ action }) => {
@@ -310,20 +316,26 @@ function List({ coin }: ListProps): JSX.Element {
 
   return (
     <tr className='list-row'>
+      {/* Favorite icon for toggling watchlist status */}
       <td className="favorite-icon" onClick={toggleFavorite}>
         {isFavorite ? <GradeIcon style={{ color: 'red' }} /> : <StarOutlineIcon />}
       </td>
+
+       {/* Coin image and link to detailed page */}
       <td className='td-image'>
         <Link to={`/coins/${coin.id}`}>
           <img src={coin.image || '/bitcoin.png'} alt={coin.name} className='coin-logo' />
         </Link>
       </td>
+      {/* Coin name and symbol */}
       <td>
         <div className='name-col'>
           <p className='coin-symbol'>{coin.symbol}</p>
           <p className='coin-name'>{coin.name}</p>
         </div>
       </td>
+
+      {/* Price change percentage with respective icons for positive/negative change */}
       {coin.price_change_percentage_24h > 0 ? (
         <td className='chip-flex'>
           <div className='price-chip'>{coin.price_change_percentage_24h.toFixed(2)}%</div>
@@ -339,6 +351,8 @@ function List({ coin }: ListProps): JSX.Element {
           </div>
         </td>
       )}
+
+      {/* Current price with color indicating price trend */}
       <td>
         <h3 className='coin-price td-center' style={{ color: coin.price_change_percentage_24h > 0 ? "var(--green)" : "var(--red)" }}>
           ${coin.current_price.toLocaleString()}
@@ -347,9 +361,13 @@ function List({ coin }: ListProps): JSX.Element {
       <td>
         <p className='total_volume td-right td-volume'>${coin.total_volume.toLocaleString()}</p>
       </td>
+      
+       {/* Market cap displayed in full for desktop */}
       <td className='desktop-td-mkt'>
         <p className='market_cap td-right td-market'>${coin.market_cap.toLocaleString()}</p>
       </td>
+
+      {/* Abbreviated market cap for mobile view */}
       <td className='mobile-td-mkt'>
         <p className='market_cap td-right td-market'>${convertNumber(coin.market_cap)}</p>
       </td>

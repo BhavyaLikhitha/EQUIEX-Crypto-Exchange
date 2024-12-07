@@ -26,12 +26,15 @@ interface TabsProps {
 }
 
 export default function Tabs({ coins }: TabsProps): JSX.Element {
+  // State for managing the currently selected tab (list or grid view)
   const [value, setValue] = useState<string>("list");
 
+  // Event handler to change the selected tab value
   const handleChange = (event: React.SyntheticEvent, newValue: string): void => {
     setValue(newValue);
   };
 
+    // Styling for the tab labels
   const style = {
     color: "var(--magenta)",
     fontFamily: "Inter,sans-serif",
@@ -39,6 +42,7 @@ export default function Tabs({ coins }: TabsProps): JSX.Element {
     fontWeight: 600,
   };
 
+  // Create a custom theme for the Tab component
   const theme = createTheme({
     palette: {
       primary: {
@@ -49,11 +53,13 @@ export default function Tabs({ coins }: TabsProps): JSX.Element {
 
   return (
     <ThemeProvider theme={theme}>
-      <TabContext value={value}>
-        <TabList onChange={handleChange} variant="fullWidth">
+      <TabContext value={value}> {/* Provide the value of the selected tab */}
+        <TabList onChange={handleChange} variant="fullWidth"> {/* Tab list with two options (list/grid) */}
           <Tab label="List" value="list" sx={style} />
           <Tab label="Grid" value="grid" sx={style} />
         </TabList>
+
+        {/* List view panel */}
         <TabPanel value="list">
           <table className="list-table">
             {coins.map((item, i) => (
@@ -61,10 +67,12 @@ export default function Tabs({ coins }: TabsProps): JSX.Element {
             ))}
           </table>
         </TabPanel>
+
+        {/* Grid view panel */}
         <TabPanel value="grid">
-          <div className="grid-flex">
+          <div className="grid-flex"> {/* Container for the grid view of coins */}
             {coins.map((coin, i) => (
-              <Grid coin={coin} key={i} />
+              <Grid coin={coin} key={i} /> 
             ))}
           </div>
         </TabPanel>

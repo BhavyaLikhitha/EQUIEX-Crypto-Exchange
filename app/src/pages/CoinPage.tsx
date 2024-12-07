@@ -212,17 +212,27 @@ interface ChartData {
 }
 
 function CoinPage() {
+  // State for loading status
   const [loading, setLoading] = useState<boolean>(true);
+
+  // Extract 'id' from the URL parameters (e.g., /coin/bitcoin would have id='bitcoin')
   const { id } = useParams<{ id: string }>();
+
+  // State to store coin data fetched from the API
   const [coinData, setCoinData] = useState<CoinData | null>(null);
+
+  // State to manage the selected time period for the chart (default is 30 days)
   const [days, setDays] = useState<number>(30);
+
+  // State to store chart data fetched from the API
   const [chartData, setChartData] = useState<ChartData | null>(null);
 
+  // useEffect to fetch coin data and chart data whenever 'id' or 'days' changes
   useEffect(() => {
     if (id) {
-      setLoading(true);
+      setLoading(true); // Set loading to true while data is being fetched
 
-      // Fetch coin data
+      // Fetch coin data from the Coingecko API
       axios
         .get(`https://api.coingecko.com/api/v3/coins/${id}`)
         .then((response) => {
@@ -233,7 +243,7 @@ function CoinPage() {
           console.error("ERROR>>>", error.message);
         });
 
-      // Fetch chart data
+      // Fetch chart data for the specified 'days' range
       axios
         .get(
           `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}&interval=daily`
@@ -241,12 +251,13 @@ function CoinPage() {
         .then((response) => {
           console.log("Prices", response.data.prices);
 
-          // Create chart data structure
+         
+          // Extract labels (dates) and data (prices) from the response
           const labels = response.data.prices.map((price: [number, number]) =>
-            convertDate(price[0])
+            convertDate(price[0]) // Convert timestamp to human-readable date
           );
 
-          const data = response.data.prices.map((price: [number, number]) => price[1]);
+          const data = response.data.prices.map((price: [number, number]) => price[1]); // Extract price data
 
           setChartData({
             labels: labels,
@@ -267,16 +278,21 @@ function CoinPage() {
         })
         .catch((error) => {
           console.error("ERROR>>>", error.message);
-          setLoading(false);
+          setLoading(false);  // Stop loading even if there's an error
         });
     }
-  }, [id, days]);
+  }, [id, days]);  // Runs whenever 'id' or 'days' changes
 
+  /**
+   * Handle change in the 'days' option (e.g., 7, 30, 90, 180 days)
+   * @param event - The event triggered by changing the days option
+   */
   const handleDaysChange = (event: SelectChangeEvent<number>) => {
     const newDays = Number(event.target.value);
     setDays(newDays);
     setLoading(true);
 
+    // Fetch updated chart data for the new time period
     axios
       .get(
         `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${newDays}&interval=daily`
@@ -305,14 +321,15 @@ function CoinPage() {
           ]
         });
 
-        setLoading(false);
+        setLoading(false); // Stop loading once data is fetched
       })
       .catch((error) => {
-        console.error("ERROR>>>", error.message);
+        console.error("ERROR>>>", error.message);  // Log the error if the request fails
         setLoading(false);
       });
   };
 
+  // If loading, display the loader
   if (loading) {
     return (
       <div>
@@ -322,6 +339,7 @@ function CoinPage() {
     );
   }
 
+  // If coin data is not available, display an error message
   if (!coinData) {
     return (
       <div>
@@ -335,11 +353,14 @@ function CoinPage() {
     <div>
       <Header />
       <div className="wrapper">
-        <List coin={coinData} />
+        <List coin={coinData} /> {/* List component to display coin details */}
       </div>
       <div className="chart-wrapper">
         <SelectDays days={days} handleDaysChange={handleDaysChange} />
+        {/* Dropdown to select days for chart data */}
+        
         {chartData && <Chart key={days} chartData={chartData} multiAxis />}
+         {/* Chart component to display price trends */}
       </div>
       <div className="coin-info-table">
         <h2>Coin Stats</h2>

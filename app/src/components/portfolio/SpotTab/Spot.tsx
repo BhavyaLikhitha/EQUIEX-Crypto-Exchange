@@ -352,10 +352,14 @@ import bnb from '../../../assets/bnb.png';
 import eth from '../../../assets/eth.jpg';
 import img from '../../../assets/image.png';
 
+// Register necessary Chart.js components for bar chart
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const SpotPage: React.FC = () => {
+  // Define the wallet address for fetching portfolio data
   const walletAddress = '0xc744bc7bdbae39ad2d372df6abaf974d81e4914d';
+
+  // State to hold the user's portfolio and total value
   const [portfolio, setPortfolio] = useState<any[]>([]);
   const [totalValue, setTotalValue] = useState<number>(0);
 
@@ -366,12 +370,15 @@ const SpotPage: React.FC = () => {
     { coinName: 'BNB', quantity: 0.03, price: 650.04, value: 20.15, imageUrl: bnb },
   ];
 
+  // Combine portfolio data with additional coins
   const allPortfolio = [...portfolio, ...additionalCoins];
-
+ 
+  // Fetch portfolio data from the API
   useEffect(() => {
     fetchPortfolio();
   }, []);
 
+  // Recalculate total value whenever portfolio data changes
   useEffect(() => {
     // Calculate the total value dynamically
     const calculateTotalValue = () => {
@@ -382,6 +389,7 @@ const SpotPage: React.FC = () => {
     calculateTotalValue();
   }, [portfolio]);
 
+  // Function to fetch portfolio data from the backend API
   const fetchPortfolio = async () => {
     try {
       const response = await fetch(
@@ -394,8 +402,10 @@ const SpotPage: React.FC = () => {
     }
   };
 
+  // Bar chart colors for different coins
   const barColors = ['#cb6ce6', '#F4A300', '#6C5B7B', '#F7B7A3', '#FFABAB'];
 
+  // Chart data including labels (coin names) and dataset (coin values)
   const chartData = {
     labels: allPortfolio.map((coin) => coin.coinName),
     datasets: [
@@ -409,6 +419,8 @@ const SpotPage: React.FC = () => {
     ],
   };
 
+
+  // Chart options for customizing the chart's look and behavior
   const chartOptions = {
     responsive: true,
     scales: {
@@ -441,10 +453,11 @@ const SpotPage: React.FC = () => {
         position: 'right' as const,
         labels: {
           generateLabels: (chart: any) => {
+            // Customize legend labels based on chart data
             const labels = chart.data.labels.map((label: any, index: any) => {
               return {
                 text: label,
-                fillStyle: barColors[index],
+                fillStyle: barColors[index], // Set the legend color based on the bar color
               };
             });
             return labels;
@@ -457,11 +470,15 @@ const SpotPage: React.FC = () => {
 
   return (
     <div className="spot-page">
+       {/* Header Section */}
       <div className="head">
         <h1 className="welcome">
           My <span className="porti">Portfolio</span>
         </h1>
       </div>
+
+
+      {/* Display total value of the portfolio */}
       <h2>Total Value: ${totalValue.toFixed(2)}</h2>
 
       <table className="portfolio-table">
@@ -475,6 +492,7 @@ const SpotPage: React.FC = () => {
           </tr>
         </thead>
         <tbody>
+           {/* Render portfolio coins */}
           {allPortfolio.length > 0 ? (
             allPortfolio.map((coin, index) => (
               <tr key={index}>
@@ -495,8 +513,9 @@ const SpotPage: React.FC = () => {
         </tbody>
       </table>
 
+      {/* Bar Chart Section */}
       <div className="bar-graph">
-        <Bar data={chartData} options={chartOptions} />
+        <Bar data={chartData} options={chartOptions} />  {/* Render the bar chart */}
       </div>
     </div>
   );

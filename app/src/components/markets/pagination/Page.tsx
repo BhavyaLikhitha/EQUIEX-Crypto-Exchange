@@ -5,13 +5,15 @@ import './page.css';
 // Define the prop types for the Page component
 interface PageProps {
   page: number;
-  handlePageChange: (event: React.ChangeEvent<unknown>, value: number) => void;
+  handlePageChange: (event: React.ChangeEvent<unknown>, value: number) => void; // Function to handle page changes
 }
 
+// Page component for rendering pagination
 export default function Page({ page, handlePageChange }: PageProps): JSX.Element {
   return (
     <div className="pagination-div">
       <Pagination
+       // Style overrides for Material-UI's Pagination component
         sx={{
           "& .MuiPaginationItem-text": {
             color: "black !important",

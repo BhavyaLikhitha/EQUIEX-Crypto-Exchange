@@ -200,10 +200,12 @@ import Switch from '@mui/material/Switch';
 import { toast, ToastContainer} from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
+// Importing necessary libraries and components
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 const Settings: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>('profile');
+  // State management for various settings
+  const [activeTab, setActiveTab] = useState<string>('profile'); // Current active tab in settings
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [resetPassword, setResetPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
@@ -215,12 +217,13 @@ const Settings: React.FC = () => {
   
   const navigate = useNavigate();
 
+  // Handles file input change event
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       setSelectedFile(event.target.files[0]);
     }
   };
-
+  // Handles file sharing to the backend (e.g., for KYC verification)
   const handleFileShare = async () => {
     if (selectedFile) {
       try {
@@ -229,10 +232,10 @@ const Settings: React.FC = () => {
         toast.error('Error sharing file: ' + error.message);
       }
     } else {
-      toast.error('Please select a file first.');
+      toast.error('Please select a file first.'); // Error if no file selected
     }
   };
-
+   // Handles password reset logic
   const handlePasswordReset = () => {
     if (resetPassword === confirmPassword) {
         toast.success("Password reset Successful!");
@@ -243,22 +246,26 @@ const Settings: React.FC = () => {
     }
   };
 
+  // Toggle handler for settings (e.g., enabling or disabling notifications)
   const handleSwitchChange = (setter: React.Dispatch<React.SetStateAction<boolean>>, label: string, enabled: boolean) => { 
     setter(enabled); 
     const message = enabled ? `${label} enabled` : `${label} disabled`; 
-    toast.success(message);
+    toast.success(message); // Show success message for switch toggle
   };
+    // Handles form submission for the contact us form
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault(); 
     toast.success('We will contact you shortly.');
   };
 
+  // Handles data sharing toggle
   const handleDataSharingChange = (enabled: boolean) => {
     setDataSharingEnabled(enabled); 
     const message = enabled ? 'Data sharing enabled' : 'Data sharing disabled'; 
-    toast.success(message); 
+    toast.success(message);  // Show success message for data sharing toggle
   };
 
+  // Renders the content based on the active tab
   const renderContent = () => {
     switch (activeTab) {
       case 'profile':
@@ -266,6 +273,7 @@ const Settings: React.FC = () => {
           content: (
             <div>
               <h2 className='my-pro'>My Profile</h2>
+              {/* Display user's profile information */}
               <div className="profile-field">
                 <strong className='strong'>Name:</strong>
                 <input type="text" value="Akshay" readOnly />
@@ -308,6 +316,7 @@ const Settings: React.FC = () => {
   />
 </label>
               </div>
+              {/* Security settings for password reset */}
               <div className="profile-field">
                 <strong className='strong'>Current Password:</strong>
                 <input type="password" value="********" readOnly />
@@ -338,6 +347,7 @@ const Settings: React.FC = () => {
           content: (
             <div> 
                 <h2 className='my-pro'>Notifications</h2> 
+                 {/* Notification settings with switches for toggling */}
                 <div> <label className='profile-field'> Enable Notifications 
                     <Switch className='togge' {...label} checked={notificationsEnabled} onChange={(e) => handleSwitchChange(setNotificationsEnabled, 'Notifications', e.target.checked)} />
                          </label> 
@@ -355,11 +365,13 @@ const Settings: React.FC = () => {
           ),
           image: notificationsImage,
         };
+        // Contact Us section
       case 'contact':
         return {
           content: (
             <div>
               <h2 className='my-pro'>Contact Us</h2>
+               {/* Contact form */}
               <form onSubmit={handleFormSubmit}>
                 <div >
                   <label className='contact-label'>
@@ -390,8 +402,10 @@ const Settings: React.FC = () => {
               </form>
             </div>
           ),
-          image: contactImage,
+          image: contactImage, // Image associated with the Contact Us tab
         };
+
+      // KYC Verification section
       case 'kyc':
         return {
           content: (
@@ -438,6 +452,7 @@ const Settings: React.FC = () => {
           content: (
             <div>
               <h2>About</h2>
+               {/* Description and features of the platform */}
               <div className="platform-description">
   <p>
     Equiex is an innovative platform designed to provide users with an all-in-one solution for trading cryptocurrency, exploring NFTs, and managing their portfolios. The application is user-friendly and integrates multiple features for an enhanced experience in the world of digital assets. VaultX allows users to track market trends, buy and sell cryptocurrencies, maintain a portfolio, explore NFTs, and stay informed with the latest updates through notifications and blogs.
@@ -454,8 +469,10 @@ const Settings: React.FC = () => {
 
             </div>
           ),
-          image: aboutImage,
+          image: aboutImage, // Image associated with the About tab
         };
+
+      // Logout confirmation section
       case 'logout':
         return { 
                 content: (
@@ -467,7 +484,7 @@ const Settings: React.FC = () => {
                         className="confirm-button"
                         onClick={() => {
                           localStorage.removeItem('userToken');
-                          setIsLoggedIn(false);
+                          setIsLoggedIn(false); // Update logged-in state
                           navigate('/login');
                         }}
                       >
@@ -486,7 +503,7 @@ const Settings: React.FC = () => {
             };
     }
   };
-
+ // Destructure content and image returned by renderContent()
   const { content, image } = renderContent();
 
   return (
@@ -504,7 +521,10 @@ const Settings: React.FC = () => {
             <li onClick={() => setActiveTab('logout')}>Logout</li>
           </ul>
         </div>
+
+        {/* Main content section */}
         <div className="settings-content">
+          {/* Left section: Dynamic content */}
           <div className="settings-content-left">{content}</div>
           <div className="settings-content-right">
             {image && <img src={image} alt={activeTab} className="content-image" />}

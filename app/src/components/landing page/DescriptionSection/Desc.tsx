@@ -81,21 +81,29 @@ const Desc: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Select the heading element and the boxes for scroll-based animation
       const descHeading = document.querySelector('.desc-heading') as HTMLElement;
       const descBoxes = document.querySelectorAll('.desc-boxes') as NodeListOf<HTMLElement>;
 
+      // Function to add the "show" class if the element is in the viewport
       const showElement = (element: HTMLElement) => {
         const rect = element.getBoundingClientRect();
         if (rect.top < window.innerHeight) {
-          element.classList.add('show');
+          element.classList.add('show'); // Adds the "show" class to trigger animations or styles
         }
       };
 
+       // Check and apply animation for the heading element
       if (descHeading) showElement(descHeading);
+
+      // Check and apply animation for each box in the descBoxes list
       descBoxes.forEach(box => showElement(box));
     };
 
+    // Add a scroll event listener to trigger animations
     window.addEventListener('scroll', handleScroll);
+
+    // Cleanup function to remove the event listener when the component unmounts
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -127,6 +135,7 @@ const Desc: React.FC = () => {
           <p className="desc-text">{t('blogsDescription')}</p>
         </div>
       </div>
+      {/* CTA Button */}
       <button className="get-started-button">{t('getStarted')}</button>
     </div>
   );

@@ -111,29 +111,37 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 
 const Explore: React.FC = () => {
+   // Use the React Router hook to navigate between pages
   const navigate = useNavigate();
+
+  // Use the translation hook for multi-language support
   const { t } = useTranslation();
 
   useEffect(() => {
+    // Scroll event handler to trigger animations when elements are in the viewport
     const handleScroll = () => {
       const exploreHeading = document.querySelector('.explore-heading') as HTMLElement;
       const exploreCards = document.querySelectorAll('.explore-card') as NodeListOf<HTMLElement>;
 
+      // Function to add the "show" class to elements within the viewport
       const showElement = (element: HTMLElement) => {
         const rect = element.getBoundingClientRect();
         if (rect.top < window.innerHeight) {
-          element.classList.add('show');
+          element.classList.add('show'); // Adds animation-related styles
         }
       };
 
+      // Adds animation-related styles
       if (exploreHeading) showElement(exploreHeading);
+      // Apply the animation to each card in the grid
       exploreCards.forEach(card => showElement(card));
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);  // Function to handle navigation to a specific path
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+   // Function to handle navigation to a specific path
   const handleNavigation = (path: string) => {
     navigate(path);
   };
