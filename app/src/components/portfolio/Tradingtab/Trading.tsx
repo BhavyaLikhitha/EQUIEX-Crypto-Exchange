@@ -563,7 +563,9 @@ function Trading() {
           
         </div>
          {/* Display transaction status */}
+         <div className='tra-status'>
         {transactionStatus}
+        </div>
       </div>
       {/* Toast notifications for success or error messages */}
       <ToastContainer position="top-right" autoClose={2000} />
