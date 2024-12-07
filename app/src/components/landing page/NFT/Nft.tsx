@@ -175,7 +175,7 @@ function Nft(): JSX.Element {
         ))}
       </div>
       <button className="visit-button"
-      onClick={() => navigate('/nft')}
+      onClick={() => navigate('/nfts')}
       role="button"
       tabIndex={0}>
         {t('visitGallery')}
