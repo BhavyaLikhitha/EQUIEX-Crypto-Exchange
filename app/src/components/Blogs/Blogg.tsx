@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./pages/HomePage";
-import AddBlog from "./pages/AddBlog";
-import EditBlog from "./pages/EditBlogPage";
-import BlogPost from "./components/BlogPost";
-import { Blog } from "./types/types";
+import Home from "./HomePage";
+import AddBlog from "./AddBlog";
+import EditBlog from "./EditBlogPage";
+import BlogPost from "./BlogPost";
+import { Blog } from "./types";
 
-const App: React.FC = () => {
+const Blogg: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([
     {
       id: 1,
@@ -38,4 +38,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Blogg;
