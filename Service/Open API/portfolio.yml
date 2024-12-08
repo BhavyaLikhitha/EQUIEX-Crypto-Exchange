@@ -1,0 +1,430 @@
+openapi: 3.0.0
+info:
+  title: Equiex Project API
+  version: 1.2.0
+  description: REST API for managing crypto wallet, transactions, and portfolio in a crypto trading platform with order types and detailed portfolio summary.
+
+servers:
+  - url: http://localhost:3002
+    description: Development server
+
+components:
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        coinName:
+          type: string
+          description: Name of the cryptocurrency involved in the transaction.
+          example: "BTC"
+        quantity:
+          type: number
+          format: float
+          description: Quantity of the coin involved in the transaction.
+          example: 0.5
+        value:
+          type: number
+          format: float
+          description: Total value of the transaction in the local currency.
+          example: 25000.00
+        price:
+          type: number
+          format: float
+          description: Price per coin at the time of the transaction.
+          example: 50000.00
+        transactionType:
+          type: string
+          description: Type of the transaction (buy or sell).
+          enum: [buy, sell]
+          example: "buy"
+        orderType:
+          type: string
+          description: Type of the order (market or limit).
+          enum: [market, limit]
+          example: "market"
+        timestamp:
+          type: string
+          format: date-time
+          description: The time when the transaction was created.
+          example: "2023-11-30T14:30:00Z"
+
+    PortfolioSummary:
+      type: object
+      properties:
+        tradingBalance:
+          type: number
+          format: float
+          description: The current trading balance after deposits and withdrawals.
+          example: 1000.00
+        spotBalances:
+          type: array
+          description: List of individual coin holdings and their values.
+          items:
+            type: object
+            properties:
+              coinName:
+                type: string
+                description: Name of the cryptocurrency.
+                example: "BTC"
+              quantity:
+                type: number
+                format: float
+                description: Quantity of the coin currently held by the user.
+                example: 1.5
+              currentValue:
+                type: number
+                format: float
+                description: Current total value of the coin holding in the local currency.
+                example: 75000.00
+        individualHoldings:
+          type: array
+          description: List of each coin held by the user, including current market value.
+          items:
+            type: object
+            properties:
+              coinName:
+                type: string
+                description: Name of the cryptocurrency.
+                example: "BTC"
+              quantity:
+                type: number
+                format: float
+                description: Quantity of the coin currently held by the user.
+                example: 1.5
+              averagePrice:
+                type: number
+                format: float
+                description: Average price at which the coin was purchased.
+                example: 50000.00
+              currentPrice:
+                type: number
+                format: float
+                description: Current market price of the coin.
+                example: 55000.00
+              currentValue:
+                type: number
+                format: float
+                description: Current total value of the coin holding.
+                example: 82500.00
+
+paths:
+  /wallet/connect:
+    post:
+      summary: Connects the user's wallet and stores the wallet address.
+      description: This endpoint allows a user to connect their wallet by providing a wallet address.
+      requestBody:
+        description: The wallet address provided by the user.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                walletAddress:
+                  type: string
+                  description: The blockchain wallet address of the user.
+                  example: "0x1234567890abcdef1234567890abcdef12345678"
+              required:
+                - walletAddress
+      responses:
+        '200':
+          description: Wallet connected successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Wallet connected successfully."
+                  walletAddress:
+                    type: string
+                    example: "0x1234567890abcdef1234567890abcdef12345678"
+        '400':
+          description: Invalid input or already connected wallet.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid wallet address or wallet already connected."
+
+  /wallet/deposit:
+    post:
+      summary: Handles deposits to the user's trading account.
+      description: This endpoint allows the user to deposit funds into their trading account.
+      requestBody:
+        description: Details of the deposit transaction.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  format: float
+                  description: The amount of funds to be deposited.
+                  example: 1000.00
+                currency:
+                  type: string
+                  description: The currency of the deposit.
+                  example: "USD"
+              required:
+                - amount
+                - currency
+      responses:
+        '200':
+          description: Deposit successful and trading balance updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Deposit successful."
+                  newTradingBalance:
+                    type: number
+                    format: float
+                    example: 5000.00
+        '400':
+          description: Invalid deposit data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid deposit amount or currency."
+
+  /wallet/withdraw:
+    post:
+      summary: Handles withdrawals from the user's trading account.
+      description: This endpoint allows the user to withdraw funds from their trading account.
+      requestBody:
+        description: Details of the withdrawal transaction.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  format: float
+                  description: The amount of funds to be withdrawn.
+                  example: 500.00
+                currency:
+                  type: string
+                  description: The currency of the withdrawal.
+                  example: "USD"
+              required:
+                - amount
+                - currency
+      responses:
+        '200':
+          description: Withdrawal successful and trading balance updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Withdrawal successful."
+                  newTradingBalance:
+                    type: number
+                    format: float
+                    example: 4500.00
+        '400':
+          description: Insufficient funds or invalid withdrawal data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Insufficient funds or invalid withdrawal amount."
+
+  /transactions/history:
+    get:
+      summary: Retrieves the transaction history for the user.
+      description: This endpoint fetches the order history for the user.
+      responses:
+        '200':
+          description: Transaction history retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+        '404':
+          description: No transaction history available.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No transaction history found."
+
+  /portfolio/summary:
+    get:
+      summary: Fetches the user's portfolio summary.
+      description: This endpoint provides a summary of the user's portfolio, including trading balance, spot balances for each coin, and individual holdings.
+      responses:
+        '200':
+          description: Portfolio summary retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioSummary'
+        '404':
+          description: Portfolio not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Portfolio not found."
+
+  /orders/buy:
+    post:
+      summary: Places a buy order for the user.
+      description: This endpoint places a buy order, updates the trading balance, and stores the transaction in the database.
+      requestBody:
+        description: Details of the buy order.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coinName:
+                  type: string
+                  description: The name of the cryptocurrency being purchased.
+                  example: "BTC"
+                quantity:
+                  type: number
+                  format: float
+                  description: The quantity of the cryptocurrency to be bought.
+                  example: 0.5
+                price:
+                  type: number
+                  format: float
+                  description: The price per unit of the cryptocurrency.
+                  example: 55000.00
+                orderType:
+                  type: string
+                  enum: [market, limit]
+                  description: The type of order (market or limit).
+                  example: "market"
+              required:
+                - coinName
+                - quantity
+                - price
+                - orderType
+      responses:
+        '200':
+          description: Buy order placed, trading balance updated, and transaction stored successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Buy order placed successfully."
+                  newTradingBalance:
+                    type: number
+                    format: float
+                    example: 2000.00
+                  spotBalance:
+                    type: number
+                    format: float
+                    example: 0.5
+        '400':
+          description: Invalid buy order data or insufficient funds.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid buy order data or insufficient funds."
+
+  /orders/sell:
+    post:
+      summary: Places a sell order for the user.
+      description: This endpoint places a sell order, updates the trading balance, and stores the transaction in the database.
+      requestBody:
+        description: Details of the sell order.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coinName:
+                  type: string
+                  description: The name of the cryptocurrency being sold.
+                  example: "BTC"
+                quantity:
+                  type: number
+                  format: float
+                  description: The quantity of the cryptocurrency to be sold.
+                  example: 0.5
+                price:
+                  type: number
+                  format: float
+                  description: The price per unit of the cryptocurrency.
+                  example: 55000.00
+                orderType:
+                  type: string
+                  enum: [market, limit]
+                  description: The type of order (market or limit).
+                  example: "limit"
+              required:
+                - coinName
+                - quantity
+                - price
+                - orderType
+      responses:
+        '200':
+          description: Sell order placed, trading balance updated, and transaction stored successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Sell order placed successfully."
+                  newTradingBalance:
+                    type: number
+                    format: float
+                    example: 4000.00
+                  spotBalance:
+                    type: number
+                    format: float
+                    example: 1.5
+        '400':
+          description: Invalid sell order data or insufficient holdings.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid sell order data or insufficient holdings."

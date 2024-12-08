@@ -1,0 +1,132 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: var(--white);
+    z-index: 1000;
+  }
+  
+  .logo {
+    cursor: pointer;
+    height: 70px;
+  }
+  
+  .links {
+    display: flex;
+    justify-content: flex-end;
+   
+    gap: 50px;
+  }
+  
+  .link {
+    color:black;
+    font-size: 1.2rem;
+    color: var(--darkgrey);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .link:hover {
+    color: var(--magenta);
+    transform: all 0.3s;
+  }
+  
+  /* Override default Material-UI Button styles */
+  .MuiButton-text {
+    color: black !important; /* Ensures the text color is black */
+    font-size: 1rem !important; /* Match the font size */
+    font-weight:600 !important;
+    
+  }
+  .MuiButton-text:hover {
+    background-color: var(--magenta) !important; 
+    color: var(--white) !important;
+    transform: all 0.3s !important;
+    padding: 0.1rem 20px !important; /* Adjust padding on hover for visual effect */
+    border-radius: 3rem; /* Optional: Increase the radius on hover */
+    box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); /* Magenta color with 50% opacity */
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .mobile-drawer {
+    display: none; /* Initially hide the menu icon */
+  }
+  
+  @media only screen and (max-width: 800px) {
+    .links {
+      display: none; /* Hide the links when the screen width is <= 800px */
+    }
+  
+    .mobile-drawer {
+    
+      display: block; /* Show the menu icon when the screen width is <= 800px */
+    }
+    .drawer-div {
+      width: 40vw;
+      background-color: var(--white);
+      height: 100vh;
+      padding: 0.5rem 1.5rem;
+    }
+  
+  }
+  
+  .logout {
+    background-color: var(--magenta);
+    margin-right: 20px;
+    border: var(--magenta);
+    color:var(--white);
+    padding: 10px 20px;
+    border-radius: 3rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 16px;
+}
+.logout:hover {
+            box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); 
+            transition: all 0.5s ease-in-out;
+}
+
+.notification-icon{
+  margin-top: 5px;
+  color:#444
+}
+
+.language-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-icon {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  width: 150px;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
