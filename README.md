@@ -8,6 +8,12 @@ The application includes essential functionalities like market trend tracking, t
 
 ---
 
+## 10 Min Presentation Video Link (Microsoft Stream):
+  ```
+  https://northeastern-my.sharepoint.com/:v:/g/personal/bukka_b_northeastern_edu/EXhjQwmUkUdDu2-y1JAsVWAB-LMcD2CLBQYl-zEU5RrvbA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=vVZzHB
+  ```
+
+
 ## **Features and Functionality**
 
 ### **1. Header**
