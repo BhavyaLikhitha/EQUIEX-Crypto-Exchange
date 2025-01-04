@@ -1,5 +1,8 @@
 # **EquiEx - Trade Crypto, Explore NFTs, Grow Portfolio**
 
+![Equiex Logo](equi.png "Equiex Logo")
+
+
 ## **Project Overview**
 
 EquiEx is a Progressive Web Application (PWA) designed to provide a seamless, feature-rich platform for cryptocurrency trading, NFT exploration, and portfolio management. This project integrates modern web technologies, robust backend support, and advanced capabilities to offer users an engaging and professional experience.
@@ -10,7 +13,7 @@ The application includes essential functionalities like market trend tracking, t
 
 ## 10 Min Presentation Video Link (Microsoft Stream):
   ```
-  https://northeastern-my.sharepoint.com/:v:/g/personal/bukka_b_northeastern_edu/EXhjQwmUkUdDu2-y1JAsVWAB-LMcD2CLBQYl-zEU5RrvbA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=vVZzHB
+  https://drive.google.com/file/d/1hr-nonDWmUJfJpIPpexLcGKhSaa8uJmP/view?usp=sharing
   ```
 
 
@@ -199,35 +202,10 @@ The application includes essential functionalities like market trend tracking, t
 - **Virtual Keyboard API**: Secure and user-friendly sign-up process.
 ---
 
-## **How to Run**
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/info-6150-fall-2024/final-project-random
-2. Install the required dependencies:
-    ```bash
-    npm create vite@latest app -- --template
-    cd app
-    npm i
-    add port number in vite.config.js
-    npm install @mui/material @emotion/react @emotion/styled
-    npm install axios
-    npm install bootstrap axios react-router-dom
-    npm install react-virtual-keyboard
-    npm install @reduxjs/toolkit react-redux
-    npm install i18next react-i18next
-    npm install ethers
-    npm i -s i18next react-i18next i18next-http-backend
-    npm install -D @vite-pwa/assets-generator
-    npm install -D vite-plugin-pwa
-    npm i @vite-pwa/assets-generator -D 
-
 ## Team Members
 
 - **Bhavya Likhitha Bukka**: bukka.b@northeastern.edu
 - **Akshay Raj Chevala**: chevala.a@northeastern.edu
-- **Sneh Patil**: patil.sneh1@northeastern.edu
-- **Ayush Ovhal**: ovhal.a@northeastern.edu
 
 ## Object Model
 

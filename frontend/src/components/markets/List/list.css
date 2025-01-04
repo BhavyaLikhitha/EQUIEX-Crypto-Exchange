@@ -1,0 +1,103 @@
+
+.list-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 2rem 1.5rem;
+    border-radius: 10px;
+  }
+  
+  .list-row td {
+    text-align: left;
+    width: 18%;
+  }
+  
+  .td-image {
+    width: 3rem !important;
+    margin-right: 10rem;
+  }
+  
+  .td-right {
+    text-align: right;
+  }
+  
+  .td-center {
+    text-align: center;
+  }
+  
+  .mobile-td-mkt {
+    display: none;
+  }
+  
+  @media only screen and (max-width: 1200px) {
+    .list-row td {
+      font-size: 1.1rem !important;  
+    }
+  }
+  
+  @media only screen and (max-width: 1000px) {
+    .td-icon {
+      display: none !important;
+    }
+    
+    .list-row td {
+      font-size: 1rem !important; 
+    }
+  }
+  
+  @media only screen and (max-width: 900px) {
+    .td-volume {
+      display: none !important;
+    }
+  
+    .list-row td {
+      font-size: 0.9rem !important; 
+    }
+  }
+  
+  @media only screen and (max-width: 800px) {
+    .desktop-td-mkt {
+      display: none !important;
+    }
+    
+    .mobile-td-mkt {
+      display: block !important;
+    }
+  
+    .list-row td {
+      font-size: 0.8rem !important; 
+    }
+    .coin-name{
+        display: none;
+    }
+    .icon-chip{
+        display: none;
+    }
+    .coin-price{
+        font-size: 14px !important;
+    }
+    .price-chip{
+        padding: 0.2rem !important;
+    }
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .list-row td {
+      font-size: 0.7rem !important; 
+    }
+    .price-chip{
+        display: none;
+    }
+  }
+  
+  @media only screen and (max-width: 400px) {
+    .list-row td {
+      font-size: 0.6rem !important; 
+    }
+  }
+
+  .favorite-icon{
+    font-size: 22px;
+  }
+  

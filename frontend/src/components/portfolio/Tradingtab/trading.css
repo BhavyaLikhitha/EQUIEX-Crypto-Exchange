@@ -1,0 +1,141 @@
+.trading-container{
+    display: flex;
+   justify-content:space-between;
+    align-items: center;
+}
+
+.connect-btn{
+    background-color: var(--magenta);
+    margin-left:auto;
+    color:var(--white);
+    padding: 8px 15px;
+    border-radius: 3rem;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    border: var(--magenta);
+    text-transform: uppercase;
+
+    &:hover {
+        box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); /* Magenta color with 50% opacity */
+        transition: all 0.5s ease-in-out;
+}
+}
+
+.deposit-btn{
+    background-color: var(--magenta);
+    margin-right: 10px;
+    color:var(--white);
+    padding: 8px 15px;
+    border-radius: 3rem;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    border: var(--magenta);
+    text-transform: uppercase;
+    margin-left: 10px;
+
+    &:hover {
+        box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); /* Magenta color with 50% opacity */
+        transition: all 0.5s ease-in-out;
+    }
+
+}
+
+.with-btn{
+    background-color: var(--magenta);
+    margin-left: 30px;
+    color:var(--white);
+    padding: 8px 15px;
+    border-radius: 3rem;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    border: var(--magenta);
+    text-transform: uppercase;
+
+    &:hover {
+        box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); /* Magenta color with 50% opacity */
+        transition: all 0.5s ease-in-out;
+    }
+
+}
+
+.wallet-add{
+     /* margin-top: 20px; */
+     text-align: left;
+     padding: 10px; 
+     /* border: 2px solid var(--magenta);  */
+     border-radius: 10px; 
+     background-color: var(--white); /* Light background for the box */
+     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+     width: 600px; /* Set the desired width */
+     height: 30px; /* Set the desired height */
+     /* margin-left: 60px;  */
+     margin-right: auto; 
+     margin-bottom: 30px;
+    margin-top: -30px;
+     font-size: 16px;
+     color:#666;
+     &:hover {
+        box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); /* Magenta color with 50% opacity */
+        transition: all 0.5s ease-in-out;
+    }
+}
+
+.tr-add {
+    /* margin-top: 20px; */
+    text-align: left;
+    padding: 10px; 
+    /* border: 2px solid var(--magenta);  */
+    border-radius: 10px; 
+    background-color: var(--white); /* Light background for the box */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    width: 600px; /* Set the desired width */
+    height: 30px; /* Set the desired height */
+    /* margin-left: 60px;  */
+    margin-right: auto; 
+    margin-bottom: 30px;
+   margin-top: 40px;
+    font-size: 16px;
+    color:#666;
+    &:hover {
+        box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); /* Magenta color with 50% opacity */
+        transition: all 0.5s ease-in-out;
+    }
+}
+
+.usd-add{
+     /* margin-top: 20px; */
+     text-align: left;
+     padding: 10px; 
+     /* border: 2px solid var(--magenta);  */
+     border-radius: 10px; 
+     background-color: var(--white); /* Light background for the box */
+     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+     width: 600px; /* Set the desired width */
+     height: 30px; /* Set the desired height */
+     /* margin-left: 60px;  */
+     margin-right: auto; 
+     margin-bottom: 30px;
+    margin-top: 40px;
+     font-size: 16px;
+     color:#666;
+   
+         box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); /* Magenta color with 50% opacity */
+         transition: all 0.5s ease-in-out;
+   
+}
+
+.amount{
+    margin-top: 30px;
+    width:500px;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.tra-status{
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #444;
+}
