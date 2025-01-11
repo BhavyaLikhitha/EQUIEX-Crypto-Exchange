@@ -71,7 +71,7 @@ function Footer() {
 
       {/* Footer Bottom */}
       <div className="footer-bottom">
-        <p>&copy; 2024 EquiEX</p>
+        <p>&copy; 2025 EquiEX</p>
       </div>
     </div>
   );
