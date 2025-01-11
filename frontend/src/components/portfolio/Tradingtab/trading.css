@@ -139,3 +139,60 @@
     margin-bottom: 20px;
     color: #444;
 }
+
+@media only screen and (max-width: 800px) {
+    /* General Trading Container */
+    .trading-container {
+      flex-direction: column !important; /* Stack elements vertically */
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 10px !important;
+    }
+  
+    .connect-btn {
+      font-size: 14px !important; /* Adjust button font size */
+      padding: 10px 20px !important;
+      width: 100% !important; /* Full-width button */
+      margin-bottom: 10px !important;
+    }
+  
+    /* Wallet Address, Trading Balance, and USD Balance */
+    .wallet-add, .tr-add, .usd-add {
+      width: 90% !important; /* Reduce width for smaller screens */
+      font-size: 14px !important; /* Adjust font size */
+      height: auto !important; /* Let height adjust dynamically */
+      padding: 10px !important;
+      margin: 10px auto !important;
+    }
+  
+    /* Input Field for Amount */
+    .amount {
+      width: 90% !important; /* Full-width input */
+      font-size: 14px !important; /* Adjust font size */
+      padding: 8px !important; /* Add padding for better usability */
+      margin: 10px auto !important;
+    }
+  
+    /* Transaction Controls */
+    .transaction-controls {
+      flex-direction: column !important; /* Stack buttons vertically */
+      align-items: center !important;
+      gap: 10px !important;
+    }
+  
+    .deposit-btn, .with-btn {
+      width: 90% !important; /* Full-width buttons */
+      font-size: 14px !important; /* Adjust button font size */
+      padding: 10px !important; /* Adjust padding */
+      margin: 5px auto !important; /* Add spacing between buttons */
+    }
+  
+    /* Transaction Status */
+    .tra-status {
+      font-size: 14px !important; /* Adjust font size */
+      text-align: center !important; /* Center align text */
+      margin: 10px auto !important;
+      width: 90% !important;
+    }
+  }
+  

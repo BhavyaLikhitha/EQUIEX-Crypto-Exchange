@@ -85,3 +85,15 @@
       }
     }
   }
+
+  @media only screen and (max-width: 800px) {
+    .mobile-footer {
+      position: fixed !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      z-index: 1000 !important;
+      background-color: var(--white); /* Optional: Ensure it blends with your theme */
+      box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visibility */
+    }
+  }
+  

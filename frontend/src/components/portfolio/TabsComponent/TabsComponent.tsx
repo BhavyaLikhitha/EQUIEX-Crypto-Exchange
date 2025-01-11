@@ -11,7 +11,7 @@ import "./tabscom.css";
 
 export default function TabsComponent(): JSX.Element {
    // State to manage the selected tab
-  const [value, setValue] = useState<string>("spot");
+  const [value, setValue] = useState<string>("trading");
 
   // Function to handle tab changes
   const handleChange = (event: React.SyntheticEvent, newValue: string): void => {

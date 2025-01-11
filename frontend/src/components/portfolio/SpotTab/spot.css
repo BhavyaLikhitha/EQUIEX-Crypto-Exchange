@@ -105,4 +105,74 @@
     color:var(--magenta)
   }
 
- 
+  @media only screen and (max-width: 800px) {
+    /* General Spot Page */
+    .spot-page {
+      padding: 10px !important;
+      align-items: stretch !important;
+    }
+  
+    /* Header Section */
+    .head {
+      margin-bottom: 10px !important;
+    }
+  
+    .welcome {
+      font-size: 5vw !important; /* Adjust font size for smaller screens */
+      width: 100% !important;
+      height: auto !important;
+      padding: 10px !important;
+      text-align: center !important;
+      margin: 10px 0 !important;
+    }
+  
+    .porti {
+      font-size: 5vw !important;
+    }
+  
+    /* Total Value Section */
+    h2 {
+      font-size: 4vw !important;
+      text-align: center !important;
+      margin: 15px 0 !important;
+    }
+  
+    /* Portfolio Table */
+    .portfolio-table {
+      width: 100% !important;
+      max-width: 100% !important;
+      font-size: 3.5vw !important;
+      margin-top: 15px !important;
+      margin-bottom: 20px !important;
+    }
+  
+    .portfolio-table th, .portfolio-table td {
+      font-size: 3vw !important;
+      padding: 8px !important;
+    }
+  
+    .coin-logo {
+      width: 40px !important; /* Adjust image size */
+      height: 40px !important;
+    }
+  
+    /* Bar Chart */
+    .chart-container {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-top: 15px !important;
+      margin-bottom: 20px !important;
+    }
+  
+    .bar-graph {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 15px 0 !important;
+    }
+  
+    /* Responsive Text for Chart Labels */
+    .bar-graph canvas {
+      font-size: 3vw !important;
+    }
+  }
+  
