@@ -79,4 +79,98 @@
     cursor: pointer;
   }
   
+/* General Mobile Styles */
+@media (max-width: 768px) {
+  /* Container */
+  .login-container {
+    flex-direction: column !important;
+    height: auto !important;
+    padding: 20px !important;
+  }
+
+  .login-left {
+    flex: none !important;
+    margin-bottom: 20px !important;
+  }
+
+  .login-image {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .login-right {
+    flex: none !important;
+    padding: 20px !important;
+  }
+
+  /* Form */
+  .login-form {
+    max-width: 100% !important;
+    padding: 20px !important;
+    background-color: #f9f9f9 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .form-group {
+    margin-bottom: 15px !important;
+  }
+
+  input {
+    font-size: 14px !important;
+    padding: 8px !important;
+    margin-top: 5px !important;
+    border-radius: 5px !important;
+  }
+
+  .submit-btn {
+    font-size: 14px !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+  }
+
+  .forgot-password-btn {
+    font-size: 14px !important;
+    padding: 5px 10px !important;
+  }
+
+  /* Headings */
+  .login-heading {
+    font-size: 24px !important;
+    text-align: center !important;
+    margin-bottom: 20px !important;
+  }
+}
+
+/* Extra Small Screens */
+@media (max-width: 480px) {
+  /* Container */
+  .login-container {
+    padding: 10px !important;
+  }
+
+  /* Form */
+  .login-form {
+    padding: 15px !important;
+  }
+
+  input {
+    font-size: 12px !important;
+    padding: 6px !important;
+  }
+
+  .submit-btn {
+    font-size: 12px !important;
+    padding: 8px !important;
+  }
+
+  .forgot-password-btn {
+    font-size: 12px !important;
+  }
+
+  /* Headings */
+  .login-heading {
+    font-size: 20px !important;
+  }
+}
 

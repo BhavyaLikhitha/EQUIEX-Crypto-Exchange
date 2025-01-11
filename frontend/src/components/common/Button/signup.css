@@ -23,7 +23,6 @@
 
   .signup-container {
     display: flex;
-    /* height: 100vh; */
   }
   
   .signup-left {
@@ -80,7 +79,7 @@
     text-transform: uppercase;
 }
 .submit-btn:hover {
-            box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); /* Magenta color with 50% opacity */
+            box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); 
             transition: all 0.5s ease-in-out;
 }
 
@@ -107,7 +106,120 @@
 .virtual-keyboard{
   border: 2px solid var(--magenta);
   &:hover {
-    box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); /* Magenta color with 50% opacity */
+    box-shadow: 2px 2px 10px rgba(255, 0, 255, 0.8); 
     transition: all 0.5s ease-in-out;
 }
+}
+
+/* General Mobile Styles */
+@media (max-width: 768px) {
+  /* Signup Container */
+  .signup-container {
+    flex-direction: column !important;
+    padding: 20px !important;
+  }
+
+  .signup-left {
+    flex: none !important;
+    margin-bottom: 20px !important;
+  }
+
+  .signup-image {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .signup-right {
+    flex: none !important;
+    padding: 20px !important;
+  }
+
+  /* Signup Form */
+  .signup-form {
+    max-width: 100% !important;
+    padding: 20px !important;
+    background-color: #f9f9f9 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .form-group {
+    margin-bottom: 15px !important;
+  }
+
+  input {
+    font-size: 14px !important;
+    padding: 8px !important;
+    margin-top: 5px !important;
+    border-radius: 5px !important;
+  }
+
+  .submit-btn {
+    font-size: 14px !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    width: 100% !important;
+  }
+
+  .login-link {
+    font-size: 14px !important;
+  }
+
+  /* Headings */
+  .signup-heading {
+    font-size: 32px !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* Password and Keyboard */
+  .password-container {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .password-toggle-icon {
+    margin: 10px 0 0 0 !important;
+  }
+
+  .keyboard-icon {
+    margin: 10px 0 !important;
+    font-size: 14px !important;
+  }
+
+  .virtual-keyboard {
+    width: 100% !important;
+    border-radius: 10px !important;
+  }
+}
+
+/* Extra Small Screens (Max Width: 480px) */
+@media (max-width: 480px) {
+  /* Headings */
+  .signup-heading {
+    font-size: 24px !important;
+  }
+
+  /* Inputs */
+  input {
+    font-size: 12px !important;
+    padding: 6px !important;
+  }
+
+  .submit-btn {
+    font-size: 12px !important;
+    padding: 8px !important;
+  }
+
+  .login-link {
+    font-size: 12px !important;
+  }
+
+  /* Password and Keyboard */
+  .password-toggle-icon {
+    font-size: 12px !important;
+  }
+
+  .keyboard-icon {
+    font-size: 12px !important;
+  }
 }
