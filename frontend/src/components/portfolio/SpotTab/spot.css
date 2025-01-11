@@ -165,14 +165,9 @@
     }
   
     .bar-graph {
-      width: 100% !important;
-      max-width: 100% !important;
-      margin: 15px 0 !important;
+     display: none !important;
     }
   
-    /* Responsive Text for Chart Labels */
-    .bar-graph canvas {
-      font-size: 3vw !important;
-    }
+  
   }
   
