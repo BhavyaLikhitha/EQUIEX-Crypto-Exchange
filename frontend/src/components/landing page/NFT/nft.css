@@ -40,6 +40,8 @@
   opacity: 0;
   transform: translateY(50px);
   transition: all 0.6s ease-in-out;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(255, 0, 255, 0.5);
 }
 
 .nft-card.show {
@@ -48,8 +50,7 @@
 }
 
 .nft-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(255, 0, 255, 0.5);
+
 }
 
 .nft-image {

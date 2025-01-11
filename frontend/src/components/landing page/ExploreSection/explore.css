@@ -45,10 +45,10 @@
       transform: translateY(50px);
       transition: all 0.8s ease-in-out; 
 
-      &:hover {
+      
         transform: translateY(-5px); 
         box-shadow: 0 8px 15px rgba(255, 0, 255, 0.5);
-      }
+      
 
       @media (min-width: 768px) {
         flex-direction: row;
