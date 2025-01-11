@@ -205,3 +205,71 @@
 .trade-bal{
   align-items: left;
 }
+
+@media only screen and (max-width: 800px) {
+  /* Wrapper for the List */
+  .wrapper {
+    width: 100% !important;
+    margin: 0 auto !important;
+    display: block !important; /* Ensure it occupies the full width */
+  }
+
+  /* Chart Section */
+  .chart-section {
+    width: 100% !important;
+    margin: 1rem 0 !important; /* Add spacing between sections */
+    display: block !important; /* Stack vertically */
+  }
+
+  /* Trade Panel (Buy and Sell Section) */
+  .trade-panel {
+    width: 100% !important;
+    margin: 1rem 0 !important;
+    padding: 1rem !important;
+    display: block !important;
+    text-align: center !important; /* Center-align content */
+  }
+
+  .trade-panel .trade-buttons {
+    display: flex !important;
+    flex-direction: column !important; /* Stack buttons vertically */
+    gap: 0.5rem !important; /* Add space between buttons */
+  }
+
+  .trade-panel .trade-buttons button {
+    width: 50% !important; /* Slightly smaller width */
+    padding: 0.5rem !important; /* Reduce padding */
+    font-size: 0.9rem !important; /* Reduce font size */
+    margin: 0.5rem auto !important; /* Center the buttons and add spacing */
+  }
+
+  /* Order History Section */
+  .order-history {
+    width: 100% !important;
+    margin: 1rem 0 !important;
+    padding: 1rem !important;
+    display: block !important;
+  }
+
+  .order-history table {
+    width: 100% !important;
+    font-size: 0.9rem !important; /* Adjust font size for readability */
+  }
+
+  .order-history button {
+    width: 50% !important; /* Full-width download button */
+    padding: 0.8rem !important;
+    margin-top: 1rem !important;
+  }
+
+  /* General Styles for Mobile View */
+  .main-content {
+    display: flex !important;
+    flex-direction: column !important; /* Stack child elements vertically */
+    align-items: center !important;
+  }
+
+  .trade-page {
+    padding: 1rem !important;
+  }
+}

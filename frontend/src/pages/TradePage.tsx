@@ -314,6 +314,8 @@ const showNotification = (title:any, options:any) => {
 
 
   return (
+    <div>
+
     <div className="trade-page">
       <Header />
        {/* Coin Data List */}
@@ -382,7 +384,7 @@ const showNotification = (title:any, options:any) => {
         </table>
         <button onClick={handleDownloadHistory}>Download History</button>
       </div>
-    
+      </div>
       <Footer />
       <ToastContainer position="top-right" autoClose={2000} /> 
     </div>

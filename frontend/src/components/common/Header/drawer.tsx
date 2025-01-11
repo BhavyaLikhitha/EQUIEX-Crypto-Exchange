@@ -23,7 +23,7 @@ export default function AnchorTemporaryDrawer(): JSX.Element {
         <div className='drawer-div'> {/* Container for links */}
           <a href='/markets'><p className='link'>Markets</p></a> {/* Navigation links */}
           <a href='/trade/bitcoin'><p className='link'>Trade</p></a>
-          <a href='/nft'><p className='link'>NFT Gallery</p></a>
+          <a href='/nfts'><p className='link'>NFT Gallery</p></a>
           <a href='/blogs'><p className='link'>Academy</p></a>
           <a href='/rewards'><p className='link'>Rewards</p></a>
           <a href="/login"><p className='link'>Login</p></a>
