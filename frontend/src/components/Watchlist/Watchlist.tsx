@@ -45,7 +45,12 @@ function Watchlist() {
       <div className="watchlist-container">
         <ToastContainer />  {/* Toast notification container for alerts */}
         <h1 className='watch-head'>Watchlist</h1>
-
+        {favoriteCoins.length === 0 ? (
+          <div className="empty-watchlist">
+            <p className='emoji'>😢 Uh oh! There are no favorite coins in your watchlist.</p>
+          </div>
+        ) : (
+          <>
         {/* Table header for the list of coins */}
         <table className="coin-list">
             <tr className="tr-head">
@@ -63,10 +68,15 @@ function Watchlist() {
               // Render each coin using the List component and pass coin as a prop
               <List key={coin.symbol} coin={coin} />
             ))}
-          </div>
+             </div>
+             </>
+            )}
+         
           <ToastContainer position="top-right" autoClose={2000} />
       </div>
+      <div className='mobile-footer'>
       <Footer /> {/* Renders the Footer component at the bottom of the page */}
+      </div>
     </>
   );
 }
