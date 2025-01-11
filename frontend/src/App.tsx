@@ -16,6 +16,7 @@ const App: React.FC = () => {
       }
     };
   }, []);
+  
   return (
     <div className="App">
       <RouterProvider router={routes} />
