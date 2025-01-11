@@ -110,8 +110,8 @@
   /* Further adjustments for very small screens */
   .search-flex {
     margin-left: 20px !important;
-    width: 230px !important; /* Further reduce width */
-    padding: 0.1rem 0.8rem !important; /* Compact padding */
+    width: 500px !important; /* Further reduce width */
+    padding: 0.1rem 1rem !important; /* Compact padding */
     margin-top: 15px !important;
     margin-bottom: 0.8rem !important;
   }
@@ -131,7 +131,7 @@
   }
 
   .my-fav {
-    width: 200px !important;
+    width: 250px !important;
     font-size: 12px !important; /* Further reduce font size */
     padding: 8px 20px !important; /* Compact padding */
     margin-right: 90px !important; /* Adjust margins */
