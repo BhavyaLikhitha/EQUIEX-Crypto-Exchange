@@ -251,3 +251,218 @@
     margin-top: 10px;
     width:270px;
   }
+
+  /* General Mobile View Styles */
+@media (max-width: 768px) {
+  /* Hero Section */
+  .hero-section {
+    flex-direction: column !important;
+    text-align: center !important;
+    padding: 20px !important;
+  }
+
+  .text-content {
+    max-width: 100% !important;
+    margin-bottom: 20px !important;
+  }
+
+  .hero-image img {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
+  .get-started-btn {
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+    margin: 20px auto !important;
+  }
+
+  .nft-head {
+    font-size: 36px !important;
+  }
+
+  .nft-span {
+    font-size: 36px !important;
+  }
+
+  .nft-p {
+    font-size: 16px !important;
+    text-align: center !important;
+    margin: 10px 0 !important;
+  }
+
+  /* Top Collections */
+  .top-collections {
+    margin-bottom: 20px !important;
+  }
+
+  .nft-h2 {
+    font-size: 28px !important;
+    margin-bottom: 30px !important;
+  }
+
+  .collect-grid {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+
+  .collect-card {
+    width: 90% !important;
+    margin: 0 auto !important;
+    padding: 10px !important;
+    text-align: center !important;
+  }
+
+  /* .nft-img {
+    width: 100% !important;
+    height: auto !important;
+  } */
+
+  .n-name {
+    font-size: 18px !important;
+  }
+
+  .n-plat {
+    font-size: 16px !important;
+  }
+
+  .n-price {
+    font-size: 18px !important;
+  }
+
+  /* Mint Section */
+  .mint-section {
+    flex-direction: column !important;
+    height: auto !important;
+    padding: 20px !important;
+  }
+
+  .mint-image img {
+    width: 100% !important;
+    height: auto !important;
+    margin: 20px auto !important;
+  }
+
+  .mint-content {
+    margin: 20px auto !important;
+    text-align: center !important;
+  }
+
+  .mint-n {
+    font-size: 28px !important;
+  }
+
+  .mint-p {
+    font-size: 18px !important;
+    margin: 10px 0 !important;
+  }
+
+  .mint-l {
+    font-size: 16px !important;
+  }
+
+  .mint-btn {
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+    margin: 10px auto !important;
+    display: block !important;
+  }
+
+  .mint-form {
+    width: 100% !important;
+    margin: 10px auto !important;
+    padding: 20px !important;
+  }
+
+  .mint-form input {
+    font-size: 14px !important;
+    padding: 10px !important;
+    width: 100% !important;
+    margin: 10px 0 !important;
+  }
+
+  /* My NFTs Section */
+  .my-c {
+    font-size: 28px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .my-cf {
+    font-size: 28px !important;
+  }
+
+  .collect-grid {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+
+  .coll-card {
+    width: 90% !important;
+    margin: 0 auto !important;
+    padding: 10px !important;
+    text-align: center !important;
+  }
+
+  /* .nf-img {
+    width: 100% !important;
+    height: auto !important;
+  } */
+
+  .n-name {
+    font-size: 18px !important;
+  }
+
+  .n-plat {
+    font-size: 16px !important;
+  }
+
+  .n-price {
+    font-size: 18px !important;
+  }
+
+  .edit-fields {
+    width: 100% !important;
+    margin: 10px auto !important;
+  }
+
+  .card-actions button {
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+    margin: 10px auto !important;
+    display: block !important;
+  }
+}
+
+/* Extra Small Screens (Max Width: 480px) */
+@media (max-width: 480px) {
+  .nft-head,
+  .nft-span {
+    font-size: 28px !important;
+  }
+
+  .nft-p {
+    font-size: 14px !important;
+  }
+
+  .nft-h2 {
+    font-size: 24px !important;
+  }
+
+  .mint-n {
+    font-size: 24px !important;
+  }
+
+  .mint-p {
+    font-size: 16px !important;
+  }
+
+  .mint-l {
+    font-size: 14px !important;
+  }
+
+  .my-c,
+  .my-cf {
+    font-size: 24px !important;
+  }
+}
