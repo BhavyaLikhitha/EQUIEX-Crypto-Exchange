@@ -225,6 +225,7 @@
   
       .get-started-button {
         font-size: 0.4rem !important;
+        margin-bottom: 50px !important;
       }
     }
   }
