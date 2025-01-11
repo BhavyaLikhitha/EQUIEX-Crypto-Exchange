@@ -109,11 +109,18 @@
 @media (max-width: 500px) {
   /* Further adjustments for very small screens */
   .search-flex {
+    /* margin-left: 20px !important;
+    width: 50% !important; 
+    padding: 0.1rem 1rem !important; 
+    margin-top: 15px !important;
+    margin-bottom: 0.8rem !important; */
+    box-sizing: border-box;
     margin-left: 20px !important;
-    width: 500px !important; /* Further reduce width */
-    padding: 0.1rem 1rem !important; /* Compact padding */
+    width: 50% !important;
+    padding: 0.1rem 1rem !important;
     margin-top: 15px !important;
     margin-bottom: 0.8rem !important;
+    flex: 0 0 50%; /* Ensure correct behavior in flexbox layouts */
   }
 
   .search-input {
@@ -131,12 +138,19 @@
   }
 
   .my-fav {
-    width: 250px !important;
-    font-size: 12px !important; /* Further reduce font size */
-    padding: 8px 20px !important; /* Compact padding */
-    margin-right: 90px !important; /* Adjust margins */
+    /* width: 50% !important;
+    font-size: 12px !important;
+    padding: 8px 20px !important; 
+    margin-right: 90px !important; 
+    margin-top: 2px !important; */
+    box-sizing: border-box;
+    width: 50% !important;
+    font-size: 12px !important;
+    padding: 8px 20px !important;
+    margin-right: 90px !important;
     margin-top: 2px !important;
-    /* margin-left: auto !important; */
-    /* margin-right: auto !important; */
+    flex: 0 0 50%; /* Ensure compatibility with flexbox layouts */
+
+   
   }
 }

@@ -155,7 +155,7 @@
         /* For screens below 500px */
         .grid-container {
           width: 230px !important; /* Full width for extra small screens */
-          /* margin-left: 10px !important; */
+          margin-left: -10px !important;
           margin-bottom: 1rem !important; /* Reduced spacing */
           padding: 1rem !important; /* Compact padding for smaller devices */
           border-radius: 8px !important; /* Slightly smaller border radius */
