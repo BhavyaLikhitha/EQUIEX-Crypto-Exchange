@@ -1,7 +1,6 @@
   .blogs-page {
     padding: 20px;
   }
-  
   .hero-section {
     display: flex;
     justify-content: space-between;
@@ -204,6 +203,175 @@
     font-size: 48px !important;
     color:var(--magenta);
     margin-top: 20px;
-
-
   }
+
+  /* General Styles for Mobile */
+@media (max-width: 768px) {
+  /* Hero Section */
+  .hero-section {
+    flex-direction: column !important;
+    text-align: center !important;
+    padding: 20px !important;
+  }
+
+  .hero-content {
+    margin-bottom: 20px !important;
+  }
+
+  .hero-content h1 {
+    font-size: 36px !important;
+  }
+
+  .hero-content h3 {
+    font-size: 24px !important;
+  }
+
+  .hero-content p {
+    font-size: 14px !important;
+    margin: 10px 0 !important;
+  }
+
+  .ge-started-btn {
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+    margin: 10px auto !important;
+    display: inline-block !important;
+  }
+
+  .her-image img {
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 10px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Recent and My Blogs Section */
+  .recent-blogs,
+  .my-blogs {
+    margin: 20px 0 !important;
+  }
+
+  .recent-blogs h2,
+  .my-blogs h2 {
+    font-size: 28px !important;
+    text-align: center !important;
+  }
+
+  .blogs-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 20px !important;
+  }
+
+  .blog-card {
+    width: 90% !important;
+    margin: 10px auto !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
+  }
+
+  .blog-card h3 {
+    font-size: 20px !important;
+  }
+
+  .blog-card p {
+    font-size: 14px !important;
+  }
+
+  .blog-image {
+    width: 100% !important;
+    height: auto !important;
+    margin-bottom: 10px !important;
+  }
+
+  .blog-actions {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    font-size: 14px !important;
+    padding: 8px 12px !important;
+  }
+
+  /* Add/Edit Form */
+  .add-blog-form,
+  .edit-fields {
+    width: 90% !important;
+    margin: 20px auto !important;
+  }
+
+  .add-blog-form input,
+  .add-blog-form textarea,
+  .edit-fields input,
+  .edit-fields textarea {
+    font-size: 14px !important;
+    padding: 10px !important;
+  }
+
+  /* Write a Blog Button */
+  .write-btn {
+    display: block !important;
+    margin: 20px auto !important;
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+  }
+}
+
+/* Extra Small Screens (Max Width: 480px) */
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 28px !important;
+  }
+
+  .hero-content h3 {
+    font-size: 20px !important;
+  }
+
+  .hero-content p {
+    font-size: 12px !important;
+  }
+
+  .ge-started-btn {
+    font-size: 12px !important;
+    padding: 6px 12px !important;
+  }
+
+  .blogs-grid {
+    gap: 10px !important;
+  }
+
+  .blog-card {
+    padding: 8px !important;
+    font-size: 12px !important;
+  }
+
+  .blog-card h3 {
+    font-size: 16px !important;
+  }
+
+  .blog-card p {
+    font-size: 12px !important;
+  }
+
+  .rec,
+  .cre {
+    font-size: 24px !important;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+  }
+
+  .add-blog-form input,
+  .add-blog-form textarea,
+  .edit-fields input,
+  .edit-fields textarea {
+    font-size: 12px !important;
+  }
+}
