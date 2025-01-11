@@ -315,9 +315,9 @@ const showNotification = (title:any, options:any) => {
 
   return (
     <div>
-
+    <Header />
     <div className="trade-page">
-      <Header />
+     
        {/* Coin Data List */}
        <div className="wrapper">
         {coinData && <List coin={coinData} />}

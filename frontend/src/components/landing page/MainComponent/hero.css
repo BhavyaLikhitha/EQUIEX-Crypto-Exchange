@@ -343,21 +343,49 @@
     }
 }
 
-@media only screen and (max-width: 400px) {
-    .hero-heading, .grow {
+@media (max-width: 500px) {
+    .typing-animation, .grow {
         margin-top: -10px;
-        font-size: 22px !important;
+        font-size:26px !important;
     }
     .place {
         font-size: 14px !important;
 margin-left: 30px !important;
         text-align: flex-start !important;
     }
-    .email-input, .signup-button {
+    /* .email-input, .signup-button {
         font-size: 0.9vw;
-    }
+    } */
+
+     /* Email Signup Section */
+  .email-signup {
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important; /* Full width for input and button */
+    margin-left: 0 !important;
+    align-items: center !important;
+  }
+
+  .email-input {
+    width: 90% !important; /* Adjust input width */
+    align-items: center !important;
+    margin-left: 50px !important;
+    font-size: 1rem !important; /* Smaller font size */
+    padding: 0.5rem !important;
+  }
+
+  .signup-button {
+    margin-top: 10px !important;
+    margin-left: 50px !important;
+    align-items: center !important;
+    font-size: 1rem !important; /* Smaller button size */
+    padding: 0.5rem 1rem !important;
+    width: auto !important;
+  }
+
     .arrow-icon {
-        font-size: 1vw;
+        font-size: 24px !important
+        ;
     }
     .port-button {
         font-size: 11px;
