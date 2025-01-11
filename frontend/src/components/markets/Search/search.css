@@ -71,3 +71,72 @@
   align-items: center;
   gap: 1rem;
 }
+
+@media (max-width: 768px) {
+  /* Search Box Flex Container */
+  .search-flex {
+    width: 80% !important; /* Reduce width for smaller screens */
+    padding: 0.2rem 1rem !important; /* Adjust padding */
+    margin-top: 20px !important;
+    margin-bottom: 1rem !important;
+    border-radius: 1.5rem !important; /* Slightly smaller border radius */
+  }
+
+  .search-input {
+    font-size: 0.9rem !important; /* Reduce font size */
+  }
+
+  .clear-btn {
+    font-size: 0.8rem !important; /* Smaller font size */
+    padding: 0.4rem 0.8rem !important; /* Adjust padding */
+    border-radius: 0.8rem !important; /* Smaller border radius */
+  }
+
+  .no-results {
+    font-size: 1rem !important; /* Slightly smaller font */
+  }
+
+  .my-fav {
+    font-size: 14px !important; /* Reduce font size */
+    padding: 10px 20px !important; /* Adjust padding */
+    border-radius: 2rem !important; /* Maintain smooth corners */
+    margin-right: 20px !important; /* Reduce margin */
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+@media (max-width: 500px) {
+  /* Further adjustments for very small screens */
+  .search-flex {
+    margin-left: 20px !important;
+    width: 230px !important; /* Further reduce width */
+    padding: 0.1rem 0.8rem !important; /* Compact padding */
+    margin-top: 15px !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .search-input {
+    font-size: 0.8rem !important; /* Smaller font size */
+  }
+
+  .clear-btn {
+    font-size: 0.7rem !important; /* Smaller font size */
+    padding: 0.3rem 0.6rem !important; /* Compact padding */
+    border-radius: 0.6rem !important; /* Adjust radius */
+  }
+
+  .no-results {
+    font-size: 0.9rem !important; /* Smaller font */
+  }
+
+  .my-fav {
+    width: 200px !important;
+    font-size: 12px !important; /* Further reduce font size */
+    padding: 8px 20px !important; /* Compact padding */
+    margin-right: 90px !important; /* Adjust margins */
+    margin-top: 2px !important;
+    /* margin-left: auto !important; */
+    /* margin-right: auto !important; */
+  }
+}

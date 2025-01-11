@@ -4,3 +4,10 @@
     justify-content: center;
     margin: 3rem;
   }
+  @media (max-width: 800px) {
+    .pagination-div {
+      margin: 1rem !important; /* Reduce margin for mobile view */
+      width: 80% !important; /* Adjust width to make it smaller */
+    }
+  }
+  

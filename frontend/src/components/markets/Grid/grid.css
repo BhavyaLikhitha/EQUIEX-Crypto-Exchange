@@ -125,3 +125,55 @@
         color: #666;
         font-size: 0.9rem;
     }
+
+
+    @media (max-width: 768px) {
+        /* For screens below 768px */
+        .grid-container {
+          width: 250px !important; /* Full width for smaller screens */
+          margin-left: 30px !important;
+          margin-bottom: 1.5rem !important; /* Spacing between stacked items */
+        }
+      
+        .info-flex {
+          flex-direction: column !important; /* Stack content vertically */
+          justify-content: center !important;
+          align-items: flex-start !important;
+          gap: 0.8rem !important; /* Adjust gap for readability */
+        }
+      
+        .chip-flex {
+          flex-direction: column !important;
+          gap: 0.5rem !important; /* Reduce gap between chips */
+          align-items: center !important;
+        }
+      
+       
+      }
+      
+      @media (max-width: 500px) {
+        /* For screens below 500px */
+        .grid-container {
+          width: 230px !important; /* Full width for extra small screens */
+          /* margin-left: 10px !important; */
+          margin-bottom: 1rem !important; /* Reduced spacing */
+          padding: 1rem !important; /* Compact padding for smaller devices */
+          border-radius: 8px !important; /* Slightly smaller border radius */
+          align-items: center !important;
+        }
+      
+        .info-flex {
+          flex-direction: column !important;
+          gap: 0.5rem !important; /* Tighter gap */
+          align-items: center !important;
+        }
+      
+        .chip-flex {
+          flex-direction: column !important;
+          gap: 0.3rem !important; 
+          align-items: center !important;
+        }
+      
+        
+      }
+      

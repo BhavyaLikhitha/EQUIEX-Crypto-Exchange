@@ -27,7 +27,7 @@ interface TabsProps {
 
 export default function Tabs({ coins }: TabsProps): JSX.Element {
   // State for managing the currently selected tab (list or grid view)
-  const [value, setValue] = useState<string>("list");
+  const [value, setValue] = useState<string>("grid");
 
   // Event handler to change the selected tab value
   const handleChange = (event: React.SyntheticEvent, newValue: string): void => {
@@ -55,8 +55,9 @@ export default function Tabs({ coins }: TabsProps): JSX.Element {
     <ThemeProvider theme={theme}>
       <TabContext value={value}> {/* Provide the value of the selected tab */}
         <TabList onChange={handleChange} variant="fullWidth"> {/* Tab list with two options (list/grid) */}
-          <Tab label="List" value="list" sx={style} />
-          <Tab label="Grid" value="grid" sx={style} />
+        <Tab label="Grid" value="grid" sx={style} />
+        <Tab label="List" value="list" sx={style} />
+          
         </TabList>
 
         {/* List view panel */}

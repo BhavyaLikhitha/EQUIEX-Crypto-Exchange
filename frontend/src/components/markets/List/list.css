@@ -55,49 +55,58 @@
       font-size: 0.9rem !important; 
     }
   }
-  
-  @media only screen and (max-width: 800px) {
-    .desktop-td-mkt {
-      display: none !important;
-    }
-    
-    .mobile-td-mkt {
-      display: block !important;
-    }
-  
-    .list-row td {
-      font-size: 0.8rem !important; 
-    }
-    .coin-name{
-        display: none;
-    }
-    .icon-chip{
-        display: none;
-    }
-    .coin-price{
-        font-size: 14px !important;
-    }
-    .price-chip{
-        padding: 0.2rem !important;
-    }
-  }
-  
-  @media only screen and (max-width: 600px) {
-    .list-row td {
-      font-size: 0.7rem !important; 
-    }
-    .price-chip{
-        display: none;
-    }
-  }
-  
-  @media only screen and (max-width: 400px) {
-    .list-row td {
-      font-size: 0.6rem !important; 
-    }
+ /* General styling for mobile view adjustments */
+@media only screen and (max-width: 800px) {
+  /* Hide unnecessary columns in mobile view */
+  .td-volume,
+  .desktop-td-mkt,
+  .mobile-td-mkt,
+  .td-icon,
+  .price-chip,
+  .chip-flex {
+    display: none !important;
   }
 
-  .favorite-icon{
-    font-size: 22px;
+  /* Display only the coin image, name, symbol, and current price */
+  .list-row td {
+    font-size: 0.8rem !important;
+  }
+
+  .td-image {
+    width: 3rem !important;
+  }
+
+  .coin-logo {
+    max-width: 2rem;
+    height: auto;
+  }
+
+  .coin-name {
+    display: inline;
+    font-size: 0.9rem;
+  }
+
+  .coin-symbol {
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .coin-price {
+    font-size: 1rem !important;
+    font-weight: bold;
+    color: var(--green); /* Default color; adjust dynamically with JS or inline styles */
   }
   
+  /* Keep the table layout */
+  .list-row {
+    display: table-row; /* Ensure rows remain in table structure */
+    margin: 0; /* Reset margin for table-row display */
+    padding: 0.5rem 0; /* Add padding for spacing */
+  }
+  
+  .list-row td {
+    text-align: left;
+    padding: 0.5rem 0.2rem; /* Adjust padding for smaller screens */
+  }
+}
